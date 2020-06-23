@@ -1,6 +1,6 @@
 siteUrl = https://github.com/ponsuyambu/Toggler
 gitUrl = https://github.com/ponsuyambu/Toggler
-version = 0.0.3
+version = 0.0.5
 groupId = in.ponshere
 licenses = Apache-2.0
 id = toggler
