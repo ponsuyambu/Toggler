@@ -1,9 +1,9 @@
 # Toggler  ![master](https://github.com/ponsuyambu/Toggler/workflows/master/badge.svg?branch=master)
 
-    Handle the feature toggles in your Android app seamlessly
+Handle the feature toggles in your Android app seamlessly
 
-    ## Setup
+## Setup
 
-    ### Dependency
+### Dependency
 
-    ### Toggles configuration
+### Toggles configuration
