@@ -21,7 +21,7 @@ object Toggler {
         clazz.methods.forEach { method ->
             method?.annotations?.forEach {
                 if (it is SwitchToggle) {
-                    map[method] = methodCreator.createSwitchToggleMethod(it)
+                    map[method] = methodCreator.createSwitchToggleMethod(it, method)
                 } else if (it is SelectToggle) {
                     map[method] = methodCreator.createSelectToggleMethod(it)
                 }

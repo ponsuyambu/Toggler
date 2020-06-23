@@ -25,6 +25,10 @@ class MainActivity : AppCompatActivity() {
 
                     Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
                 }
+            } else {
+                runOnUiThread {
+                    Toast.makeText(this, "Failed: ${it.exception}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
         Log.d(
