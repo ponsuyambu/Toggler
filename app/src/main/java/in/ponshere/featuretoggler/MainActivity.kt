@@ -20,22 +20,26 @@ class MainActivity : AppCompatActivity() {
                 FirebaseRemoteConfig.getInstance().activate()
                 runOnUiThread {
                     val text =
-                        "feature3Enabled: ${TogglerApp.togglerConfiguration.getFeature3Option()}"
+                        "feature3Enabled: ${Toggler.get<AppToggles>().getFeature3Option()}"
                     btnLaunch.text = text
 
                     Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                runOnUiThread {
+                    Toast.makeText(this, "Failed: ${it.exception}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
         Log.d(
             "Toggle",
-            "toggles.isFeature2Enabled() " + TogglerApp.togglerConfiguration.isFeature2Enabled()
+            "toggles.isFeature2Enabled() " + Toggler.get<AppToggles>().isFeature2Enabled()
         )
 
 
 
         btnLaunch.setOnClickListener {
-            Toggler.launchTogglerActivity(this)
+            Toggler.showAllToggles(this)
         }
 
     }

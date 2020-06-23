@@ -21,7 +21,8 @@ internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodC
                     methodCreator.createSwitchToggleMethod(
                         method.getAnnotation(
                             SwitchToggle::class.java
-                        )!!
+                        )!!,
+                        method
                     )
                 cache[method] = switchToggleMethod
                 return switchToggleMethod.value()

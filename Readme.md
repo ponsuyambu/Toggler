@@ -16,7 +16,8 @@ dependencies {
 
 ### Toggles configuration
 #### Basic usage
-Create an interface with SwitchToggle annotation
+##### 1. Create an interface with SwitchToggle annotation
+
 ```kotlin
 interface AppToggles {
     @SwitchToggle(
@@ -27,5 +28,36 @@ interface AppToggles {
     fun isFeatureAEnabled(): Boolean
 }
 ```
+##### 2. Initialize the toggler in application class
+```kotlin
+class TogglerApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        val appToggles = Toggler.init(this, AppToggles::class.java)
+    }
+}
+```
+##### 3. Use the toggle
+``` kotlin
+if(Toggler.get<AppToggles>().isFeatureAEnabled()) {
+    //enable Feature A
+}
+```
+or you can also use the `appToggles` instance created in application class.
+``` kotlin
+if(appToggles.isFeatureAEnabled()) {
+    //enable Feature A
+}
+```
+##### 4. Showing all toggles
+To show all of the toggles, use the below API. In the screen, you can easily enable/disable/change toggle values.
+```kotlin
+Toggler.showAllToggles(context)
+```
+
+## Contributing
+Please fork this repository and contribute back using pull requests. Features can be requested using issues. All code, comments, and critiques are greatly appreciated.
+
+
 
 
