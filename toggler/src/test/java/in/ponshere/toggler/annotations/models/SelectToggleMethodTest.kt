@@ -17,13 +17,13 @@ private val SELECT_OPTIONS = arrayOf("Option 1", "Options 2")
 
 class SelectToggleMethodTest : ToggleMethodTest() {
 
-    private lateinit var selectToggleMethod: SelectToggleMethod
+    private lateinit var selectToggleMethod: SelectToggleMethodImplementation
 
     @Before
     override fun setup() {
         super.setup()
 
-        selectToggleMethod = SelectToggleMethod(A_SHARED_PREFERENCES_KEY,
+        selectToggleMethod = SelectToggleMethodImplementation(A_SHARED_PREFERENCES_KEY,
             AN_EMPTY_FIREBASE_CONFIG_KEY,
             sharedPreferences,
             SELECT_TOGGLE_DEFAULT_VALUE,
@@ -44,7 +44,7 @@ class SelectToggleMethodTest : ToggleMethodTest() {
 
     @Test
     fun `should return the value from firebase when 'value' method is invoked and firebase config key is not empty`() {
-        selectToggleMethod = SelectToggleMethod(A_SHARED_PREFERENCES_KEY,
+        selectToggleMethod = SelectToggleMethodImplementation(A_SHARED_PREFERENCES_KEY,
             A_FIREBASE_CONFIG_KEY,
             sharedPreferences,
             SELECT_TOGGLE_DEFAULT_VALUE,

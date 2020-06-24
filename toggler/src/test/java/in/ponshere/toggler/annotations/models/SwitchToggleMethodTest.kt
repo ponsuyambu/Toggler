@@ -12,13 +12,13 @@ private const val SWITCH_TOGGLE_DEFAULT_VALUE = true
 
 class SwitchToggleMethodTest : ToggleMethodTest() {
 
-    private lateinit var switchToggleMethod: SwitchToggleMethod
+    private lateinit var switchToggleMethod: `SwitchToggleMethodImplementation`
 
     @Before
     override fun setup() {
         super.setup()
 
-        switchToggleMethod = SwitchToggleMethod(A_SHARED_PREFERENCES_KEY,
+        switchToggleMethod = `SwitchToggleMethodImplementation`(A_SHARED_PREFERENCES_KEY,
             A_FIREBASE_CONFIG_KEY,
             sharedPreferences,
             SWITCH_TOGGLE_DEFAULT_VALUE

@@ -4,7 +4,7 @@ package `in`.ponshere.toggler
 
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
-import `in`.ponshere.toggler.annotations.models.BaseToggleMethod
+import `in`.ponshere.toggler.annotations.models.BaseToggleMethodImplementation
 import `in`.ponshere.toggler.helpers.ToggleMethodCreator
 import `in`.ponshere.toggler.helpers.TogglesInvocationHandler
 import `in`.ponshere.toggler.ui.TogglerActivity
@@ -19,8 +19,8 @@ object Toggler {
     private lateinit var clazz: Class<*>
     private lateinit var toggles: Any
 
-    internal val allToggles: MutableList<BaseToggleMethod<*>> by lazy {
-        val map = mutableMapOf<Method, BaseToggleMethod<*>>()
+    internal val allToggles: MutableList<BaseToggleMethodImplementation<*>> by lazy {
+        val map = mutableMapOf<Method, BaseToggleMethodImplementation<*>>()
         clazz.methods.forEach { method ->
             method?.annotations?.forEach {
                 if (it is SwitchToggle) {

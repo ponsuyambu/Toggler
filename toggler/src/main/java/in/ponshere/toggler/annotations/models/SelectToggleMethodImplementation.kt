@@ -4,13 +4,13 @@ import `in`.ponshere.toggler.annotations.FeatureToggleType
 import android.content.SharedPreferences
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 
-internal class SelectToggleMethod(
+internal class SelectToggleMethodImplementation(
     sharedPreferencesKey: String,
     firebaseConfigKey: String,
     sharedPreferences: SharedPreferences,
     val defaultValue: String,
     val selectOptions: Array<String>
-) : BaseToggleMethod<String>(
+) : BaseToggleMethodImplementation<String>(
     sharedPreferences,
     sharedPreferencesKey,
     firebaseConfigKey,

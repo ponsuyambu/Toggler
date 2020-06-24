@@ -3,12 +3,12 @@ package `in`.ponshere.toggler.annotations.models
 import `in`.ponshere.toggler.annotations.FeatureToggleType
 import android.content.SharedPreferences
 
-internal class SwitchToggleMethod(
+internal class SwitchToggleMethodImplementation(
     sharedPreferencesKey: String,
     firebaseConfigKey: String,
     sharedPreferences: SharedPreferences,
     val defaultValue: Boolean
-) : BaseToggleMethod<Boolean>(
+) : BaseToggleMethodImplementation<Boolean>(
     sharedPreferences,
     sharedPreferencesKey,
     firebaseConfigKey,

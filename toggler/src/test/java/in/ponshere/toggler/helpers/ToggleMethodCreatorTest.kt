@@ -1,8 +1,7 @@
-package `in`.ponshere.toggler
+package `in`.ponshere.toggler.helpers
 
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
-import `in`.ponshere.toggler.helpers.ToggleMethodCreator
 import io.mockk.mockk
 import org.junit.Before
 import java.lang.reflect.Method
