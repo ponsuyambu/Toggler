@@ -8,7 +8,7 @@ internal class SwitchToggleMethod(
     firebaseConfigKey: String,
     sharedPreferences: SharedPreferences,
     val defaultValue: Boolean
-) : FeatureToggleMethod<Boolean>(
+) : BaseToggleMethod<Boolean>(
     sharedPreferences,
     sharedPreferencesKey,
     firebaseConfigKey,

@@ -2,14 +2,14 @@ package `in`.ponshere.toggler
 
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
-import `in`.ponshere.toggler.annotations.models.FeatureToggleMethod
+import `in`.ponshere.toggler.annotations.models.BaseToggleMethod
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 
 internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodCreator) :
     InvocationHandler {
 
-    private val cache = mutableMapOf<Method, FeatureToggleMethod<*>>()
+    private val cache = mutableMapOf<Method, BaseToggleMethod<*>>()
 
     @Throws(Throwable::class)
     override operator fun invoke(proxy: Any?, method: Method, args: Array<Any?>?): Any {

@@ -1,6 +1,6 @@
 package `in`.ponshere.toggler
 
-import `in`.ponshere.toggler.annotations.models.FeatureToggleMethod
+import `in`.ponshere.toggler.annotations.models.BaseToggleMethod
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -34,7 +34,7 @@ internal class TogglerActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                val filteredToggles = mutableListOf<FeatureToggleMethod<*>>()
+                val filteredToggles = mutableListOf<BaseToggleMethod<*>>()
                 Toggler.allToggles.forEach {
                     if (it.sharedPreferencesKey.contains(newText ?: "")) {
                         filteredToggles.add(it)

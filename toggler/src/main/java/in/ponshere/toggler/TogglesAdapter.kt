@@ -1,7 +1,7 @@
 package `in`.ponshere.toggler
 
 import `in`.ponshere.toggler.annotations.FeatureToggleType
-import `in`.ponshere.toggler.annotations.models.FeatureToggleMethod
+import `in`.ponshere.toggler.annotations.models.BaseToggleMethod
 import `in`.ponshere.toggler.annotations.models.SelectToggleMethod
 import `in`.ponshere.toggler.annotations.models.SwitchToggleMethod
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.recyclerview.widget.RecyclerView
 
-internal class TogglesAdapter(private var featureToggles: MutableList<FeatureToggleMethod<*>>) :
+internal class TogglesAdapter(private var featureToggles: MutableList<BaseToggleMethod<*>>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -97,7 +97,7 @@ internal class TogglesAdapter(private var featureToggles: MutableList<FeatureTog
         }
     }
 
-    fun update(featureToggles: List<FeatureToggleMethod<*>>) {
+    fun update(featureToggles: List<BaseToggleMethod<*>>) {
         this.featureToggles.clear()
         this.featureToggles.addAll(featureToggles)
         notifyDataSetChanged()

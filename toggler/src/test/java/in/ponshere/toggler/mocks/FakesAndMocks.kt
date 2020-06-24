@@ -4,6 +4,9 @@ import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
 import kotlin.reflect.jvm.javaMethod
 
+const val A_SHARED_PREFERENCES_KEY = "a_shared_preferences_key"
+const val A_FIREBASE_CONFIG_KEY = "a_shared_preferences_key"
+
 val aSwitchToggleWithoutAnyValuesMethod = FakeToggles::aSwitchToggleWithoutAnyValues.javaMethod!! //this can't be null, hence its ok to use !!
 val aSwitchToggleWithAllValuesMethod = FakeToggles::aSwitchToggleWithAllValues.javaMethod!! //this can't be null, hence its ok to use !!
 val aSwitchToggleWithTrueDefaultValueMethod = FakeToggles::aSwitchToggleWithTrueDefaultValue.javaMethod!! //this can't be null, hence its ok to use !!
