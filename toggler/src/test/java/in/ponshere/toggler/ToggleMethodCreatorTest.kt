@@ -2,10 +2,9 @@ package `in`.ponshere.toggler
 
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
-import `in`.ponshere.toggler.mocks.aSelectToggleWithoutAnyValuesMethod
-import `in`.ponshere.toggler.mocks.aSwitchToggleWithoutAnyValuesMethod
 import io.mockk.mockk
 import org.junit.Before
+import java.lang.reflect.Method
 
 internal open class ToggleMethodCreatorTest {
     protected lateinit var toggleMethodCreator : ToggleMethodCreator
@@ -15,14 +14,14 @@ internal open class ToggleMethodCreatorTest {
         toggleMethodCreator = ToggleMethodCreator(mockk())
     }
 
-    protected fun toSelectToggle(): SelectToggle {
-        return aSelectToggleWithoutAnyValuesMethod.getAnnotation(
+    protected fun toSelectToggle(aSelectToggleMethod: Method): SelectToggle {
+        return aSelectToggleMethod.getAnnotation(
             SelectToggle::class.java
         )!! // it is a select toggle, so can't be null.
     }
 
-    protected fun toSwitchToggle(): SwitchToggle {
-        return aSwitchToggleWithoutAnyValuesMethod.getAnnotation(
+    protected fun toSwitchToggle(aSwitchToggleMethod: Method): SwitchToggle {
+        return aSwitchToggleMethod.getAnnotation(
             SwitchToggle::class.java
         )!! // it is a switch toggle, so can't be null.
     }
