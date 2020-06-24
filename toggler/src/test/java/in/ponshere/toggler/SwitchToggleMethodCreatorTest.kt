@@ -1,5 +1,6 @@
 package `in`.ponshere.toggler
 
+import `in`.ponshere.toggler.annotations.FeatureToggleType
 import `in`.ponshere.toggler.mocks.aSwitchToggleWithAllValuesMethod
 import `in`.ponshere.toggler.mocks.aSwitchToggleWithFalseDefaultValueMethod
 import `in`.ponshere.toggler.mocks.aSwitchToggleWithTrueDefaultValueMethod
@@ -59,5 +60,14 @@ internal class SwitchToggleMethodCreatorTest : ToggleMethodCreatorTest() {
         val switchToggleMethod = toggleMethodCreator.createSwitchToggleMethod(switchToggle, aSwitchToggleWithoutAnyValuesMethod)
 
         assertTrue(switchToggleMethod.defaultValue)
+    }
+
+    @Test
+    fun `check feature toggle type`() {
+        val switchToggle = toSwitchToggle(aSwitchToggleWithAllValuesMethod)
+
+        val switchToggleMethod = toggleMethodCreator.createSwitchToggleMethod(switchToggle, aSwitchToggleWithAllValuesMethod)
+
+        assertEquals(FeatureToggleType.SWITCH, switchToggleMethod.featureToggleType)
     }
 }

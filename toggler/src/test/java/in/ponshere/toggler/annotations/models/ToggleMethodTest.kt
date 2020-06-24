@@ -20,10 +20,11 @@ open class ToggleMethodTest {
 
     }
 
-    protected fun mockSharedPreferences() {
+    private fun mockSharedPreferences() {
         every { sharedPreferences.getBoolean(any(), any()) } returns true
         every { sharedPreferences.edit() } returns sharedPreferencesEditor
         every { sharedPreferencesEditor.putBoolean(any(), any()) } returns sharedPreferencesEditor
+        every { sharedPreferencesEditor.putString(any(), any()) } returns sharedPreferencesEditor
         every { sharedPreferencesEditor.apply() } returns Unit
     }
 }
