@@ -38,7 +38,7 @@ internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodC
                 return selectToggleMethod.value()
             }
         }
-        return Any()
+        throw IllegalStateException()
     }
 
 }
