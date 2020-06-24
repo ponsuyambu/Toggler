@@ -2,6 +2,7 @@ package `in`.ponshere.toggler
 
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
+import `in`.ponshere.toggler.helpers.ToggleMethodCreator
 import io.mockk.mockk
 import org.junit.Before
 import java.lang.reflect.Method
@@ -11,7 +12,8 @@ internal open class ToggleMethodCreatorTest {
 
     @Before
     fun setup() {
-        toggleMethodCreator = ToggleMethodCreator(mockk())
+        toggleMethodCreator =
+            ToggleMethodCreator(mockk())
     }
 
     protected fun toSelectToggle(aSelectToggleMethod: Method): SelectToggle {

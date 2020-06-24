@@ -3,7 +3,7 @@
     package="in.ponshere.toggler">
 
     <application>
-        <activity android:name=".TogglerActivity"></activity>
+        <activity android:name=".ui.TogglerActivity"></activity>
     </application>
 
 </manifest>

@@ -5,6 +5,9 @@ package `in`.ponshere.toggler
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
 import `in`.ponshere.toggler.annotations.models.BaseToggleMethod
+import `in`.ponshere.toggler.helpers.ToggleMethodCreator
+import `in`.ponshere.toggler.helpers.TogglesInvocationHandler
+import `in`.ponshere.toggler.ui.TogglerActivity
 import android.content.Context
 import android.content.Intent
 import java.lang.reflect.Method
@@ -35,8 +38,10 @@ object Toggler {
         this.clazz = clazz
         val sharedPreferences =
             context.getSharedPreferences("toggler_preferences", Context.MODE_PRIVATE)
-        methodCreator = ToggleMethodCreator(sharedPreferences)
-        val togglesInvocationHandler = TogglesInvocationHandler(methodCreator)
+        methodCreator =
+            ToggleMethodCreator(sharedPreferences)
+        val togglesInvocationHandler =
+            TogglesInvocationHandler(methodCreator)
         toggles = Proxy.newProxyInstance(
             Toggler::class.java.classLoader,
             arrayOf<Class<*>>(clazz),

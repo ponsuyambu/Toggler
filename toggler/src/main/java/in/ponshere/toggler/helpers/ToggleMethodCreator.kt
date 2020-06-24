@@ -1,4 +1,4 @@
-package `in`.ponshere.toggler
+package `in`.ponshere.toggler.helpers
 
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle

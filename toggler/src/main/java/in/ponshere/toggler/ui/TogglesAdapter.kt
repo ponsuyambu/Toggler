@@ -1,5 +1,6 @@
-package `in`.ponshere.toggler
+package `in`.ponshere.toggler.ui
 
+import `in`.ponshere.toggler.R
 import `in`.ponshere.toggler.annotations.FeatureToggleType
 import `in`.ponshere.toggler.annotations.models.BaseToggleMethod
 import `in`.ponshere.toggler.annotations.models.SelectToggleMethod

@@ -1,5 +1,7 @@
-package `in`.ponshere.toggler
+package `in`.ponshere.toggler.ui
 
+import `in`.ponshere.toggler.R
+import `in`.ponshere.toggler.Toggler
 import `in`.ponshere.toggler.annotations.models.BaseToggleMethod
 import android.os.Bundle
 import android.view.Menu
@@ -16,7 +18,8 @@ internal class TogglerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_toggler)
-        togglesAdapter = TogglesAdapter(Toggler.allToggles)
+        togglesAdapter =
+            TogglesAdapter(Toggler.allToggles)
         togglerList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = togglesAdapter
