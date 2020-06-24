@@ -14,23 +14,29 @@ internal class ToggleMethodCreator(private val sharedPreferences: SharedPreferen
         val fireBaseRemoteConfigKey = switchToggleAnnotation.fireBaseRemoteConfigKey
 
         return SwitchToggleMethod(
-            if(sharedPreferencesKey.isBlank()) method.name else sharedPreferencesKey,
+            resolveSharedPreferencesKey(sharedPreferencesKey, method),
             fireBaseRemoteConfigKey,
             sharedPreferences,
             defaultValue
         )
     }
 
-    internal fun createSelectToggleMethod(switchToggleAnnotation: SelectToggle): SelectToggleMethod {
+    internal fun createSelectToggleMethod(switchToggleAnnotation: SelectToggle, method: Method): SelectToggleMethod {
         val sharedPreferencesKey = switchToggleAnnotation.sharedPreferencesKey
         val defaultValue = switchToggleAnnotation.defaultValue
         val fireBaseRemoteConfigKey = switchToggleAnnotation.fireBaseRemoteConfigKey
         return SelectToggleMethod(
-            sharedPreferencesKey,
+            resolveSharedPreferencesKey(sharedPreferencesKey, method),
             fireBaseRemoteConfigKey,
             sharedPreferences,
             defaultValue,
             switchToggleAnnotation.selectOptions
         )
     }
+
+    private fun resolveSharedPreferencesKey(
+        sharedPreferencesKey: String,
+        method: Method
+    ) = if (sharedPreferencesKey.isBlank()) method.name else sharedPreferencesKey
+
 }

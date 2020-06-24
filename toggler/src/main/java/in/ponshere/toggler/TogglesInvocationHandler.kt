@@ -31,7 +31,8 @@ internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodC
                     methodCreator.createSelectToggleMethod(
                         method.getAnnotation(
                             SelectToggle::class.java
-                        )!!
+                        )!!,
+                        method
                     )
                 cache[method] = selectToggleMethod
                 return selectToggleMethod.value()

@@ -8,7 +8,7 @@ internal class SelectToggleMethod(
     sharedPreferencesKey: String,
     firebaseConfigKey: String,
     sharedPreferences: SharedPreferences,
-    private val defaultValue: String,
+    val defaultValue: String,
     val selectOptions: Array<String>
 ) : FeatureToggleMethod<String>(
     sharedPreferences,

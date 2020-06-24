@@ -1,20 +1,10 @@
 package `in`.ponshere.toggler
 
-import `in`.ponshere.toggler.annotations.SwitchToggle
 import `in`.ponshere.toggler.mocks.aSwitchToggleWithoutAnyValuesMethod
-import io.mockk.mockk
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
 
-class SwitchToggleMethodCreatorTest {
-    
-    private lateinit var toggleMethodCreator : ToggleMethodCreator
-
-    @Before
-    fun setup() {
-        toggleMethodCreator = ToggleMethodCreator(mockk())
-    }
+internal class SwitchToggleMethodCreatorTest : ToggleMethodCreatorTest() {
 
     @Test
     fun `should use method name as shared preferences key if sharedPreferencesKey is not provided`() {
@@ -32,11 +22,5 @@ class SwitchToggleMethodCreatorTest {
         val switchToggleMethod = toggleMethodCreator.createSwitchToggleMethod(switchToggle, aSwitchToggleWithoutAnyValuesMethod)
 
         Assert.assertTrue(switchToggleMethod.defaultValue)
-    }
-
-    private fun toSwitchToggle(): SwitchToggle {
-        return aSwitchToggleWithoutAnyValuesMethod.getAnnotation(
-            SwitchToggle::class.java
-        )!! // it is a switch toggle, so can't be null.
     }
 }

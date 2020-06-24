@@ -23,7 +23,7 @@ object Toggler {
                 if (it is SwitchToggle) {
                     map[method] = methodCreator.createSwitchToggleMethod(it, method)
                 } else if (it is SelectToggle) {
-                    map[method] = methodCreator.createSelectToggleMethod(it)
+                    map[method] = methodCreator.createSelectToggleMethod(it, method)
                 }
             }
         }
