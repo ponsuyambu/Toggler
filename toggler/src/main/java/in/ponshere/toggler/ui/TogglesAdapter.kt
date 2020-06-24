@@ -1,9 +1,10 @@
-package `in`.ponshere.toggler
+package `in`.ponshere.toggler.ui
 
+import `in`.ponshere.toggler.R
 import `in`.ponshere.toggler.annotations.FeatureToggleType
-import `in`.ponshere.toggler.annotations.models.FeatureToggleMethod
-import `in`.ponshere.toggler.annotations.models.SelectToggleMethod
-import `in`.ponshere.toggler.annotations.models.SwitchToggleMethod
+import `in`.ponshere.toggler.annotations.models.BaseToggleMethodImplementation
+import `in`.ponshere.toggler.annotations.models.SelectToggleMethodImplementation
+import `in`.ponshere.toggler.annotations.models.`SwitchToggleMethodImplementation`
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.recyclerview.widget.RecyclerView
 
-internal class TogglesAdapter(private var featureToggles: MutableList<FeatureToggleMethod<*>>) :
+internal class TogglesAdapter(private var featureToggles: MutableList<BaseToggleMethodImplementation<*>>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -43,9 +44,9 @@ internal class TogglesAdapter(private var featureToggles: MutableList<FeatureTog
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is CheckboxViewHolder) {
-            holder.bind(featureToggles[position] as SwitchToggleMethod)
+            holder.bind(featureToggles[position] as `SwitchToggleMethodImplementation`)
         } else if (holder is SpinnerViewHolder) {
-            holder.bind(featureToggles[position] as SelectToggleMethod)
+            holder.bind(featureToggles[position] as SelectToggleMethodImplementation)
         }
     }
 
@@ -53,7 +54,7 @@ internal class TogglesAdapter(private var featureToggles: MutableList<FeatureTog
         private val checkbox = view.findViewById<CheckBox>(R.id.toggleCheckbox)
         private val toggleTitle = view.findViewById<TextView>(R.id.toggleTitle)
 
-        fun bind(toggle: SwitchToggleMethod) {
+        fun bind(toggle: `SwitchToggleMethodImplementation`) {
             checkbox.isChecked = toggle.value()
             toggleTitle.text = toggle.sharedPreferencesKey
 
@@ -67,7 +68,7 @@ internal class TogglesAdapter(private var featureToggles: MutableList<FeatureTog
         private val spinner = view.findViewById<Spinner>(R.id.toggleSpinner)
         private val toggleTitle = view.findViewById<TextView>(R.id.toggleTitle)
 
-        fun bind(toggle: SelectToggleMethod) {
+        fun bind(toggle: SelectToggleMethodImplementation) {
             toggleTitle.text = toggle.sharedPreferencesKey
             val adapter = ArrayAdapter(
                 view.context, android.R.layout.simple_spinner_item,
@@ -97,7 +98,7 @@ internal class TogglesAdapter(private var featureToggles: MutableList<FeatureTog
         }
     }
 
-    fun update(featureToggles: List<FeatureToggleMethod<*>>) {
+    fun update(featureToggles: List<BaseToggleMethodImplementation<*>>) {
         this.featureToggles.clear()
         this.featureToggles.addAll(featureToggles)
         notifyDataSetChanged()
