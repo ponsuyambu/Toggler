@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     name: Run Unit Tests
-    runs-on: ubuntu-18.04
+    runs-on: macOS-latest
 
     steps:
       - uses: actions/checkout@v1
@@ -27,7 +27,7 @@ jobs:
 
   apk:
     name: Generate APK
-    runs-on: ubuntu-18.04
+    runs-on: macOS-latest
 
     steps:
       - uses: actions/checkout@v1
@@ -42,3 +42,15 @@ jobs:
         with:
           name: app
           path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Unit tests
+        run: bash ./gradlew test --stacktrace
+      - name: Run UI Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          arch: x86
+          disable-animations: true
+          script: ./gradlew connectedCheck --stacktrace
+      - name: Upload Reports
+        run: bash <(curl -s https://codecov.io/bash) -t "$CODECOV_TOKEN"
+

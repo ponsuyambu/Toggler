@@ -3,7 +3,9 @@
     package="in.ponshere.toggler">
 
     <application>
-        <activity android:name=".ui.TogglerActivity"></activity>
+        <activity
+            android:name=".ui.TogglerActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
     </application>
 
 </manifest>

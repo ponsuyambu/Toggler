@@ -15,6 +15,7 @@ val aSwitchToggleWithFalseDefaultValueMethod = FakeToggles::aSwitchToggleWithFal
 
 val aSelectToggleWithoutAnyValuesMethod = FakeToggles::aSelectToggleWithoutAnyValues.javaMethod!! //this can't be null, hence its ok to use !!
 val aSelectToggleWithAllValuesMethod = FakeToggles::aSelectToggleWithAllValues.javaMethod!! //this can't be null, hence its ok to use !!
+val aNonAnnotatedMethod = FakeToggles::aNonAnnotatedMethod.javaMethod!! //this can't be null, hence its ok to use !!
 
 interface FakeToggles {
     @SwitchToggle
@@ -40,4 +41,6 @@ interface FakeToggles {
         selectOptions = ["value1", "value2"]
     )
     fun aSelectToggleWithAllValues() : String
+
+    fun aNonAnnotatedMethod()
 }

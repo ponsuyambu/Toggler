@@ -1,4 +1,4 @@
-# Toggler  ![master](https://github.com/ponsuyambu/Toggler/workflows/master/badge.svg?branch=master) [ ![Download](https://api.bintray.com/packages/suyambu/android/toggler/images/download.svg) ](https://bintray.com/suyambu/android/toggler/_latestVersion)
+# Toggler  ![master](https://github.com/ponsuyambu/Toggler/workflows/master/badge.svg?branch=master) [ ![Download](https://api.bintray.com/packages/suyambu/android/toggler/images/download.svg) ](https://bintray.com/suyambu/android/toggler/_latestVersion)  [![codecov](https://codecov.io/gh/ponsuyambu/Toggler/branch/master/graph/badge.svg)](https://codecov.io/gh/ponsuyambu/Toggler)
 
 Handle the feature toggles in your Android app seamlessly!
 

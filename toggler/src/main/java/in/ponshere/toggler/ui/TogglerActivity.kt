@@ -13,11 +13,16 @@ import kotlinx.android.synthetic.main.activity_toggler.*
 
 internal class TogglerActivity : AppCompatActivity() {
 
-    private lateinit var togglesAdapter: TogglesAdapter
+    internal lateinit var togglesAdapter: TogglesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_toggler)
+
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
         togglesAdapter =
             TogglesAdapter(Toggler.allToggles)
         togglerList.apply {
