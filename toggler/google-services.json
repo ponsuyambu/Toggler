@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "431290188287",
+    "firebase_url": "https://abtesting-4e174.firebaseio.com",
+    "project_id": "abtesting-4e174",
+    "storage_bucket": "abtesting-4e174.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431290188287:android:e6b409d974862df556e7ca",
+        "android_client_info": {
+          "package_name": "in.ponshere.featuretoggler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "431290188287-57je3rod0aathdr8drqe0ut5rd7hnnus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4yXlyXAqEyNMMNV6DzCIE0nqcBHa13Z8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "431290188287-57je3rod0aathdr8drqe0ut5rd7hnnus.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431290188287:android:2b05c9a7b59ce31f56e7ca",
+        "android_client_info": {
+          "package_name": "in.ponshere.toggler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "431290188287-57je3rod0aathdr8drqe0ut5rd7hnnus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4yXlyXAqEyNMMNV6DzCIE0nqcBHa13Z8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "431290188287-57je3rod0aathdr8drqe0ut5rd7hnnus.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431290188287:android:0e9c406655f80a3456e7ca",
+        "android_client_info": {
+          "package_name": "in.ponshere.toggler.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "431290188287-57je3rod0aathdr8drqe0ut5rd7hnnus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4yXlyXAqEyNMMNV6DzCIE0nqcBHa13Z8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "431290188287-57je3rod0aathdr8drqe0ut5rd7hnnus.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
