@@ -47,7 +47,7 @@ object Toggler {
         methodCreator =
             ToggleMethodCreator(sharedPreferences)
         val togglesInvocationHandler =
-            TogglesInvocationHandler(methodCreator)
+            TogglesInvocationHandler(methodCreator, this)
         toggles = Proxy.newProxyInstance(
             Toggler::class.java.classLoader,
             arrayOf<Class<*>>(clazz),

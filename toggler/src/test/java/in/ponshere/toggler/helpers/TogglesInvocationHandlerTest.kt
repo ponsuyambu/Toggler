@@ -1,21 +1,21 @@
 package `in`.ponshere.toggler.helpers
 
+import `in`.ponshere.toggler.Toggler
 import `in`.ponshere.toggler.annotations.models.BaseToggleMethodImplementation
 import `in`.ponshere.toggler.annotations.models.SelectToggleMethodImplementation
 import `in`.ponshere.toggler.annotations.models.SwitchToggleMethodImplementation
+import `in`.ponshere.toggler.mocks.TogglesConfigWith3Toggles
 import `in`.ponshere.toggler.mocks.aNonAnnotatedMethod
 import `in`.ponshere.toggler.mocks.aSelectToggleWithoutAnyValuesMethod
 import `in`.ponshere.toggler.mocks.aSwitchToggleWithoutAnyValuesMethod
-import io.mockk.MockKAnnotations
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import io.mockk.spyk
-import io.mockk.verify
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.lang.reflect.Method
+import kotlin.reflect.jvm.javaMethod
 
 const val SELECT_TOGGLE_VALUE = "VALUE"
 
@@ -32,11 +32,9 @@ internal class TogglesInvocationHandlerTest {
 
     private  var cacheSpy = spyk(mutableMapOf<Method, BaseToggleMethodImplementation<*>>())
 
+    private val togglerMOck = mockk<Toggler>()
+
     private lateinit var togglesInvocationHandler: TogglesInvocationHandler
-
-    @MockK
-    private lateinit var cacheMock : MutableMap<Method, BaseToggleMethodImplementation<*>>
-
 
     @Before
     fun setup() {
@@ -45,7 +43,7 @@ internal class TogglesInvocationHandlerTest {
         every { selectToggleMethodImplementationMock.value() } returns SELECT_TOGGLE_VALUE
         every { methodCreatorMock.createSwitchToggleMethod(any(), any()) } returns switchToggleMethodImplementationMock
         every { methodCreatorMock.createSelectToggleMethod(any(), any()) } returns selectToggleMethodImplementationMock
-        togglesInvocationHandler = TogglesInvocationHandler(methodCreatorMock, cacheSpy)
+        togglesInvocationHandler = TogglesInvocationHandler(methodCreatorMock, togglerMOck , cacheSpy)
         cacheSpy.clear()
     }
 
@@ -97,5 +95,17 @@ internal class TogglesInvocationHandlerTest {
     @Test(expected = IllegalStateException::class)
     fun `should throw exception if method does not have any annotation`() {
         togglesInvocationHandler.invoke(Any(), aNonAnnotatedMethod, arrayOf())
+    }
+
+    @Test
+    fun `should return the number of toggles when @NumberOfToggles annotation is used`() {
+        val listMock = mockk<MutableList<BaseToggleMethodImplementation<*>>>()
+        every { listMock.size } returns 3
+        every { togglerMOck.allToggles } returns listMock
+
+
+        val numberOfToggles = togglesInvocationHandler.invoke(Any(), TogglesConfigWith3Toggles::totalNumberOfToggles.javaMethod!!, arrayOf())
+
+        assertEquals(3, numberOfToggles)
     }
 }

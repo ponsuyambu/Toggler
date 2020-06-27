@@ -48,3 +48,16 @@ interface FakeToggles {
     @NumberOfToggles
     fun totalNumberOfToggles() : Int
 }
+interface TogglesConfigWith3Toggles {
+    @SwitchToggle
+    fun toggle1(): Boolean
+
+    @SwitchToggle
+    fun toggle2(): Boolean
+
+    @SwitchToggle
+    fun toggle3(): Boolean
+
+    @NumberOfToggles
+    fun totalNumberOfToggles() : Int
+}

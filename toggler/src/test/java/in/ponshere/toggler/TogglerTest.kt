@@ -1,6 +1,6 @@
 package `in`.ponshere.toggler
 
-import `in`.ponshere.toggler.annotations.SwitchToggle
+import `in`.ponshere.toggler.mocks.TogglesConfigWith3Toggles
 import android.content.Context
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -16,20 +16,20 @@ class TogglerTest {
     @MockK
     private lateinit var mockContext: Context
 
-    private lateinit var toggles: Toggles
+    private lateinit var toggles: TogglesConfigWith3Toggles
 
     @Before
     fun setup() {
         MockKAnnotations.init(this)
         every { mockContext.getSharedPreferences(any(), any()) } returns mockk()
-        toggles = Toggler.init(mockContext, Toggles::class.java)
+        toggles = Toggler.init(mockContext, TogglesConfigWith3Toggles::class.java)
     }
 
     @Test
     fun `should initialize the toggler when init method is invoked`() {
         assertNotNull(toggles)
         assertNotNull(Toggler.clazz)
-        assertTrue(Toggler.clazz == Toggles::class.java)
+        assertTrue(Toggler.clazz == TogglesConfigWith3Toggles::class.java)
         assertNotNull(Toggler.methodCreator)
 
     }
@@ -42,13 +42,3 @@ class TogglerTest {
 
 }
 
-private interface Toggles {
-    @SwitchToggle
-    fun toggle1(): Boolean
-
-    @SwitchToggle
-    fun toggle2(): Boolean
-
-    @SwitchToggle
-    fun toggle3(): Boolean
-}

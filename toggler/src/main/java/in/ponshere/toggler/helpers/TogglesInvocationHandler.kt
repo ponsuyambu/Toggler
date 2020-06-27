@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 
 internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodCreator,
+                                        private val toggler: Toggler,
                                         //Inject cache for testing
                                         private val cache : MutableMap<Method, BaseToggleMethodImplementation<*>> = mutableMapOf()) :
     InvocationHandler {
@@ -42,7 +43,7 @@ internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodC
                     return selectToggleMethod.value()
                 }
                 method.isAnnotationPresent(NumberOfToggles::class.java) -> {
-                    return Toggler.allToggles.size
+                    return toggler.allToggles.size
                 }
             }
         }
