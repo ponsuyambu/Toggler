@@ -1,3 +1,54 @@
 package `in`.ponshere.toggler
 
-class TogglerTest
+import `in`.ponshere.toggler.annotations.SwitchToggle
+import android.content.Context
+import io.mockk.MockKAnnotations
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Test
+
+class TogglerTest {
+
+    @MockK
+    private lateinit var mockContext: Context
+
+    private lateinit var toggles: Toggles
+
+    @Before
+    fun setup() {
+        MockKAnnotations.init(this)
+        every { mockContext.getSharedPreferences(any(), any()) } returns mockk()
+        toggles = Toggler.init(mockContext, Toggles::class.java)
+    }
+
+    @Test
+    fun `should initialize the toggler when init method is invoked`() {
+        assertNotNull(toggles)
+        assertNotNull(Toggler.clazz)
+        assertTrue(Toggler.clazz == Toggles::class.java)
+        assertNotNull(Toggler.methodCreator)
+
+    }
+
+    @Test
+    fun `should have expected value for allToggles`() {
+        assertTrue(Toggler.allToggles.size == 3)
+    }
+
+
+}
+
+private interface Toggles {
+    @SwitchToggle
+    fun toggle1(): Boolean
+
+    @SwitchToggle
+    fun toggle2(): Boolean
+
+    @SwitchToggle
+    fun toggle3(): Boolean
+}

@@ -1,5 +1,6 @@
 package `in`.ponshere.featuretoggler
 
+import `in`.ponshere.toggler.annotations.NumberOfToggles
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
 
@@ -21,6 +22,9 @@ interface AppToggles {
         selectOptions = ["1", "2", "3", "4"]
     )
     fun getFeature3Option(): String
+
+    @NumberOfToggles
+    fun totalNumberOfToggles() : Int
 //
 //    @SwitchToggle(sharedPreferencesKey = "new login", defaultValue = false)
 //    fun isNewLoginEnabled(): Boolean
