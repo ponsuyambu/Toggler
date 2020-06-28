@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#4ECCCCCC"
     tools:context=".ui.TogglerActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/togglerList"
+        android:layout_marginTop="4dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
