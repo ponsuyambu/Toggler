@@ -55,7 +55,7 @@ interface TogglesConfigWith3Toggles {
     @SwitchToggle
     fun toggle2(): Boolean
 
-    @SwitchToggle
+    @SelectToggle
     fun toggle3(): Boolean
 
     @NumberOfToggles

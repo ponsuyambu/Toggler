@@ -7,6 +7,7 @@ import `in`.ponshere.toggler.annotations.SwitchToggle
 import `in`.ponshere.toggler.annotations.models.BaseToggleMethodImplementation
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
+import java.util.*
 
 internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodCreator,
                                         private val toggler: Toggler,
@@ -45,8 +46,15 @@ internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodC
                 method.isAnnotationPresent(NumberOfToggles::class.java) -> {
                     return toggler.allToggles.size
                 }
+                method.name == "equals" -> {
+                    if(args != null) {
+                        return Objects.equals(proxy, args[0])
+                    }
+                    return false
+                }
             }
         }
+
         throw IllegalStateException()
     }
 

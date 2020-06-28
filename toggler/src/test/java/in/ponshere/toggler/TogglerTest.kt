@@ -1,13 +1,11 @@
 package `in`.ponshere.toggler
-
 import `in`.ponshere.toggler.mocks.TogglesConfigWith3Toggles
 import android.content.Context
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -39,6 +37,10 @@ class TogglerTest {
         assertTrue(Toggler.allToggles.size == 3)
     }
 
+    @Test
+    fun `should return the same toggles instance when get method invoked`() {
+        assertEquals(toggles, Toggler.get())
+    }
+
 
 }
-
