@@ -8,16 +8,22 @@ import `in`.ponshere.toggler.annotations.models.BaseToggleMethodImplementation
 import `in`.ponshere.toggler.helpers.ToggleMethodCreator
 import `in`.ponshere.toggler.helpers.TogglesInvocationHandler
 import `in`.ponshere.toggler.ui.TogglerActivity
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import androidx.annotation.VisibleForTesting
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
 
 
 object Toggler {
-    private lateinit var methodCreator: ToggleMethodCreator
-    private lateinit var clazz: Class<*>
-    private lateinit var toggles: Any
+    @VisibleForTesting
+    internal lateinit var methodCreator: ToggleMethodCreator
+    @VisibleForTesting
+    internal lateinit var clazz: Class<*>
+    @VisibleForTesting
+    internal lateinit var toggles: Any
 
     internal val allToggles: MutableList<BaseToggleMethodImplementation<*>> by lazy {
         val map = mutableMapOf<Method, BaseToggleMethodImplementation<*>>()
@@ -41,7 +47,7 @@ object Toggler {
         methodCreator =
             ToggleMethodCreator(sharedPreferences)
         val togglesInvocationHandler =
-            TogglesInvocationHandler(methodCreator)
+            TogglesInvocationHandler(methodCreator, this)
         toggles = Proxy.newProxyInstance(
             Toggler::class.java.classLoader,
             arrayOf<Class<*>>(clazz),
@@ -54,6 +60,9 @@ object Toggler {
 
     fun showAllToggles(context: Context) {
         val intent = Intent(context, TogglerActivity::class.java)
+        if((context is Activity).not()) {
+            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+        }
         context.startActivity(intent)
     }
 }

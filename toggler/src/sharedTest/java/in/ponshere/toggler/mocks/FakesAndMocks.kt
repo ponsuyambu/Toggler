@@ -1,5 +1,6 @@
 package `in`.ponshere.toggler.mocks
 
+import `in`.ponshere.toggler.annotations.NumberOfToggles
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
 import kotlin.reflect.jvm.javaMethod
@@ -43,4 +44,20 @@ interface FakeToggles {
     fun aSelectToggleWithAllValues() : String
 
     fun aNonAnnotatedMethod()
+
+    @NumberOfToggles
+    fun totalNumberOfToggles() : Int
+}
+interface TogglesConfigWith3Toggles {
+    @SwitchToggle
+    fun toggle1(): Boolean
+
+    @SwitchToggle
+    fun toggle2(): Boolean
+
+    @SwitchToggle
+    fun toggle3(): Boolean
+
+    @NumberOfToggles
+    fun totalNumberOfToggles() : Int
 }

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_toggler.*
 
 
-internal class TogglerActivity : AppCompatActivity() {
+ class TogglerActivity : AppCompatActivity() {
 
     internal lateinit var togglesAdapter: TogglesAdapter
 
