@@ -1,4 +1,4 @@
-![Toggles](doc/toggles.png)
+![Toggles](docs/toggles.png)
 
 # Toggler  ![master](https://github.com/ponsuyambu/Toggler/workflows/master/badge.svg?branch=master) [ ![Download](https://api.bintray.com/packages/suyambu/android/toggler/images/download.svg) ](https://bintray.com/suyambu/android/toggler/_latestVersion)  [![codecov](https://codecov.io/gh/ponsuyambu/Toggler/branch/master/graph/badge.svg)](https://codecov.io/gh/ponsuyambu/Toggler)  [![Maintainability](https://api.codeclimate.com/v1/badges/f5e9af491e5cbc1b88f3/maintainability)](https://codeclimate.com/github/ponsuyambu/Toggler/maintainability)
 
