@@ -3,6 +3,7 @@ package `in`.ponshere.toggler.ui
 import `in`.ponshere.toggler.R
 import `in`.ponshere.toggler.Toggler
 import `in`.ponshere.toggler.annotations.models.Toggle
+import `in`.ponshere.toggler.ui.adapters.TogglesAdapter
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
