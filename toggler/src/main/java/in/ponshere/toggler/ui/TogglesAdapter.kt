@@ -7,6 +7,10 @@ import `in`.ponshere.toggler.annotations.FeatureToggleType
 import `in`.ponshere.toggler.annotations.models.SelectToggleImpl
 import `in`.ponshere.toggler.annotations.models.SwitchToggleImpl
 import `in`.ponshere.toggler.annotations.models.Toggle
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,16 +84,23 @@ internal class TogglesAdapter(val toggler: Toggler) :
                 adapter.notifyItemChanged(adapterPosition)
             }
 
-            tvFirebaseValue.text = toggle.firebaseProviderValue()
+            tvFirebaseValue.text = if (toggle.isFirebaseKeyConfigured()) toggle.firebaseProviderValue() else notConfiguredNotation()
+
             tvDefaultValue.text = toggle.defaultValue.toString()
             tvSharedPreferencesKey.text = toggle.sharedPreferencesKey
-            tvFirebaseConfigKey.text = toggle.firebaseConfigKey
+            tvFirebaseConfigKey.text = if (toggle.isFirebaseKeyConfigured()) toggle.firebaseConfigKey else notConfiguredNotation()
 
             llDetails.visibility = if (toggle.isExpanded) View.VISIBLE else View.GONE
             mainView.setOnClickListener {
                 val expanded: Boolean = toggle.isExpanded
                 toggle.isExpanded = expanded.not()
                 adapter.notifyItemChanged(adapterPosition)
+            }
+        }
+
+        private fun notConfiguredNotation() : SpannableString{
+            return SpannableString("-").apply {
+                setSpan(ForegroundColorSpan(Color.RED), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
         }
     }
