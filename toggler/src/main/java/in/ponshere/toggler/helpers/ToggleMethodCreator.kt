@@ -1,5 +1,6 @@
 package `in`.ponshere.toggler.helpers
 
+import `in`.ponshere.toggler.ToggleValueProvider
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
 import `in`.ponshere.toggler.annotations.models.SelectToggleMethodImplementation
@@ -8,7 +9,7 @@ import android.content.SharedPreferences
 import java.lang.reflect.Method
 
 internal class ToggleMethodCreator(private val sharedPreferences: SharedPreferences) {
-    internal fun createSwitchToggleMethod(switchToggleAnnotation: SwitchToggle, method: Method): SwitchToggleMethodImplementation {
+    internal fun createSwitchToggleMethod(switchToggleAnnotation: SwitchToggle, method: Method, toggleValueProvider: ToggleValueProvider): SwitchToggleMethodImplementation {
         val sharedPreferencesKey = switchToggleAnnotation.sharedPreferencesKey
         val defaultValue = switchToggleAnnotation.defaultValue
         val fireBaseRemoteConfigKey = switchToggleAnnotation.fireBaseRemoteConfigKey
@@ -17,11 +18,12 @@ internal class ToggleMethodCreator(private val sharedPreferences: SharedPreferen
             resolveSharedPreferencesKey(sharedPreferencesKey, method),
             fireBaseRemoteConfigKey,
             sharedPreferences,
-            defaultValue
+            defaultValue,
+            toggleValueProvider
         )
     }
 
-    internal fun createSelectToggleMethod(switchToggleAnnotation: SelectToggle, method: Method): SelectToggleMethodImplementation {
+    internal fun createSelectToggleMethod(switchToggleAnnotation: SelectToggle, method: Method, toggleValueProvider: ToggleValueProvider): SelectToggleMethodImplementation {
         val sharedPreferencesKey = switchToggleAnnotation.sharedPreferencesKey
         val defaultValue = switchToggleAnnotation.defaultValue
         val fireBaseRemoteConfigKey = switchToggleAnnotation.fireBaseRemoteConfigKey
@@ -30,7 +32,8 @@ internal class ToggleMethodCreator(private val sharedPreferences: SharedPreferen
             fireBaseRemoteConfigKey,
             sharedPreferences,
             defaultValue,
-            switchToggleAnnotation.selectOptions
+            switchToggleAnnotation.selectOptions,
+            toggleValueProvider
         )
     }
 

@@ -1,5 +1,6 @@
 package `in`.ponshere.toggler.annotations.models
 
+import `in`.ponshere.toggler.ToggleValueProvider
 import `in`.ponshere.toggler.mocks.AN_EMPTY_FIREBASE_CONFIG_KEY
 import `in`.ponshere.toggler.mocks.A_FIREBASE_CONFIG_KEY
 import `in`.ponshere.toggler.mocks.A_SHARED_PREFERENCES_KEY
@@ -27,12 +28,13 @@ class SelectToggleMethodTest : ToggleMethodTest() {
             AN_EMPTY_FIREBASE_CONFIG_KEY,
             sharedPreferences,
             SELECT_TOGGLE_DEFAULT_VALUE,
-            SELECT_OPTIONS
+            SELECT_OPTIONS,
+            ToggleValueProvider.LOCAL
         )
     }
 
     @Test
-    fun `should return the value from shared preferences when 'value' method is invoked and firebase config key is empty`() {
+    fun `should return the value from shared preferences when 'value' method is invoked and firebase config key is empty AND value provider is local`() {
         val expectedValue = "an_expected_value"
         every { sharedPreferences.getString(any(), any())} returns expectedValue
 
@@ -43,12 +45,13 @@ class SelectToggleMethodTest : ToggleMethodTest() {
     }
 
     @Test
-    fun `should return the value from firebase when 'value' method is invoked and firebase config key is not empty`() {
+    fun `should return the value from firebase WHEN 'value' method is invoked AND firebase config key is not empty AND value provider is firebase`() {
         selectToggleMethod = SelectToggleMethodImplementation(A_SHARED_PREFERENCES_KEY,
             A_FIREBASE_CONFIG_KEY,
             sharedPreferences,
             SELECT_TOGGLE_DEFAULT_VALUE,
-            SELECT_OPTIONS
+            SELECT_OPTIONS,
+            ToggleValueProvider.FIREBASE
         )
         mockkStatic(FirebaseRemoteConfig::class)
         val expectedValue = "an_expected_value"
@@ -70,7 +73,7 @@ class SelectToggleMethodTest : ToggleMethodTest() {
     fun `should update the value in shared preferences when 'update' method is invoked`() {
         val valueToBeUpdated = "Options 2"
 
-        selectToggleMethod.update(valueToBeUpdated)
+        selectToggleMethod.updateLocalProvider(valueToBeUpdated)
 
         verify {
             sharedPreferences.edit()

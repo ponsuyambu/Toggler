@@ -25,14 +25,16 @@ object Toggler {
     @VisibleForTesting
     internal lateinit var toggles: Any
 
+    internal var toggleValueProvider = ToggleValueProvider.FIREBASE
+
     internal val allToggles: MutableList<BaseToggleMethodImplementation<*>> by lazy {
         val map = mutableMapOf<Method, BaseToggleMethodImplementation<*>>()
         clazz.methods.forEach { method ->
             method?.annotations?.forEach {
                 if (it is SwitchToggle) {
-                    map[method] = methodCreator.createSwitchToggleMethod(it, method)
+                    map[method] = methodCreator.createSwitchToggleMethod(it, method, toggleValueProvider)
                 } else if (it is SelectToggle) {
-                    map[method] = methodCreator.createSelectToggleMethod(it, method)
+                    map[method] = methodCreator.createSelectToggleMethod(it, method, toggleValueProvider)
                 }
             }
         }
@@ -40,7 +42,7 @@ object Toggler {
     }
 
 
-    fun <T> init(context: Context, clazz: Class<T>): T {
+    fun <T> init(context: Context, clazz: Class<T>, toggleValueProvider: ToggleValueProvider = ToggleValueProvider.FIREBASE): T {
         this.clazz = clazz
         val sharedPreferences =
             context.getSharedPreferences("toggler_preferences", Context.MODE_PRIVATE)
@@ -53,6 +55,7 @@ object Toggler {
             arrayOf<Class<*>>(clazz),
             togglesInvocationHandler
         )
+        this.toggleValueProvider = toggleValueProvider
         return toggles as T
     }
 

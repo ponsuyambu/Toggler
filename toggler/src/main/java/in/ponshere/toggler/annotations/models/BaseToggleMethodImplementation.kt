@@ -10,5 +10,5 @@ internal abstract class BaseToggleMethodImplementation<T>(
     val featureToggleType: FeatureToggleType
 ) {
     abstract fun value(): T
-    abstract fun update(value: T)
+    abstract fun updateLocalProvider(value: T)
 }

@@ -59,7 +59,7 @@ internal class TogglesAdapter(private var featureToggles: MutableList<BaseToggle
             toggleTitle.text = toggle.sharedPreferencesKey
 
             checkbox.setOnClickListener {
-                toggle.update(checkbox.isChecked)
+                toggle.updateLocalProvider(checkbox.isChecked)
             }
         }
     }
@@ -89,7 +89,7 @@ internal class TogglesAdapter(private var featureToggles: MutableList<BaseToggle
                     position: Int,
                     id: Long
                 ) {
-                    toggle.update(toggle.selectOptions[position])
+                    toggle.updateLocalProvider(toggle.selectOptions[position])
                 }
 
                 override fun onNothingSelected(parentView: AdapterView<*>?) {}
