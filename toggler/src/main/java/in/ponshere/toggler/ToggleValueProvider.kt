@@ -4,12 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 
-enum class ToggleValueProviderType {
-    LOCAL, FIREBASE
-}
-
-
-
 abstract class ToggleValueProvider {
     enum class Type {
         LOCAL, FIREBASE
@@ -21,8 +15,8 @@ abstract class ToggleValueProvider {
     abstract fun setStringValue(key: String, value: String)
     abstract fun setBooleanValue(key: String, value: Boolean)
 
-    companion object {
-        fun get(type: Type): ToggleValueProvider {
+    internal companion object {
+        internal fun get(type: Type): ToggleValueProvider {
             if (type == Type.LOCAL) {
                 return LocalProvider
             } else if (type == Type.FIREBASE){
@@ -33,7 +27,7 @@ abstract class ToggleValueProvider {
     }
 }
 
-object LocalProvider : ToggleValueProvider() {
+internal object LocalProvider : ToggleValueProvider() {
     lateinit var sharedPreferences: SharedPreferences
     override val type: Type = Type.LOCAL
 
@@ -61,7 +55,7 @@ object LocalProvider : ToggleValueProvider() {
     }
 }
 
-object FirebaseProvider : ToggleValueProvider() {
+internal object FirebaseProvider : ToggleValueProvider() {
     override val type: Type = Type.FIREBASE
 
     override fun getStringValue(key: String, defaultValue: String): String {

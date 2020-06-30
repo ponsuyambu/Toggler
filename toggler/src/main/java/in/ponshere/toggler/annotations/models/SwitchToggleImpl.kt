@@ -3,7 +3,6 @@ package `in`.ponshere.toggler.annotations.models
 import `in`.ponshere.toggler.FirebaseProvider
 import `in`.ponshere.toggler.LocalProvider
 import `in`.ponshere.toggler.ToggleValueProvider
-import `in`.ponshere.toggler.ToggleValueProviderType
 import `in`.ponshere.toggler.annotations.FeatureToggleType
 import android.content.SharedPreferences
 
@@ -11,8 +10,7 @@ internal class SwitchToggleImpl(
     sharedPreferencesKey: String,
     firebaseConfigKey: String,
     sharedPreferences: SharedPreferences,
-    val defaultValue: Boolean,
-    toggleValueProviderType: ToggleValueProviderType
+    val defaultValue: Boolean
 ) : Toggle<Boolean>(
     sharedPreferences,
     sharedPreferencesKey,

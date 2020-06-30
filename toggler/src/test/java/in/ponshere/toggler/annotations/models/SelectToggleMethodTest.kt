@@ -1,6 +1,6 @@
 package `in`.ponshere.toggler.annotations.models
 
-import `in`.ponshere.toggler.ToggleValueProviderType
+import `in`.ponshere.toggler.ToggleValueProvider
 import `in`.ponshere.toggler.mocks.AN_EMPTY_FIREBASE_CONFIG_KEY
 import `in`.ponshere.toggler.mocks.A_FIREBASE_CONFIG_KEY
 import `in`.ponshere.toggler.mocks.A_SHARED_PREFERENCES_KEY
@@ -29,7 +29,7 @@ class SelectToggleMethodTest : ToggleMethodTest() {
             sharedPreferences,
             SELECT_TOGGLE_DEFAULT_VALUE,
             SELECT_OPTIONS,
-            ToggleValueProviderType.LOCAL
+            ToggleValueProvider.Type.LOCAL
         )
     }
 
@@ -51,7 +51,7 @@ class SelectToggleMethodTest : ToggleMethodTest() {
             sharedPreferences,
             SELECT_TOGGLE_DEFAULT_VALUE,
             SELECT_OPTIONS,
-            ToggleValueProviderType.FIREBASE
+            ToggleValueProvider.Type.FIREBASE
         )
         mockkStatic(FirebaseRemoteConfig::class)
         val expectedValue = "an_expected_value"

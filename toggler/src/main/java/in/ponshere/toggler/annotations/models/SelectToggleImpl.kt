@@ -2,7 +2,6 @@ package `in`.ponshere.toggler.annotations.models
 
 import `in`.ponshere.toggler.LocalProvider
 import `in`.ponshere.toggler.ToggleValueProvider
-import `in`.ponshere.toggler.ToggleValueProviderType
 import `in`.ponshere.toggler.annotations.FeatureToggleType
 import android.content.SharedPreferences
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -13,7 +12,7 @@ internal class SelectToggleImpl(
     sharedPreferences: SharedPreferences,
     val defaultValue: String,
     val selectOptions: Array<String>,
-    val valueProviderType: ToggleValueProviderType
+    val valueProviderType: ToggleValueProvider.Type
 ) : Toggle<String>(
     sharedPreferences,
     sharedPreferencesKey,
@@ -21,8 +20,8 @@ internal class SelectToggleImpl(
     FeatureToggleType.SELECT
 ) {
     override fun resolvedValue(highPriorityToggleValueProvider: ToggleValueProvider): String {
-        if(valueProviderType == ToggleValueProviderType.LOCAL) return sharedPreferences.getString(sharedPreferencesKey, defaultValue)!!
-        if (firebaseConfigKey.isNotEmpty() && valueProviderType == ToggleValueProviderType.FIREBASE) {
+        if(valueProviderType == ToggleValueProvider.Type.LOCAL) return sharedPreferences.getString(sharedPreferencesKey, defaultValue)!!
+        if (firebaseConfigKey.isNotEmpty() && valueProviderType == ToggleValueProvider.Type.FIREBASE) {
             return FirebaseRemoteConfig.getInstance().getString(firebaseConfigKey)
         }
         return sharedPreferences.getString(sharedPreferencesKey, defaultValue)!!

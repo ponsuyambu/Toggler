@@ -25,11 +25,11 @@ object Toggler {
     @VisibleForTesting
     internal lateinit var toggles: Any
 
-    internal var toggleValueProviderType = ToggleValueProviderType.FIREBASE
+    internal var toggleValueProviderType = ToggleValueProvider.Type.FIREBASE
 
     internal val toggleValueProvider: ToggleValueProvider
         get() {
-            if(toggleValueProviderType == ToggleValueProviderType.FIREBASE)
+            if(toggleValueProviderType == ToggleValueProvider.Type.FIREBASE)
                 return FirebaseProvider
             return LocalProvider
         }
@@ -49,7 +49,7 @@ object Toggler {
     }
 
 
-    fun <T> init(context: Context, clazz: Class<T>, toggleValueProviderType: ToggleValueProviderType = ToggleValueProviderType.FIREBASE): T {
+    fun <T> init(context: Context, clazz: Class<T>, toggleValueProviderType: ToggleValueProvider.Type = ToggleValueProvider.Type.FIREBASE): T {
         this.clazz = clazz
         val sharedPreferences =
             context.getSharedPreferences("toggler_preferences", Context.MODE_PRIVATE)

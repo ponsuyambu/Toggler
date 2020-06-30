@@ -1,6 +1,6 @@
 package `in`.ponshere.toggler.helpers
 
-import `in`.ponshere.toggler.ToggleValueProviderType
+import `in`.ponshere.toggler.ToggleValueProvider
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
 import `in`.ponshere.toggler.annotations.models.SelectToggleImpl
@@ -9,7 +9,7 @@ import android.content.SharedPreferences
 import java.lang.reflect.Method
 
 internal class ToggleMethodCreator(private val sharedPreferences: SharedPreferences) {
-    internal fun createSwitchToggleMethod(switchToggleAnnotation: SwitchToggle, method: Method, toggleValueProviderType: ToggleValueProviderType): SwitchToggleImpl {
+    internal fun createSwitchToggleMethod(switchToggleAnnotation: SwitchToggle, method: Method, toggleValueProviderType: ToggleValueProvider.Type): SwitchToggleImpl {
         val sharedPreferencesKey = switchToggleAnnotation.sharedPreferencesKey
         val defaultValue = switchToggleAnnotation.defaultValue
         val fireBaseRemoteConfigKey = switchToggleAnnotation.fireBaseRemoteConfigKey
@@ -18,12 +18,11 @@ internal class ToggleMethodCreator(private val sharedPreferences: SharedPreferen
             resolveSharedPreferencesKey(sharedPreferencesKey, method),
             fireBaseRemoteConfigKey,
             sharedPreferences,
-            defaultValue,
-            toggleValueProviderType
+            defaultValue
         )
     }
 
-    internal fun createSelectToggleMethod(switchToggleAnnotation: SelectToggle, method: Method, toggleValueProviderType: ToggleValueProviderType): SelectToggleImpl {
+    internal fun createSelectToggleMethod(switchToggleAnnotation: SelectToggle, method: Method, toggleValueProviderType: ToggleValueProvider.Type): SelectToggleImpl {
         val sharedPreferencesKey = switchToggleAnnotation.sharedPreferencesKey
         val defaultValue = switchToggleAnnotation.defaultValue
         val fireBaseRemoteConfigKey = switchToggleAnnotation.fireBaseRemoteConfigKey
