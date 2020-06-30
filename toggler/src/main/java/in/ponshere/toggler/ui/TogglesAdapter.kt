@@ -1,5 +1,6 @@
 package `in`.ponshere.toggler.ui
 
+import `in`.ponshere.toggler.LocalProvider
 import `in`.ponshere.toggler.R
 import `in`.ponshere.toggler.Toggler
 import `in`.ponshere.toggler.annotations.FeatureToggleType
@@ -36,7 +37,9 @@ internal class TogglesAdapter(val toggler: Toggler) :
                 R.layout.layout_select_toggle,
                 parent,
                 false
-            )
+            ),
+            this,
+            Toggler
         )
     }
 
@@ -56,7 +59,7 @@ internal class TogglesAdapter(val toggler: Toggler) :
     }
 
     class CheckboxViewHolder(view: View, private val adapter: TogglesAdapter, val toggler: Toggler) : RecyclerView.ViewHolder(view) {
-        private val checkbox = view.findViewById<Switch>(R.id.toggleCheckbox)
+        private val localProviderSwitch = view.findViewById<Switch>(R.id.swithcLocalProvider)
         private val mainView = view.findViewById<ConstraintLayout>(R.id.clMain)
         private val llDetails = view.findViewById<LinearLayout>(R.id.llDetails)
         private val toggleTitle = view.findViewById<TextView>(R.id.toggleTitle)
@@ -67,14 +70,15 @@ internal class TogglesAdapter(val toggler: Toggler) :
         private val tvDefaultValue = view.findViewById<TextView>(R.id.tvDefaultValue)
 
         fun bind(toggle: SwitchToggleImpl) {
-            checkbox.isChecked = toggle.value()
-            toggleTitle.text = toggle.sharedPreferencesKey
 
-            checkbox.setOnClickListener {
-                toggle.updateLocalProvider(checkbox.isChecked)
+            toggleTitle.text = toggle.sharedPreferencesKey
+            tvResolvedValue.text = if (toggle.resolvedValue(toggler.toggleValueProvider)) "ON" else "OFF"
+
+            localProviderSwitch.isChecked = toggle.booleanValue(LocalProvider)
+            localProviderSwitch.setOnCheckedChangeListener { _, isChecked ->
+                toggle.updateLocalProvider(isChecked)
             }
 
-            tvResolvedValue.text = if (toggle.booleanValue(toggler.toggleValueProvider)) "ON" else "OFF"
             tvFirebaseValue.text = toggle.firebaseProviderValue()
             tvDefaultValue.text = toggle.defaultValue.toString()
             tvSharedPreferencesKey.text = toggle.sharedPreferencesKey
@@ -89,7 +93,7 @@ internal class TogglesAdapter(val toggler: Toggler) :
         }
     }
 
-    class SpinnerViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class SpinnerViewHolder(private val view: View,private val adapter: TogglesAdapter, val toggler: Toggler) : RecyclerView.ViewHolder(view) {
         private val spinner = view.findViewById<Spinner>(R.id.toggleSpinner)
         private val toggleTitle = view.findViewById<TextView>(R.id.toggleTitle)
 
@@ -102,7 +106,7 @@ internal class TogglesAdapter(val toggler: Toggler) :
             spinner.adapter = adapter
             var position = 0
             for (index in toggle.selectOptions.indices) {
-                if (toggle.selectOptions[index] == toggle.value()) {
+                if (toggle.selectOptions[index] == toggle.resolvedValue(toggler.toggleValueProvider)) {
                     position = index
                     break
                 }

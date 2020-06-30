@@ -13,12 +13,10 @@ internal abstract class Toggle<T>(
     val featureToggleType: FeatureToggleType,
     var isExpanded: Boolean = false
 ) {
-    @Deprecated("use value(toggleValueProvider)")
-    abstract fun value(): T
+    abstract fun resolvedValue(highPriorityToggleValueProvider: ToggleValueProvider): T
     abstract fun value(toggleValueProvider: ToggleValueProvider): String
     abstract fun booleanValue(toggleValueProvider: ToggleValueProvider) : Boolean
     abstract fun update(value : T, toggleValueProvider: ToggleValueProvider = LocalProvider)
-    @Deprecated("use update(toggleValueProvider)")
     abstract fun updateLocalProvider(value: T)
 
     fun localProviderValue(): String {

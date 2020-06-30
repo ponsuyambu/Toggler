@@ -31,7 +31,7 @@ class SwitchToggleMethodTest : ToggleMethodTest() {
     fun `should return the value from shared preferences when 'value' method is invoked and value provider is local`() {
         every { sharedPreferences.getBoolean(any(), any())} returns false
 
-        val value = switchToggleMethod.value()
+        val value = switchToggleMethod.resolvedValue()
 
         assertFalse(value)
         verify { sharedPreferences.getBoolean(A_SHARED_PREFERENCES_KEY, SWITCH_TOGGLE_DEFAULT_VALUE) }

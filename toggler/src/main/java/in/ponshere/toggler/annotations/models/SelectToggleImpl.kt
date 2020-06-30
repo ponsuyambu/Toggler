@@ -20,7 +20,7 @@ internal class SelectToggleImpl(
     firebaseConfigKey,
     FeatureToggleType.SELECT
 ) {
-    override fun value(): String {
+    override fun resolvedValue(highPriorityToggleValueProvider: ToggleValueProvider): String {
         if(valueProviderType == ToggleValueProviderType.LOCAL) return sharedPreferences.getString(sharedPreferencesKey, defaultValue)!!
         if (firebaseConfigKey.isNotEmpty() && valueProviderType == ToggleValueProviderType.FIREBASE) {
             return FirebaseRemoteConfig.getInstance().getString(firebaseConfigKey)

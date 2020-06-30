@@ -12,7 +12,7 @@ interface AppToggles {
     fun isFeatureAEnabled(): Boolean
 
     @SwitchToggle(sharedPreferencesKey = "feature2",
-        fireBaseRemoteConfigKey = "feature1",
+        fireBaseRemoteConfigKey = "feature2",
         defaultValue = false)
     fun isFeature2Enabled(): Boolean
 
@@ -78,6 +78,8 @@ interface AppToggles {
         selectOptions = ["1", "2", "3", "4"]
     )
     fun l(): String
-//
-//    fun f1(): String
+
+
+    @SwitchToggle
+    fun f1(): String
 }

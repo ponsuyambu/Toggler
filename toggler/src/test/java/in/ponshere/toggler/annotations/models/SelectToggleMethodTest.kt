@@ -38,7 +38,7 @@ class SelectToggleMethodTest : ToggleMethodTest() {
         val expectedValue = "an_expected_value"
         every { sharedPreferences.getString(any(), any())} returns expectedValue
 
-        val value = selectToggle.value()
+        val value = selectToggle.resolvedValue()
 
         assertEquals(expectedValue, value)
         verify { sharedPreferences.getString(A_SHARED_PREFERENCES_KEY, SELECT_TOGGLE_DEFAULT_VALUE) }
@@ -60,7 +60,7 @@ class SelectToggleMethodTest : ToggleMethodTest() {
         every { FirebaseRemoteConfig.getInstance() } returns remoteConfigMock
         every { remoteConfigMock.getString(any()) } returns expectedValue
 
-        val value = selectToggle.value()
+        val value = selectToggle.resolvedValue()
 
         assertEquals(expectedValue, value)
         verify {

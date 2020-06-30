@@ -39,8 +39,8 @@ internal class TogglesInvocationHandlerTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        every { switchToggleMethodImplementationMock.value() } returns false
-        every { selectToggleImplMock.value() } returns SELECT_TOGGLE_VALUE
+        every { switchToggleMethodImplementationMock.resolvedValue() } returns false
+        every { selectToggleImplMock.resolvedValue() } returns SELECT_TOGGLE_VALUE
         every { methodCreatorMock.createSwitchToggleMethod(any(), any()) } returns switchToggleMethodImplementationMock
         every { methodCreatorMock.createSelectToggleMethod(any(), any()) } returns selectToggleImplMock
         togglesInvocationHandler = TogglesInvocationHandler(methodCreatorMock, togglerMOck , cacheSpy)

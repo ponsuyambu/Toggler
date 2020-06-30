@@ -18,7 +18,7 @@ internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodC
     @Throws(Throwable::class)
     override operator fun invoke(proxy: Any?, method: Method, args: Array<Any?>?): Any {
         if (cache[method] != null) {
-            return cache[method]?.value()!!
+            return cache[method]?.resolvedValue(toggler.toggleValueProvider)!!
         } else {
             when {
                 method.isAnnotationPresent(SwitchToggle::class.java) -> {
@@ -31,7 +31,7 @@ internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodC
                             toggler.toggleValueProviderType
                         )
                     cache[method] = switchToggleMethod
-                    return switchToggleMethod.value()
+                    return switchToggleMethod.resolvedValue(toggler.toggleValueProvider)
                 }
                 method.isAnnotationPresent(SelectToggle::class.java) -> {
                     val selectToggleMethod =
@@ -43,7 +43,7 @@ internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodC
                             toggler.toggleValueProviderType
                         )
                     cache[method] = selectToggleMethod
-                    return selectToggleMethod.value()
+                    return selectToggleMethod.resolvedValue(toggler.toggleValueProvider)
                 }
                 method.isAnnotationPresent(NumberOfToggles::class.java) -> {
                     return toggler.allToggles.size

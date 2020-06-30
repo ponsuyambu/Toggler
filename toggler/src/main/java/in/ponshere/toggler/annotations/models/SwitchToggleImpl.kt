@@ -1,5 +1,6 @@
 package `in`.ponshere.toggler.annotations.models
 
+import `in`.ponshere.toggler.FirebaseProvider
 import `in`.ponshere.toggler.LocalProvider
 import `in`.ponshere.toggler.ToggleValueProvider
 import `in`.ponshere.toggler.ToggleValueProviderType
@@ -18,22 +19,22 @@ internal class SwitchToggleImpl(
     firebaseConfigKey,
     FeatureToggleType.SWITCH
 ) {
-    override fun value(): Boolean {
-        return sharedPreferences.getBoolean(sharedPreferencesKey, defaultValue)
+    override fun resolvedValue(highPriorityToggleValueProvider: ToggleValueProvider): Boolean {
+        if(isFirebaseKeyConfigured() && highPriorityToggleValueProvider == FirebaseProvider)
+            return booleanValue(FirebaseProvider)
+        return booleanValue(LocalProvider)
     }
 
     override fun updateLocalProvider(value: Boolean) {
-        sharedPreferences.edit().apply {
-            this.putBoolean(sharedPreferencesKey, value).apply()
-        }
+        LocalProvider.setBooleanValue(sharedPreferencesKey, value)
     }
 
     override fun value(toggleValueProvider: ToggleValueProvider): String {
-        return toggleValueProvider.getStringValue(sharedPreferencesKey)
+        return toggleValueProvider.getStringValue(sharedPreferencesKey, defaultValue.toString())
     }
 
     override fun booleanValue(toggleValueProvider: ToggleValueProvider): Boolean {
-        return value(toggleValueProvider).toBoolean()
+        return toggleValueProvider.getBooleanValue(sharedPreferencesKey, defaultValue)
     }
 
     override fun update(value: Boolean, toggleValueProvider: ToggleValueProvider) {

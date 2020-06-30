@@ -53,6 +53,7 @@ object Toggler {
         this.clazz = clazz
         val sharedPreferences =
             context.getSharedPreferences("toggler_preferences", Context.MODE_PRIVATE)
+        LocalProvider.init(context)
         methodCreator =
             ToggleMethodCreator(sharedPreferences)
         val togglesInvocationHandler =
