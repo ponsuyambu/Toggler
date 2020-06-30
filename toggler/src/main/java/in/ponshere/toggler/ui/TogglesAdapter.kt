@@ -1,19 +1,22 @@
 package `in`.ponshere.toggler.ui
 
 import `in`.ponshere.toggler.R
+import `in`.ponshere.toggler.Toggler
 import `in`.ponshere.toggler.annotations.FeatureToggleType
-import `in`.ponshere.toggler.annotations.models.BaseToggleMethodImplementation
-import `in`.ponshere.toggler.annotations.models.SelectToggleMethodImplementation
-import `in`.ponshere.toggler.annotations.models.`SwitchToggleMethodImplementation`
+import `in`.ponshere.toggler.annotations.models.SelectToggleImpl
+import `in`.ponshere.toggler.annotations.models.SwitchToggleImpl
+import `in`.ponshere.toggler.annotations.models.Toggle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-internal class TogglesAdapter(private var featureToggles: MutableList<BaseToggleMethodImplementation<*>>) :
+internal class TogglesAdapter(val toggler: Toggler) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var featureToggles: MutableList<Toggle<*>> = toggler.allToggles
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
@@ -23,7 +26,9 @@ internal class TogglesAdapter(private var featureToggles: MutableList<BaseToggle
                     R.layout.layout_checkbox_toggle,
                     parent,
                     false
-                )
+                ),
+                this,
+                toggler
             )
         }
         return SpinnerViewHolder(
@@ -44,22 +49,42 @@ internal class TogglesAdapter(private var featureToggles: MutableList<BaseToggle
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is CheckboxViewHolder) {
-            holder.bind(featureToggles[position] as `SwitchToggleMethodImplementation`)
+            holder.bind(featureToggles[position] as SwitchToggleImpl)
         } else if (holder is SpinnerViewHolder) {
-            holder.bind(featureToggles[position] as SelectToggleMethodImplementation)
+            holder.bind(featureToggles[position] as SelectToggleImpl)
         }
     }
 
-    class CheckboxViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val checkbox = view.findViewById<CheckBox>(R.id.toggleCheckbox)
+    class CheckboxViewHolder(view: View, private val adapter: TogglesAdapter, val toggler: Toggler) : RecyclerView.ViewHolder(view) {
+        private val checkbox = view.findViewById<Switch>(R.id.toggleCheckbox)
+        private val mainView = view.findViewById<ConstraintLayout>(R.id.clMain)
+        private val llDetails = view.findViewById<LinearLayout>(R.id.llDetails)
         private val toggleTitle = view.findViewById<TextView>(R.id.toggleTitle)
+        private val tvResolvedValue = view.findViewById<TextView>(R.id.tvResolvedValue)
+        private val tvFirebaseValue = view.findViewById<TextView>(R.id.tvFirebaseValue)
+        private val tvSharedPreferencesKey = view.findViewById<TextView>(R.id.tvSharedPreferencesKey)
+        private val tvFirebaseConfigKey = view.findViewById<TextView>(R.id.tvFirebaseConfigKey)
+        private val tvDefaultValue = view.findViewById<TextView>(R.id.tvDefaultValue)
 
-        fun bind(toggle: `SwitchToggleMethodImplementation`) {
+        fun bind(toggle: SwitchToggleImpl) {
             checkbox.isChecked = toggle.value()
             toggleTitle.text = toggle.sharedPreferencesKey
 
             checkbox.setOnClickListener {
                 toggle.updateLocalProvider(checkbox.isChecked)
+            }
+
+            tvResolvedValue.text = if (toggle.booleanValue(toggler.toggleValueProvider)) "ON" else "OFF"
+            tvFirebaseValue.text = toggle.firebaseProviderValue()
+            tvDefaultValue.text = toggle.defaultValue.toString()
+            tvSharedPreferencesKey.text = toggle.sharedPreferencesKey
+            tvFirebaseConfigKey.text = toggle.firebaseConfigKey
+
+            llDetails.visibility = if (toggle.isExpanded) View.VISIBLE else View.GONE
+            mainView.setOnClickListener {
+                val expanded: Boolean = toggle.isExpanded
+                toggle.isExpanded = expanded.not()
+                adapter.notifyItemChanged(adapterPosition)
             }
         }
     }
@@ -68,7 +93,7 @@ internal class TogglesAdapter(private var featureToggles: MutableList<BaseToggle
         private val spinner = view.findViewById<Spinner>(R.id.toggleSpinner)
         private val toggleTitle = view.findViewById<TextView>(R.id.toggleTitle)
 
-        fun bind(toggle: SelectToggleMethodImplementation) {
+        fun bind(toggle: SelectToggleImpl) {
             toggleTitle.text = toggle.sharedPreferencesKey
             val adapter = ArrayAdapter(
                 view.context, android.R.layout.simple_spinner_item,
@@ -98,7 +123,7 @@ internal class TogglesAdapter(private var featureToggles: MutableList<BaseToggle
         }
     }
 
-    fun update(featureToggles: List<BaseToggleMethodImplementation<*>>) {
+    fun update(featureToggles: List<Toggle<*>>) {
         this.featureToggles.clear()
         this.featureToggles.addAll(featureToggles)
         notifyDataSetChanged()

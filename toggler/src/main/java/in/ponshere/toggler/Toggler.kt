@@ -4,7 +4,7 @@ package `in`.ponshere.toggler
 
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
-import `in`.ponshere.toggler.annotations.models.BaseToggleMethodImplementation
+import `in`.ponshere.toggler.annotations.models.Toggle
 import `in`.ponshere.toggler.helpers.ToggleMethodCreator
 import `in`.ponshere.toggler.helpers.TogglesInvocationHandler
 import `in`.ponshere.toggler.ui.TogglerActivity
@@ -25,16 +25,23 @@ object Toggler {
     @VisibleForTesting
     internal lateinit var toggles: Any
 
-    internal var toggleValueProvider = ToggleValueProvider.FIREBASE
+    internal var toggleValueProviderType = ToggleValueProviderType.FIREBASE
 
-    internal val allToggles: MutableList<BaseToggleMethodImplementation<*>> by lazy {
-        val map = mutableMapOf<Method, BaseToggleMethodImplementation<*>>()
+    internal val toggleValueProvider: ToggleValueProvider
+        get() {
+            if(toggleValueProviderType == ToggleValueProviderType.FIREBASE)
+                return FirebaseProvider
+            return LocalProvider
+        }
+
+    internal val allToggles: MutableList<Toggle<*>> by lazy {
+        val map = mutableMapOf<Method, Toggle<*>>()
         clazz.methods.forEach { method ->
             method?.annotations?.forEach {
                 if (it is SwitchToggle) {
-                    map[method] = methodCreator.createSwitchToggleMethod(it, method, toggleValueProvider)
+                    map[method] = methodCreator.createSwitchToggleMethod(it, method, toggleValueProviderType)
                 } else if (it is SelectToggle) {
-                    map[method] = methodCreator.createSelectToggleMethod(it, method, toggleValueProvider)
+                    map[method] = methodCreator.createSelectToggleMethod(it, method, toggleValueProviderType)
                 }
             }
         }
@@ -42,7 +49,7 @@ object Toggler {
     }
 
 
-    fun <T> init(context: Context, clazz: Class<T>, toggleValueProvider: ToggleValueProvider = ToggleValueProvider.FIREBASE): T {
+    fun <T> init(context: Context, clazz: Class<T>, toggleValueProviderType: ToggleValueProviderType = ToggleValueProviderType.FIREBASE): T {
         this.clazz = clazz
         val sharedPreferences =
             context.getSharedPreferences("toggler_preferences", Context.MODE_PRIVATE)
@@ -55,7 +62,7 @@ object Toggler {
             arrayOf<Class<*>>(clazz),
             togglesInvocationHandler
         )
-        this.toggleValueProvider = toggleValueProvider
+        this.toggleValueProviderType = toggleValueProviderType
         return toggles as T
     }
 

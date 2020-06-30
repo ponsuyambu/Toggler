@@ -1,9 +1,9 @@
 package `in`.ponshere.toggler.helpers
 
 import `in`.ponshere.toggler.Toggler
-import `in`.ponshere.toggler.annotations.models.BaseToggleMethodImplementation
-import `in`.ponshere.toggler.annotations.models.SelectToggleMethodImplementation
-import `in`.ponshere.toggler.annotations.models.SwitchToggleMethodImplementation
+import `in`.ponshere.toggler.annotations.models.SelectToggleImpl
+import `in`.ponshere.toggler.annotations.models.SwitchToggleImpl
+import `in`.ponshere.toggler.annotations.models.Toggle
 import `in`.ponshere.toggler.mocks.TogglesConfigWith3Toggles
 import `in`.ponshere.toggler.mocks.aNonAnnotatedMethod
 import `in`.ponshere.toggler.mocks.aSelectToggleWithoutAnyValuesMethod
@@ -26,11 +26,11 @@ internal class TogglesInvocationHandlerTest {
     private lateinit var methodCreatorMock: ToggleMethodCreator
 
     @MockK
-    private lateinit var switchToggleMethodImplementationMock: SwitchToggleMethodImplementation
+    private lateinit var switchToggleMethodImplementationMock: SwitchToggleImpl
     @MockK
-    private lateinit var selectToggleMethodImplementationMock: SelectToggleMethodImplementation
+    private lateinit var selectToggleImplMock: SelectToggleImpl
 
-    private  var cacheSpy = spyk(mutableMapOf<Method, BaseToggleMethodImplementation<*>>())
+    private  var cacheSpy = spyk(mutableMapOf<Method, Toggle<*>>())
 
     private val togglerMOck = mockk<Toggler>()
 
@@ -40,9 +40,9 @@ internal class TogglesInvocationHandlerTest {
     fun setup() {
         MockKAnnotations.init(this)
         every { switchToggleMethodImplementationMock.value() } returns false
-        every { selectToggleMethodImplementationMock.value() } returns SELECT_TOGGLE_VALUE
+        every { selectToggleImplMock.value() } returns SELECT_TOGGLE_VALUE
         every { methodCreatorMock.createSwitchToggleMethod(any(), any()) } returns switchToggleMethodImplementationMock
-        every { methodCreatorMock.createSelectToggleMethod(any(), any()) } returns selectToggleMethodImplementationMock
+        every { methodCreatorMock.createSelectToggleMethod(any(), any()) } returns selectToggleImplMock
         togglesInvocationHandler = TogglesInvocationHandler(methodCreatorMock, togglerMOck , cacheSpy)
         cacheSpy.clear()
     }
@@ -77,7 +77,7 @@ internal class TogglesInvocationHandlerTest {
         }
         verify { cacheSpy[any()] = any() }
         assertEquals(SELECT_TOGGLE_VALUE, value)
-        assertEquals(selectToggleMethodImplementationMock, cacheSpy[aSelectToggleWithoutAnyValuesMethod])
+        assertEquals(selectToggleImplMock, cacheSpy[aSelectToggleWithoutAnyValuesMethod])
 
     }
 
@@ -99,7 +99,7 @@ internal class TogglesInvocationHandlerTest {
 
     @Test
     fun `should return the number of toggles when @NumberOfToggles annotation is used`() {
-        val listMock = mockk<MutableList<BaseToggleMethodImplementation<*>>>()
+        val listMock = mockk<MutableList<Toggle<*>>>()
         every { listMock.size } returns 3
         every { togglerMOck.allToggles } returns listMock
 

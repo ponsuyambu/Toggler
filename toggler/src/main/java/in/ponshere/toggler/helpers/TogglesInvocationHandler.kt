@@ -4,7 +4,7 @@ import `in`.ponshere.toggler.Toggler
 import `in`.ponshere.toggler.annotations.NumberOfToggles
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
-import `in`.ponshere.toggler.annotations.models.BaseToggleMethodImplementation
+import `in`.ponshere.toggler.annotations.models.Toggle
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import java.util.*
@@ -12,7 +12,7 @@ import java.util.*
 internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodCreator,
                                         private val toggler: Toggler,
                                         //Inject cache for testing
-                                        private val cache : MutableMap<Method, BaseToggleMethodImplementation<*>> = mutableMapOf()) :
+                                        private val cache : MutableMap<Method, Toggle<*>> = mutableMapOf()) :
     InvocationHandler {
 
     @Throws(Throwable::class)
@@ -28,7 +28,7 @@ internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodC
                                 SwitchToggle::class.java
                             )!!,
                             method,
-                            toggler.toggleValueProvider
+                            toggler.toggleValueProviderType
                         )
                     cache[method] = switchToggleMethod
                     return switchToggleMethod.value()
@@ -40,7 +40,7 @@ internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodC
                                 SelectToggle::class.java
                             )!!,
                             method,
-                            toggler.toggleValueProvider
+                            toggler.toggleValueProviderType
                         )
                     cache[method] = selectToggleMethod
                     return selectToggleMethod.value()
