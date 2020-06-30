@@ -77,6 +77,7 @@ internal class TogglesAdapter(val toggler: Toggler) :
             localProviderSwitch.isChecked = toggle.booleanValue(LocalProvider)
             localProviderSwitch.setOnCheckedChangeListener { _, isChecked ->
                 toggle.updateLocalProvider(isChecked)
+                tvResolvedValue.text = if (toggle.resolvedValue(toggler.toggleValueProvider)) "ON" else "OFF"
             }
 
             tvFirebaseValue.text = toggle.firebaseProviderValue()
