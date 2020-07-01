@@ -35,7 +35,7 @@ internal object LocalProvider : ToggleValueProvider() {
         sharedPreferences = context.getSharedPreferences("toggler_preferences", Context.MODE_PRIVATE)
     }
     override fun getStringValue(key: String, defaultValue: String): String {
-        return sharedPreferences.getString(key, defaultValue)!!
+        return sharedPreferences.all[key]?.toString() ?: defaultValue
     }
 
     override fun getBooleanValue(key: String, defaultValue: Boolean): Boolean {

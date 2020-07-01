@@ -10,7 +10,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-internal class SpinnerViewHolder(private val view: View, private val adapter: TogglesAdapter, val toggler: Toggler) : RecyclerView.ViewHolder(view) {
+internal class SpinnerViewHolderOld(private val view: View, private val adapter: TogglesAdapter, val toggler: Toggler) : RecyclerView.ViewHolder(view) {
     private val spinner = view.findViewById<Spinner>(R.id.toggleSpinner)
     private val toggleTitle = view.findViewById<TextView>(R.id.toggleTitle)
 

@@ -2,7 +2,6 @@ package `in`.ponshere.toggler.ui.adapters
 
 import `in`.ponshere.toggler.R
 import `in`.ponshere.toggler.Toggler
-import `in`.ponshere.toggler.annotations.FeatureToggleType
 import `in`.ponshere.toggler.annotations.models.SelectToggleImpl
 import `in`.ponshere.toggler.annotations.models.SwitchToggleImpl
 import `in`.ponshere.toggler.annotations.models.Toggle
@@ -15,40 +14,52 @@ internal class TogglesAdapter(val toggler: Toggler) :
     private var featureToggles: MutableList<Toggle<*>> = toggler.allToggles
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
-        if (viewType == FeatureToggleType.SWITCH.ordinal) {
-            return CheckboxViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.layout_checkbox_toggle,
-                    parent,
-                    false
-                ),
-                this,
-                toggler
-            )
-        }
-        return SpinnerViewHolder(
+        return CheckboxViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.layout_select_toggle,
+                R.layout.layout_checkbox_toggle,
                 parent,
                 false
             ),
             this,
-            Toggler
+            toggler
         )
+//        if (viewType == FeatureToggleType.SWITCH.ordinal) {
+//            return CheckboxViewHolder(
+//                LayoutInflater.from(parent.context).inflate(
+//                    R.layout.layout_checkbox_toggle,
+//                    parent,
+//                    false
+//                ),
+//                this,
+//                toggler
+//            )
+//        }
+//        return SpinnerViewHolderOld(
+//            LayoutInflater.from(parent.context).inflate(
+//                R.layout.layout_select_toggle,
+//                parent,
+//                false
+//            ),
+//            this,
+//            Toggler
+//        )
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return featureToggles[position].featureToggleType.ordinal
-    }
+//    override fun getItemViewType(position: Int): Int {
+//        return featureToggles[position].featureToggleType.ordinal
+//    }
 
 
     override fun getItemCount() = featureToggles.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is CheckboxViewHolder) {
-            holder.bind(featureToggles[position] as SwitchToggleImpl)
-        } else if (holder is SpinnerViewHolder) {
+            if(featureToggles[position] is SwitchToggleImpl) {
+                holder.bind(featureToggles[position] as SwitchToggleImpl)
+            } else if(featureToggles[position] is SelectToggleImpl) {
+                holder.bind(featureToggles[position] as SelectToggleImpl)
+            }
+        } else if (holder is SpinnerViewHolderOld) {
             holder.bind(featureToggles[position] as SelectToggleImpl)
         }
     }

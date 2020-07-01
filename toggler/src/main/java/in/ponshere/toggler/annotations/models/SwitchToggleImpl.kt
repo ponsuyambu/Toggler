@@ -10,11 +10,12 @@ internal class SwitchToggleImpl(
     sharedPreferencesKey: String,
     firebaseConfigKey: String,
     sharedPreferences: SharedPreferences,
-    val defaultValue: Boolean
+    defaultValue: Boolean
 ) : Toggle<Boolean>(
     sharedPreferences,
     sharedPreferencesKey,
     firebaseConfigKey,
+    defaultValue,
     FeatureToggleType.SWITCH
 ) {
     override fun resolvedValue(highPriorityToggleValueProvider: ToggleValueProvider): Boolean {

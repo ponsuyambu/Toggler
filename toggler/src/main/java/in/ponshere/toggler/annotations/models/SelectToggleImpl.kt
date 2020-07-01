@@ -10,13 +10,14 @@ internal class SelectToggleImpl(
     sharedPreferencesKey: String,
     firebaseConfigKey: String,
     sharedPreferences: SharedPreferences,
-    val defaultValue: String,
+    defaultValue: String,
     val selectOptions: Array<String>,
     val valueProviderType: ToggleValueProvider.Type
 ) : Toggle<String>(
     sharedPreferences,
     sharedPreferencesKey,
     firebaseConfigKey,
+    defaultValue,
     FeatureToggleType.SELECT
 ) {
     override fun resolvedValue(highPriorityToggleValueProvider: ToggleValueProvider): String {

@@ -10,6 +10,7 @@ internal abstract class Toggle<T>(
     val sharedPreferences: SharedPreferences,
     val sharedPreferencesKey: String,
     val firebaseConfigKey: String,
+    val defaultValue: T,
     val featureToggleType: FeatureToggleType,
     var isExpanded: Boolean = false
 ) {
@@ -29,5 +30,17 @@ internal abstract class Toggle<T>(
 
     fun isFirebaseKeyConfigured(): Boolean {
         return firebaseConfigKey.isNotBlank()
+    }
+
+    fun resolvedDisplayValue(highPriorityToggleValueProvider: ToggleValueProvider): String {
+        var displayValue: String
+        displayValue = if(isFirebaseKeyConfigured() && highPriorityToggleValueProvider == FirebaseProvider)
+            firebaseProviderValue()
+        else
+            localProviderValue()
+        if(this is SwitchToggleImpl) {
+            displayValue = if(localProviderValue().toBoolean()) "ON" else "OFF"
+        }
+        return displayValue
     }
 }

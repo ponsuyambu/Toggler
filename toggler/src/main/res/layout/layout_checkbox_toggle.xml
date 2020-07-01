@@ -81,14 +81,37 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/lblValues"
                     tools:text ="Local Value"/>
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <Switch
                     android:id="@+id/swithcLocalProvider"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBaseline_toBaselineOf="@id/lblLocalValue"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lblValues" />
+
+                <LinearLayout
+                    android:id="@+id/llSelectValueContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/lblValues"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@id/swithcLocalProvider">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvLocalValue"
+                        style="@style/ValueText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="`local value`"/>
+
+                    <TextView
+                        android:id="@+id/btnEditLocalValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="EDIT"
+                        android:textColor="#6B0000FF"/>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/lblFirebaseValue"
@@ -193,6 +216,25 @@
                         android:textStyle="bold"
                         app:layout_constraintBaseline_toBaselineOf="@id/lblDefaultValue"
                         app:layout_constraintEnd_toEndOf="parent"/>
+                    <TextView
+                        android:id="@+id/lblOptions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text ="Selection Options"
+                        android:textSize="12dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/lblDefaultValue" />
+
+                    <TextView
+                        android:id="@+id/tvSelectionOptions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text ="`default value`"
+                        android:textSize="12dp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/lblOptions"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
