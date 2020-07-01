@@ -33,6 +33,7 @@ internal class CheckboxViewHolder(view: View, private val adapter: TogglesAdapte
     private val tvFirebaseConfigKey = view.findViewById<TextView>(R.id.tvFirebaseConfigKey)
     private val tvDefaultValue = view.findViewById<TextView>(R.id.tvDefaultValue)
     private val tvSelectionOptions = view.findViewById<TextView>(R.id.tvSelectionOptions)
+    private val lblSelectionOptions = view.findViewById<TextView>(R.id.lblOptions)
     private val btnEdit = view.findViewById<TextView>(R.id.btnEditLocalValue)
 
     fun bind(toggle: SwitchToggleImpl) {
@@ -40,6 +41,8 @@ internal class CheckboxViewHolder(view: View, private val adapter: TogglesAdapte
 
         localProviderSwitch.visibility = VISIBLE
         llSelectValueContainer.visibility = GONE
+        lblSelectionOptions.visibility = GONE
+        tvSelectionOptions.visibility = GONE
         localProviderSwitch.isChecked = toggle.booleanValue(LocalProvider)
         localProviderSwitch.setOnClickListener {
             toggle.updateLocalProvider((it as Switch).isChecked)
@@ -75,6 +78,8 @@ internal class CheckboxViewHolder(view: View, private val adapter: TogglesAdapte
     fun bind(toggle: SelectToggleImpl) {
         commonBind(toggle)
         llSelectValueContainer.visibility = VISIBLE
+        lblSelectionOptions.visibility = VISIBLE
+        tvSelectionOptions.visibility = VISIBLE
         localProviderSwitch.visibility = GONE
         tvLocalValue.text = toggle.localProviderValue()
         btnEdit.setOnClickListener {
