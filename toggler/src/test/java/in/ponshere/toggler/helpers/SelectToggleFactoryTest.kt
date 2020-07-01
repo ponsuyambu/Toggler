@@ -8,13 +8,13 @@ import org.junit.Assert
 import org.junit.Assert.assertArrayEquals
 import org.junit.Test
 
-internal class SelectToggleMethodCreatorTest : ToggleMethodCreatorTest() {
+internal class SelectToggleFactoryTest : ToggleFactoryTest() {
 
     @Test
     fun `should use the provided shared preferences key`() {
         val selectToggle = toSelectToggle(aSelectToggleWithAllValuesMethod)
 
-        val selectToggleMethod = toggleMethodCreator.createSelectToggleMethod(selectToggle, aSelectToggleWithAllValuesMethod)
+        val selectToggleMethod = toggleFactory.createSelectToggleMethod(selectToggle, aSelectToggleWithAllValuesMethod)
 
         assertEquals(selectToggle.sharedPreferencesKey, selectToggleMethod.sharedPreferencesKey)
     }
@@ -23,7 +23,7 @@ internal class SelectToggleMethodCreatorTest : ToggleMethodCreatorTest() {
     fun `should use the provided firebase remote config key`() {
         val selectToggle = toSelectToggle(aSelectToggleWithAllValuesMethod)
 
-        val selectToggleMethod = toggleMethodCreator.createSelectToggleMethod(selectToggle, aSelectToggleWithAllValuesMethod)
+        val selectToggleMethod = toggleFactory.createSelectToggleMethod(selectToggle, aSelectToggleWithAllValuesMethod)
 
         assertEquals(selectToggle.fireBaseRemoteConfigKey, selectToggleMethod.firebaseConfigKey)
     }
@@ -32,7 +32,7 @@ internal class SelectToggleMethodCreatorTest : ToggleMethodCreatorTest() {
     fun `should use the provided select options`() {
         val selectToggle = toSelectToggle(aSelectToggleWithAllValuesMethod)
 
-        val selectToggleMethod = toggleMethodCreator.createSelectToggleMethod(selectToggle, aSelectToggleWithAllValuesMethod)
+        val selectToggleMethod = toggleFactory.createSelectToggleMethod(selectToggle, aSelectToggleWithAllValuesMethod)
 
         assertArrayEquals(selectToggle.selectOptions, selectToggleMethod.selectOptions)
     }
@@ -42,7 +42,7 @@ internal class SelectToggleMethodCreatorTest : ToggleMethodCreatorTest() {
     fun `should use method name as shared preferences key if sharedPreferencesKey is not provided`() {
         val selectToggle = toSelectToggle(aSelectToggleWithoutAnyValuesMethod)
 
-        val selectToggleMethod = toggleMethodCreator.createSelectToggleMethod(selectToggle, aSelectToggleWithoutAnyValuesMethod)
+        val selectToggleMethod = toggleFactory.createSelectToggleMethod(selectToggle, aSelectToggleWithoutAnyValuesMethod)
 
         Assert.assertEquals(aSelectToggleWithoutAnyValuesMethod.name, selectToggleMethod.sharedPreferencesKey)
     }
@@ -51,7 +51,7 @@ internal class SelectToggleMethodCreatorTest : ToggleMethodCreatorTest() {
     fun `should use default value as empty if default value is not provided`() {
         val selectToggle = toSelectToggle(aSelectToggleWithoutAnyValuesMethod)
 
-        val selectToggleMethod = toggleMethodCreator.createSelectToggleMethod(selectToggle, aSelectToggleWithoutAnyValuesMethod)
+        val selectToggleMethod = toggleFactory.createSelectToggleMethod(selectToggle, aSelectToggleWithoutAnyValuesMethod)
 
         Assert.assertTrue(selectToggleMethod.defaultValue.isEmpty())
     }
@@ -60,7 +60,7 @@ internal class SelectToggleMethodCreatorTest : ToggleMethodCreatorTest() {
     fun `check feature toggle type`() {
         val selectToggle = toSelectToggle(aSelectToggleWithAllValuesMethod)
 
-        val selectToggleMethod = toggleMethodCreator.createSelectToggleMethod(selectToggle, aSelectToggleWithAllValuesMethod)
+        val selectToggleMethod = toggleFactory.createSelectToggleMethod(selectToggle, aSelectToggleWithAllValuesMethod)
 
         assertEquals(FeatureToggleType.SELECT, selectToggleMethod.featureToggleType)
     }

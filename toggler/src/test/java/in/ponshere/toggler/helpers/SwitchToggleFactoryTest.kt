@@ -8,13 +8,13 @@ import `in`.ponshere.toggler.mocks.aSwitchToggleWithoutAnyValuesMethod
 import org.junit.Assert.*
 import org.junit.Test
 
-internal class SwitchToggleMethodCreatorTest : ToggleMethodCreatorTest() {
+internal class SwitchToggleFactoryTest : ToggleFactoryTest() {
 
     @Test
     fun `should use the provided shared preferences key`() {
         val switchToggle = toSwitchToggle(aSwitchToggleWithAllValuesMethod)
 
-        val switchToggleMethod = toggleMethodCreator.createSwitchToggleMethod(switchToggle, aSwitchToggleWithAllValuesMethod)
+        val switchToggleMethod = toggleFactory.createSwitchToggle(switchToggle, aSwitchToggleWithAllValuesMethod)
 
         assertEquals(switchToggle.sharedPreferencesKey, switchToggleMethod.sharedPreferencesKey)
     }
@@ -23,19 +23,19 @@ internal class SwitchToggleMethodCreatorTest : ToggleMethodCreatorTest() {
     fun `should use the provided firebase remote config key`() {
         val switchToggle = toSwitchToggle(aSwitchToggleWithAllValuesMethod)
 
-        val switchToggleMethod = toggleMethodCreator.createSwitchToggleMethod(switchToggle, aSwitchToggleWithAllValuesMethod)
+        val switchToggleMethod = toggleFactory.createSwitchToggle(switchToggle, aSwitchToggleWithAllValuesMethod)
 
         assertEquals(switchToggle.fireBaseRemoteConfigKey, switchToggleMethod.firebaseConfigKey)
     }
 
     @Test
     fun `should use the provided defaultValue`() {
-        toggleMethodCreator.createSwitchToggleMethod(
+        toggleFactory.createSwitchToggle(
             toSwitchToggle(aSwitchToggleWithTrueDefaultValueMethod),
             aSwitchToggleWithTrueDefaultValueMethod).run {
                 assertTrue(defaultValue)
             }
-        toggleMethodCreator.createSwitchToggleMethod(
+        toggleFactory.createSwitchToggle(
             toSwitchToggle(aSwitchToggleWithFalseDefaultValueMethod),
             aSwitchToggleWithFalseDefaultValueMethod).run {
             assertFalse(defaultValue)
@@ -48,7 +48,7 @@ internal class SwitchToggleMethodCreatorTest : ToggleMethodCreatorTest() {
     fun `should use method name as shared preferences key if sharedPreferencesKey is not provided`() {
         val switchToggle = toSwitchToggle(aSwitchToggleWithoutAnyValuesMethod)
 
-        val switchToggleMethod = toggleMethodCreator.createSwitchToggleMethod(switchToggle, aSwitchToggleWithoutAnyValuesMethod)
+        val switchToggleMethod = toggleFactory.createSwitchToggle(switchToggle, aSwitchToggleWithoutAnyValuesMethod)
 
         assertEquals(aSwitchToggleWithoutAnyValuesMethod.name, switchToggleMethod.sharedPreferencesKey)
     }
@@ -57,7 +57,7 @@ internal class SwitchToggleMethodCreatorTest : ToggleMethodCreatorTest() {
     fun `should use default value as true if default value is not provided`() {
         val switchToggle = toSwitchToggle(aSwitchToggleWithoutAnyValuesMethod)
 
-        val switchToggleMethod = toggleMethodCreator.createSwitchToggleMethod(switchToggle, aSwitchToggleWithoutAnyValuesMethod)
+        val switchToggleMethod = toggleFactory.createSwitchToggle(switchToggle, aSwitchToggleWithoutAnyValuesMethod)
 
         assertTrue(switchToggleMethod.defaultValue)
     }
@@ -66,7 +66,7 @@ internal class SwitchToggleMethodCreatorTest : ToggleMethodCreatorTest() {
     fun `check feature toggle type`() {
         val switchToggle = toSwitchToggle(aSwitchToggleWithAllValuesMethod)
 
-        val switchToggleMethod = toggleMethodCreator.createSwitchToggleMethod(switchToggle, aSwitchToggleWithAllValuesMethod)
+        val switchToggleMethod = toggleFactory.createSwitchToggle(switchToggle, aSwitchToggleWithAllValuesMethod)
 
         assertEquals(FeatureToggleType.SWITCH, switchToggleMethod.featureToggleType)
     }

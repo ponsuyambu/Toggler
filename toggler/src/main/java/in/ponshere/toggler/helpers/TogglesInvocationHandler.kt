@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import java.util.*
 
-internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodCreator,
+internal class TogglesInvocationHandler(private val toggleFactory: ToggleFactory,
                                         private val toggler: Toggler,
                                         //Inject cache for testing
                                         private val cache : MutableMap<Method, Toggle<*>> = mutableMapOf()) :
@@ -23,7 +23,7 @@ internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodC
             when {
                 method.isAnnotationPresent(SwitchToggle::class.java) -> {
                     val switchToggleMethod =
-                        methodCreator.createSwitchToggleMethod(
+                        toggleFactory.createSwitchToggle(
                             method.getAnnotation(
                                 SwitchToggle::class.java
                             )!!,
@@ -35,7 +35,7 @@ internal class TogglesInvocationHandler(private val methodCreator: ToggleMethodC
                 }
                 method.isAnnotationPresent(SelectToggle::class.java) -> {
                     val selectToggleMethod =
-                        methodCreator.createSelectToggleMethod(
+                        toggleFactory.createSelectToggleMethod(
                             method.getAnnotation(
                                 SelectToggle::class.java
                             )!!,

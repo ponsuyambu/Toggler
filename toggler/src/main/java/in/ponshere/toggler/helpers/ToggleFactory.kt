@@ -8,8 +8,8 @@ import `in`.ponshere.toggler.annotations.models.SwitchToggleImpl
 import android.content.SharedPreferences
 import java.lang.reflect.Method
 
-internal class ToggleMethodCreator(private val sharedPreferences: SharedPreferences) {
-    internal fun createSwitchToggleMethod(switchToggleAnnotation: SwitchToggle, method: Method, toggleValueProviderType: ToggleValueProvider.Type): SwitchToggleImpl {
+internal class ToggleFactory(private val sharedPreferences: SharedPreferences) {
+    internal fun createSwitchToggle(switchToggleAnnotation: SwitchToggle, method: Method, toggleValueProviderType: ToggleValueProvider.Type): SwitchToggleImpl {
         val sharedPreferencesKey = switchToggleAnnotation.sharedPreferencesKey
         val defaultValue = switchToggleAnnotation.defaultValue
         val fireBaseRemoteConfigKey = switchToggleAnnotation.fireBaseRemoteConfigKey

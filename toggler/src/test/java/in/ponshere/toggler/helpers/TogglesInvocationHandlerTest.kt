@@ -23,7 +23,7 @@ const val SELECT_TOGGLE_VALUE = "VALUE"
 internal class TogglesInvocationHandlerTest {
 
     @MockK
-    private lateinit var methodCreatorMock: ToggleMethodCreator
+    private lateinit var factoryMock: ToggleFactory
 
     @MockK
     private lateinit var switchToggleMethodImplementationMock: SwitchToggleImpl
@@ -41,9 +41,9 @@ internal class TogglesInvocationHandlerTest {
         MockKAnnotations.init(this)
         every { switchToggleMethodImplementationMock.resolvedValue() } returns false
         every { selectToggleImplMock.resolvedValue() } returns SELECT_TOGGLE_VALUE
-        every { methodCreatorMock.createSwitchToggleMethod(any(), any()) } returns switchToggleMethodImplementationMock
-        every { methodCreatorMock.createSelectToggleMethod(any(), any()) } returns selectToggleImplMock
-        togglesInvocationHandler = TogglesInvocationHandler(methodCreatorMock, togglerMOck , cacheSpy)
+        every { factoryMock.createSwitchToggle(any(), any()) } returns switchToggleMethodImplementationMock
+        every { factoryMock.createSelectToggleMethod(any(), any()) } returns selectToggleImplMock
+        togglesInvocationHandler = TogglesInvocationHandler(factoryMock, togglerMOck , cacheSpy)
         cacheSpy.clear()
     }
 
@@ -51,7 +51,7 @@ internal class TogglesInvocationHandlerTest {
     fun `should create switch toggle implementation if it is invoked first`() {
         val value = togglesInvocationHandler.invoke(Any(), aSwitchToggleWithoutAnyValuesMethod, arrayOf())
         verify {
-            methodCreatorMock.createSwitchToggleMethod(any(), eq(aSwitchToggleWithoutAnyValuesMethod))
+            factoryMock.createSwitchToggle(any(), eq(aSwitchToggleWithoutAnyValuesMethod))
         }
         verify { cacheSpy[any()] = any() }
         Assert.assertFalse(value as Boolean)
@@ -73,7 +73,7 @@ internal class TogglesInvocationHandlerTest {
     fun `should create select toggle implementation if it is invoked first`() {
         val value = togglesInvocationHandler.invoke(Any(), aSelectToggleWithoutAnyValuesMethod, arrayOf())
         verify {
-            methodCreatorMock.createSelectToggleMethod(any(), eq(aSelectToggleWithoutAnyValuesMethod))
+            factoryMock.createSelectToggleMethod(any(), eq(aSelectToggleWithoutAnyValuesMethod))
         }
         verify { cacheSpy[any()] = any() }
         assertEquals(SELECT_TOGGLE_VALUE, value)

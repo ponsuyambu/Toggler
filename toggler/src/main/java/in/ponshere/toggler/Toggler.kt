@@ -5,7 +5,7 @@ package `in`.ponshere.toggler
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
 import `in`.ponshere.toggler.annotations.models.Toggle
-import `in`.ponshere.toggler.helpers.ToggleMethodCreator
+import `in`.ponshere.toggler.helpers.ToggleFactory
 import `in`.ponshere.toggler.helpers.TogglesInvocationHandler
 import `in`.ponshere.toggler.ui.TogglerActivity
 import android.app.Activity
@@ -19,7 +19,7 @@ import java.lang.reflect.Proxy
 
 object Toggler {
     @VisibleForTesting
-    internal lateinit var methodCreator: ToggleMethodCreator
+    internal lateinit var toggleFactory: ToggleFactory
     @VisibleForTesting
     internal lateinit var clazz: Class<*>
     @VisibleForTesting
@@ -39,9 +39,9 @@ object Toggler {
         clazz.methods.forEach { method ->
             method?.annotations?.forEach {
                 if (it is SwitchToggle) {
-                    map[method] = methodCreator.createSwitchToggleMethod(it, method, toggleValueProviderType)
+                    map[method] = toggleFactory.createSwitchToggle(it, method, toggleValueProviderType)
                 } else if (it is SelectToggle) {
-                    map[method] = methodCreator.createSelectToggleMethod(it, method, toggleValueProviderType)
+                    map[method] = toggleFactory.createSelectToggleMethod(it, method, toggleValueProviderType)
                 }
             }
         }
@@ -54,10 +54,10 @@ object Toggler {
         val sharedPreferences =
             context.getSharedPreferences("toggler_preferences", Context.MODE_PRIVATE)
         LocalProvider.init(context)
-        methodCreator =
-            ToggleMethodCreator(sharedPreferences)
+        toggleFactory =
+            ToggleFactory(sharedPreferences)
         val togglesInvocationHandler =
-            TogglesInvocationHandler(methodCreator, this)
+            TogglesInvocationHandler(toggleFactory, this)
         toggles = Proxy.newProxyInstance(
             Toggler::class.java.classLoader,
             arrayOf<Class<*>>(clazz),

@@ -6,13 +6,13 @@ import io.mockk.mockk
 import org.junit.Before
 import java.lang.reflect.Method
 
-internal open class ToggleMethodCreatorTest {
-    protected lateinit var toggleMethodCreator : ToggleMethodCreator
+internal open class ToggleFactoryTest {
+    protected lateinit var toggleFactory : ToggleFactory
 
     @Before
     fun setup() {
-        toggleMethodCreator =
-            ToggleMethodCreator(mockk())
+        toggleFactory =
+            ToggleFactory(mockk())
     }
 
     protected fun toSelectToggle(aSelectToggleMethod: Method): SelectToggle {

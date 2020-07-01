@@ -28,7 +28,7 @@ class TogglerTest {
         assertNotNull(toggles)
         assertNotNull(Toggler.clazz)
         assertTrue(Toggler.clazz == TogglesConfigWith3Toggles::class.java)
-        assertNotNull(Toggler.methodCreator)
+        assertNotNull(Toggler.toggleFactory)
 
     }
 
