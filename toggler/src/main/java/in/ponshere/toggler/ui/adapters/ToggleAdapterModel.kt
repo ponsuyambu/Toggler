@@ -1,6 +1,6 @@
 package `in`.ponshere.toggler.ui.adapters
 
-import `in`.ponshere.toggler.annotations.models.Toggle
+import `in`.ponshere.toggler.toggles.Toggle
 
 abstract class AdapterRowItem {
     companion object {

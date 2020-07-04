@@ -4,7 +4,7 @@ import `in`.ponshere.toggler.Toggler
 import `in`.ponshere.toggler.annotations.NumberOfToggles
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
-import `in`.ponshere.toggler.annotations.models.Toggle
+import `in`.ponshere.toggler.toggles.Toggle
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import java.util.*

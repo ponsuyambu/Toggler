@@ -1,10 +1,10 @@
 package `in`.ponshere.toggler.helpers
 
-import `in`.ponshere.toggler.ToggleValueProvider
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
-import `in`.ponshere.toggler.annotations.models.SelectToggleImpl
-import `in`.ponshere.toggler.annotations.models.SwitchToggleImpl
+import `in`.ponshere.toggler.providers.ToggleValueProvider
+import `in`.ponshere.toggler.toggles.SelectToggleImpl
+import `in`.ponshere.toggler.toggles.SwitchToggleImpl
 import android.content.SharedPreferences
 import java.lang.reflect.Method
 

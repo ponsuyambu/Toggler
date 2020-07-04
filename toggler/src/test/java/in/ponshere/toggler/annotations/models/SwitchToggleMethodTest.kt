@@ -2,6 +2,8 @@ package `in`.ponshere.toggler.annotations.models
 
 import `in`.ponshere.toggler.mocks.A_FIREBASE_CONFIG_KEY
 import `in`.ponshere.toggler.mocks.A_SHARED_PREFERENCES_KEY
+import `in`.ponshere.toggler.providers.LocalProvider
+import `in`.ponshere.toggler.toggles.SwitchToggleImpl
 import io.mockk.every
 import io.mockk.verify
 import org.junit.Assert.assertFalse
@@ -30,7 +32,7 @@ class SwitchToggleMethodTest : ToggleMethodTest() {
     fun `should return the value from shared preferences when 'value' method is invoked and value provider is local`() {
         every { sharedPreferences.getBoolean(any(), any())} returns false
 
-        val value = switchToggleMethod.resolvedValue()
+        val value = switchToggleMethod.resolvedValue(LocalProvider)
 
         assertFalse(value)
         verify { sharedPreferences.getBoolean(A_SHARED_PREFERENCES_KEY, SWITCH_TOGGLE_DEFAULT_VALUE) }

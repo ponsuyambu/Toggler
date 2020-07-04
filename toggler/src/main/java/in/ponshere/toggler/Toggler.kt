@@ -4,9 +4,12 @@ package `in`.ponshere.toggler
 
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
-import `in`.ponshere.toggler.annotations.models.Toggle
 import `in`.ponshere.toggler.helpers.ToggleFactory
 import `in`.ponshere.toggler.helpers.TogglesInvocationHandler
+import `in`.ponshere.toggler.providers.FirebaseProvider
+import `in`.ponshere.toggler.providers.LocalProvider
+import `in`.ponshere.toggler.providers.ToggleValueProvider
+import `in`.ponshere.toggler.toggles.Toggle
 import `in`.ponshere.toggler.ui.TogglerActivity
 import android.app.Activity
 import android.content.Context

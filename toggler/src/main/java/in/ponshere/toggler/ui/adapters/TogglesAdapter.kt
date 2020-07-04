@@ -2,10 +2,9 @@ package `in`.ponshere.toggler.ui.adapters
 
 import `in`.ponshere.toggler.R
 import `in`.ponshere.toggler.Toggler
-import `in`.ponshere.toggler.annotations.FeatureToggleType
-import `in`.ponshere.toggler.annotations.models.SelectToggleImpl
-import `in`.ponshere.toggler.annotations.models.SwitchToggleImpl
-import `in`.ponshere.toggler.annotations.models.Toggle
+import `in`.ponshere.toggler.toggles.SelectToggleImpl
+import `in`.ponshere.toggler.toggles.SwitchToggleImpl
+import `in`.ponshere.toggler.toggles.Toggle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -16,16 +15,16 @@ internal class TogglesAdapter(val toggler: Toggler) :
     private val adapterRowItems = mutableListOf<AdapterRowItem>()
     init {
         adapterRowItems.add(HeaderRowItem("SWITCH TOGGLES"))
-        featureToggles.filter { it.featureToggleType == FeatureToggleType.SWITCH }.forEach {
+        featureToggles.filter { it.toggleType == Toggle.Type.Switch }.forEach {
             adapterRowItems.add(ToggleRowItem(it as SwitchToggleImpl))
         }
 
         adapterRowItems.add(HeaderRowItem("SELECT TOGGLES"))
-        featureToggles.filter { it.featureToggleType == FeatureToggleType.SELECT }.forEach {
+        featureToggles.filter { it.toggleType == Toggle.Type.Select }.forEach {
             adapterRowItems.add(ToggleRowItem(it as SelectToggleImpl))
         }
 
-        featureToggles.sortBy { it.featureToggleType }
+        featureToggles.sortBy { it.toggleType }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

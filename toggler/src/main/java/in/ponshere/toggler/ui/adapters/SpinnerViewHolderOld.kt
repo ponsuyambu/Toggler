@@ -2,7 +2,7 @@ package `in`.ponshere.toggler.ui.adapters
 
 import `in`.ponshere.toggler.R
 import `in`.ponshere.toggler.Toggler
-import `in`.ponshere.toggler.annotations.models.SelectToggleImpl
+import `in`.ponshere.toggler.toggles.SelectToggleImpl
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter

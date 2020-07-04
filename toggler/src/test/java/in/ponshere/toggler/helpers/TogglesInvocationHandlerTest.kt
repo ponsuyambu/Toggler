@@ -1,13 +1,13 @@
 package `in`.ponshere.toggler.helpers
 
 import `in`.ponshere.toggler.Toggler
-import `in`.ponshere.toggler.annotations.models.SelectToggleImpl
-import `in`.ponshere.toggler.annotations.models.SwitchToggleImpl
-import `in`.ponshere.toggler.annotations.models.Toggle
 import `in`.ponshere.toggler.mocks.TogglesConfigWith3Toggles
 import `in`.ponshere.toggler.mocks.aNonAnnotatedMethod
 import `in`.ponshere.toggler.mocks.aSelectToggleWithoutAnyValuesMethod
 import `in`.ponshere.toggler.mocks.aSwitchToggleWithoutAnyValuesMethod
+import `in`.ponshere.toggler.toggles.SelectToggleImpl
+import `in`.ponshere.toggler.toggles.SwitchToggleImpl
+import `in`.ponshere.toggler.toggles.Toggle
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import org.junit.Assert
@@ -39,10 +39,10 @@ internal class TogglesInvocationHandlerTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        every { switchToggleMethodImplementationMock.resolvedValue() } returns false
-        every { selectToggleImplMock.resolvedValue() } returns SELECT_TOGGLE_VALUE
-        every { factoryMock.createSwitchToggle(any(), any()) } returns switchToggleMethodImplementationMock
-        every { factoryMock.createSelectToggleMethod(any(), any()) } returns selectToggleImplMock
+        every { switchToggleMethodImplementationMock.resolvedValue(any()) } returns false
+        every { selectToggleImplMock.resolvedValue(any()) } returns SELECT_TOGGLE_VALUE
+        every { factoryMock.createSwitchToggle(any(), any(), any()) } returns switchToggleMethodImplementationMock
+        every { factoryMock.createSelectToggleMethod(any(), any(), any()) } returns selectToggleImplMock
         togglesInvocationHandler = TogglesInvocationHandler(factoryMock, togglerMOck , cacheSpy)
         cacheSpy.clear()
     }
@@ -51,7 +51,7 @@ internal class TogglesInvocationHandlerTest {
     fun `should create switch toggle implementation if it is invoked first`() {
         val value = togglesInvocationHandler.invoke(Any(), aSwitchToggleWithoutAnyValuesMethod, arrayOf())
         verify {
-            factoryMock.createSwitchToggle(any(), eq(aSwitchToggleWithoutAnyValuesMethod))
+            factoryMock.createSwitchToggle(any(), eq(aSwitchToggleWithoutAnyValuesMethod), any())
         }
         verify { cacheSpy[any()] = any() }
         Assert.assertFalse(value as Boolean)
@@ -73,7 +73,7 @@ internal class TogglesInvocationHandlerTest {
     fun `should create select toggle implementation if it is invoked first`() {
         val value = togglesInvocationHandler.invoke(Any(), aSelectToggleWithoutAnyValuesMethod, arrayOf())
         verify {
-            factoryMock.createSelectToggleMethod(any(), eq(aSelectToggleWithoutAnyValuesMethod))
+            factoryMock.createSelectToggleMethod(any(), eq(aSelectToggleWithoutAnyValuesMethod), any())
         }
         verify { cacheSpy[any()] = any() }
         assertEquals(SELECT_TOGGLE_VALUE, value)

@@ -1,7 +1,7 @@
 package `in`.ponshere.featuretoggler
 
-import `in`.ponshere.toggler.ToggleValueProvider
 import `in`.ponshere.toggler.Toggler
+import `in`.ponshere.toggler.providers.ToggleValueProvider
 import android.app.Application
 
 class TogglerApp : Application() {
