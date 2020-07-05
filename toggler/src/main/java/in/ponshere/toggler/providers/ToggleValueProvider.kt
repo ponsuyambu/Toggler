@@ -1,6 +1,6 @@
 package `in`.ponshere.toggler.providers
 
-abstract class ToggleValueProvider {
+abstract class ToggleValueProvider<in T> {
     enum class Type {
         LOCAL, FIREBASE
     }
@@ -8,19 +8,9 @@ abstract class ToggleValueProvider {
 
     abstract fun getStringValue(key: String, defaultValue: String = "") : String
     abstract fun getBooleanValue(key: String, defaultValue: Boolean = false) : Boolean
-    abstract fun setStringValue(key: String, value: String)
-    abstract fun setBooleanValue(key: String, value: Boolean)
 
-    internal companion object {
-        internal fun get(type: Type): ToggleValueProvider {
-            if (type == Type.LOCAL) {
-                return LocalProvider
-            } else if (type == Type.FIREBASE){
-
-            }
-            return LocalProvider
-        }
-    }
+    abstract fun update(key: String, value: T)
+//    abstract fun< T : LocalProvider.Value<*>> get(key: String, defaultValue: T) : T
 }
 
 

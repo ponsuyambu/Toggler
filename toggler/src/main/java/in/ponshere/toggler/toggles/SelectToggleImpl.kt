@@ -19,7 +19,7 @@ internal class SelectToggleImpl(
     defaultValue,
     Type.Select
 ) {
-    override fun resolvedValue(highPriorityToggleValueProvider: ToggleValueProvider): String {
+    override fun resolvedValue(highPriorityToggleValueProvider: ToggleValueProvider<*>): String {
         if(valueProviderType == ToggleValueProvider.Type.LOCAL) return sharedPreferences.getString(sharedPreferencesKey, defaultValue)!!
         if (firebaseConfigKey.isNotEmpty() && valueProviderType == ToggleValueProvider.Type.FIREBASE) {
             return FirebaseRemoteConfig.getInstance().getString(firebaseConfigKey)
@@ -33,15 +33,15 @@ internal class SelectToggleImpl(
         }
     }
 
-    override fun value(toggleValueProvider: ToggleValueProvider): String {
+    override fun value(toggleValueProvider: ToggleValueProvider<*>): String {
         return toggleValueProvider.getStringValue(sharedPreferencesKey)
     }
 
-    override fun booleanValue(toggleValueProvider: ToggleValueProvider): Boolean {
+    override fun booleanValue(toggleValueProvider: ToggleValueProvider<*>): Boolean {
         throw UnsupportedOperationException("booleanValue is not supported in SelectToggle")
     }
 
-    override fun update(value: String, toggleValueProvider: ToggleValueProvider) {
-        if(toggleValueProvider is LocalProvider) toggleValueProvider.setStringValue(sharedPreferencesKey, value)
+    override fun update(value: String, toggleValueProvider: ToggleValueProvider<*>) {
+        if(toggleValueProvider is LocalProvider) LocalProvider.update(sharedPreferencesKey, LocalProvider.Value(value))
     }
 }

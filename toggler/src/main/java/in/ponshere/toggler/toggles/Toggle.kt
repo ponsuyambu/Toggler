@@ -13,10 +13,10 @@ internal abstract class Toggle<T>(
     val toggleType: Type,
     var isExpanded: Boolean = false
 ) : LocalProvider.Adapter, FirebaseProvider.Adapter {
-    abstract fun resolvedValue(highPriorityToggleValueProvider: ToggleValueProvider): T
-    abstract fun value(toggleValueProvider: ToggleValueProvider): String
-    abstract fun booleanValue(toggleValueProvider: ToggleValueProvider) : Boolean
-    abstract fun update(value : T, toggleValueProvider: ToggleValueProvider = LocalProvider)
+    abstract fun resolvedValue(highPriorityToggleValueProvider: ToggleValueProvider<*>): T
+    abstract fun value(toggleValueProvider: ToggleValueProvider<*>): String
+    abstract fun booleanValue(toggleValueProvider: ToggleValueProvider<*>) : Boolean
+    abstract fun update(value : T, toggleValueProvider: ToggleValueProvider<*> = LocalProvider)
     abstract fun updateLocalProvider(value: T)
 
     override fun localProviderValue(): String {
@@ -31,7 +31,7 @@ internal abstract class Toggle<T>(
         return firebaseConfigKey.isNotBlank()
     }
 
-    fun resolvedDisplayValue(highPriorityToggleValueProvider: ToggleValueProvider): String {
+    fun resolvedDisplayValue(highPriorityToggleValueProvider: ToggleValueProvider<*>): String {
         var displayValue: String
         displayValue = if(isFirebaseKeyConfigured() && highPriorityToggleValueProvider == FirebaseProvider)
             firebaseProviderValue()

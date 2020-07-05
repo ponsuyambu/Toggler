@@ -30,7 +30,7 @@ object Toggler {
 
     internal var toggleValueProviderType = ToggleValueProvider.Type.FIREBASE
 
-    internal val toggleValueProvider: ToggleValueProvider
+    internal val toggleValueProvider: ToggleValueProvider<*>
         get() {
             if(toggleValueProviderType == ToggleValueProvider.Type.FIREBASE)
                 return FirebaseProvider

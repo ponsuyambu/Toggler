@@ -17,25 +17,25 @@ internal class SwitchToggleImpl(
     defaultValue,
     Type.Switch
 ) {
-    override fun resolvedValue(highPriorityToggleValueProvider: ToggleValueProvider): Boolean {
+    override fun resolvedValue(highPriorityToggleValueProvider: ToggleValueProvider<*>): Boolean {
         if(isFirebaseKeyConfigured() && highPriorityToggleValueProvider == FirebaseProvider)
             return booleanValue(FirebaseProvider)
         return booleanValue(LocalProvider)
     }
 
     override fun updateLocalProvider(value: Boolean) {
-        LocalProvider.setBooleanValue(sharedPreferencesKey, value)
+        LocalProvider.update(sharedPreferencesKey, LocalProvider.Value(value))
     }
 
-    override fun value(toggleValueProvider: ToggleValueProvider): String {
+    override fun value(toggleValueProvider: ToggleValueProvider<*>): String {
         return toggleValueProvider.getStringValue(sharedPreferencesKey, defaultValue.toString())
     }
 
-    override fun booleanValue(toggleValueProvider: ToggleValueProvider): Boolean {
+    override fun booleanValue(toggleValueProvider: ToggleValueProvider<*>): Boolean {
         return toggleValueProvider.getBooleanValue(sharedPreferencesKey, defaultValue)
     }
 
-    override fun update(value: Boolean, toggleValueProvider: ToggleValueProvider) {
-        if(toggleValueProvider is LocalProvider) toggleValueProvider.setBooleanValue(sharedPreferencesKey, value)
+    override fun update(value: Boolean, toggleValueProvider: ToggleValueProvider<*>) {
+        if(toggleValueProvider is LocalProvider) toggleValueProvider.update(sharedPreferencesKey, LocalProvider.Value(value))
     }
 }
