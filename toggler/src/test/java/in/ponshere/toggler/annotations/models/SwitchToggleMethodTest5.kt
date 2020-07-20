@@ -8,6 +8,7 @@ import io.mockk.every
 import io.mockk.verify
 import org.junit.Assert
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
@@ -31,8 +32,10 @@ class SwitchToggleMethodTest5 : ToggleMethodTest() {
     }
 
     @Nested
+    @DisplayName("When provider is local")
     inner class WhenProviderIsLocal {
         @Nested
+        @DisplayName("when resolvedValue method is invoked")
         inner class WhenValueMethodIsInvoked {
             @Test
             fun `should return the value from shared preferences `() {
@@ -46,6 +49,7 @@ class SwitchToggleMethodTest5 : ToggleMethodTest() {
         }
 
         @Nested
+        @DisplayName("when update method is invoked")
         inner class WhenUpdateMethodIsInvoked {
             @Test
             fun `should update the value in shared preferences`() {
