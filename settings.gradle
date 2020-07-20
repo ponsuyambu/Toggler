@@ -1,2 +1,4 @@
+include ':toggler-v2'
+include ':toggler-firebase-provider'
 include ':app', ':toggler'
 rootProject.name='FeatureToggler'
