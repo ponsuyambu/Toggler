@@ -35,6 +35,16 @@ internal class CheckboxViewHolder(view: View, private val adapter: TogglesAdapte
     private val lblSelectionOptions = view.findViewById<TextView>(R.id.lblOptions)
     private val btnEdit = view.findViewById<TextView>(R.id.btnEditLocalValue)
 
+    private val cachedViews = mutableMapOf<Int, View>()
+
+    init {
+        toggler.valueProviders.forEach {
+            cachedViews[it.name.hashCode()] = view.findViewById(it.name.hashCode())
+            cachedViews[it.name.hashCode()+1] = view.findViewById(it.name.hashCode()+1)
+            cachedViews[it.name.hashCode()+2] = view.findViewById(it.name.hashCode()+2)
+        }
+    }
+
     fun bind(toggle: SwitchToggleImpl) {
         commonBind(toggle)
 
@@ -42,6 +52,7 @@ internal class CheckboxViewHolder(view: View, private val adapter: TogglesAdapte
         llSelectValueContainer.visibility = GONE
         lblSelectionOptions.visibility = GONE
         tvSelectionOptions.visibility = GONE
+
 
         //Local provider
 //        localProviderSwitch.isChecked = toggle.booleanValue(LocalProvider)
@@ -59,14 +70,14 @@ internal class CheckboxViewHolder(view: View, private val adapter: TogglesAdapte
     private fun commonBind(toggle: Toggle<*>) {
         toggleTitle.text = toggle.key
         tvResolvedValue.text = toggle.value().toString()
-
-        val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        val textView = TextView(llSelectValueContainer.context)
-        textView.layoutParams = params
-        textView.text = "Hi asd ada da da"
-        llValuesContainer.addView(textView)
+        updateToggleProviderValues(toggle)
+//        val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+//            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+//        )
+//        val textView = TextView(llSelectValueContainer.context)
+//        textView.layoutParams = params
+//        textView.text = "Hi asd ada da da"
+//        llValuesContainer.addView(textView)
 
 //        tvFirebaseValue.text =
 //            if (toggle.isFirebaseKeyConfigured()) toggle.firebaseProviderValue() else notConfiguredNotation()
@@ -81,6 +92,40 @@ internal class CheckboxViewHolder(view: View, private val adapter: TogglesAdapte
             val expanded: Boolean = toggle.isExpanded
             toggle.isExpanded = expanded.not()
             adapter.notifyItemChanged(adapterPosition)
+        }
+    }
+
+    private fun updateToggleProviderValues(toggle: Toggle<*>) {
+        toggler.valueProviders.forEach { provider ->
+            val tvLabel = cachedViews[provider.name.hashCode()] as TextView
+            val toggleSwitch = cachedViews[provider.name.hashCode() + 1] as Switch
+            val tvValue = cachedViews[provider.name.hashCode() + 2] as TextView
+
+
+            tvLabel.text = provider.name
+
+            if (toggle is SwitchToggleImpl) {
+                if (provider.isSaveAllowed) {
+                    toggleSwitch.apply {
+                        isChecked = toggle.getProviderValue(provider).toString().toBoolean()
+                        visibility = VISIBLE
+                        setOnClickListener {
+                            toggle.saveProviderValue(provider, isChecked)
+                            adapter.notifyItemChanged(adapterPosition)
+                        }
+                    }
+                } else {
+                    tvValue.apply {
+                        text = toggle.getProviderValue(provider).toString()
+                        visibility = VISIBLE
+                    }
+                }
+            } else if (toggle.type == Toggle.Type.Select) {
+                tvValue.apply {
+                    text = toggle.getProviderValue(provider).toString()
+                    visibility = VISIBLE
+                }
+            }
         }
     }
 

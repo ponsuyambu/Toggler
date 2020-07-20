@@ -15,7 +15,7 @@ import java.lang.reflect.Method
 import java.lang.reflect.Proxy
 
 object Toggler {
-    private val valueProviders: MutableList<ToggleValueProvider> = mutableListOf(LocalValueProvider)
+    internal val valueProviders: MutableList<ToggleValueProvider> = mutableListOf(LocalValueProvider)
     lateinit var highPriorityValueProvider : ToggleValueProvider
     lateinit var clazz: Class<*>
     internal lateinit var toggles: Any

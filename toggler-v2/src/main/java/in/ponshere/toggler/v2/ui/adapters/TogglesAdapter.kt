@@ -6,7 +6,13 @@ import `in`.ponshere.toggler.v2.toggles.SelectToggleImpl
 import `in`.ponshere.toggler.v2.toggles.SwitchToggleImpl
 import `in`.ponshere.toggler.v2.toggles.Toggle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.Switch
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 internal class TogglesAdapter(val toggler: Toggler) :
@@ -38,12 +44,19 @@ internal class TogglesAdapter(val toggler: Toggler) :
 //            toggler
 //        )
         if (viewType == AdapterRowItem.TOGGLE) {
+            val view = LayoutInflater.from(parent.context).inflate(
+                R.layout.layout_checkbox_toggle,
+                parent,
+                false
+            )
+
+
+            addAllProviderValuesViews(view)
+
+
+
             return CheckboxViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.layout_checkbox_toggle,
-                    parent,
-                    false
-                ),
+                view,
                 this,
                 toggler
             )
@@ -74,6 +87,59 @@ internal class TogglesAdapter(val toggler: Toggler) :
 //            this,
 //            Toggler
 //        )
+    }
+
+    private fun addAllProviderValuesViews(root: View) {
+        val llValuesContainer = root.findViewById<LinearLayout>(R.id.llValuesContainer)
+
+
+        toggler.valueProviders.forEach { provider ->
+
+            val providerRow = RelativeLayout(root.context).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+            }
+
+            val tvName = TextView(llValuesContainer.context).apply {
+                layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT).apply {
+                    addRule(RelativeLayout.ALIGN_PARENT_START)
+                }
+                id = provider.name.hashCode()
+            }
+
+            val swValue = Switch(llValuesContainer.context).apply {
+                layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT).apply {
+                    addRule(RelativeLayout.ALIGN_PARENT_END)
+                }
+                id = provider.name.hashCode() + 1
+                visibility = GONE
+            }
+
+
+            val tvValue = TextView(llValuesContainer.context).apply {
+                layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT).apply {
+                    addRule(RelativeLayout.ALIGN_PARENT_END)
+                }
+                id = provider.name.hashCode() + 2
+                visibility = GONE
+            }
+
+            providerRow.addView(tvName)
+            providerRow.addView(tvValue)
+            providerRow.addView(swValue)
+
+            llValuesContainer.addView(providerRow)
+        }
+
+
+//        val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+//            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+//        )
+//        val textView = TextView(llValuesContainer.context)
+//        textView.layoutParams = params
+//        textView.id = id
+//        llValuesContainer.addView(textView)
     }
 
     override fun getItemViewType(position: Int): Int {

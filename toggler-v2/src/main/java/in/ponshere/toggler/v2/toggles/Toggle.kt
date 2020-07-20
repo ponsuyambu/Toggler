@@ -1,6 +1,7 @@
 package `in`.ponshere.toggler.v2.toggles
 
 import `in`.ponshere.toggler.v2.Toggler
+import `in`.ponshere.toggler.v2.provider.ToggleValueProvider
 
 abstract class Toggle<T>(val type: Type,
                          val key: String,
@@ -13,6 +14,14 @@ abstract class Toggle<T>(val type: Type,
 
     fun value() : T {
         return Toggler.highPriorityValueProvider.get(key, defaultValue, classType())
+    }
+
+    fun getProviderValue(toggleValueProvider: ToggleValueProvider) : T {
+        return toggleValueProvider.get(key, defaultValue, classType())
+    }
+
+    fun saveProviderValue(toggleValueProvider: ToggleValueProvider, value: T) {
+        toggleValueProvider.save(key, value, classType())
     }
 
     sealed class Type : Comparable<Type> {
