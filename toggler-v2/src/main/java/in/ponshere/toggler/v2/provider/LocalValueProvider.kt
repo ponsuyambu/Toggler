@@ -10,8 +10,6 @@ object LocalValueProvider : ToggleValueProvider() {
     override val name = "Local"
     override val isSaveAllowed = true
 
-    override val priorityOrder =  Priority.VERY_LOW
-
     override fun init(context: Context) {
         sharedPreferences = context.getSharedPreferences("toggler_preferences", Context.MODE_PRIVATE)
     }

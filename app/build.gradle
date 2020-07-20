@@ -38,6 +38,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
     implementation project(path: ':toggler-v2')
+    implementation project(path: ':toggler-firebase-provider')
+
 //    implementation project(path: ':toggler')
 
     api 'com.google.firebase:firebase-config-ktx:19.1.1'
