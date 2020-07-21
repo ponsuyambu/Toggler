@@ -1,6 +1,7 @@
 package `in`.ponshere.toggler.v2.toggles
 
 import `in`.ponshere.toggler.v2.Toggler
+import `in`.ponshere.toggler.v2.provider.LocalValueProvider
 import `in`.ponshere.toggler.v2.provider.ToggleValueProvider
 import java.lang.reflect.Method
 
@@ -15,7 +16,12 @@ abstract class Toggle<T> constructor(val type: Type,
     abstract fun classType() : Class<T>
 
     fun value() : T {
-        return Toggler.highPriorityValueProvider.get(this, classType())
+        if(Toggler.highPriorityValueProvider.isSupported(this)) {
+            return Toggler.highPriorityValueProvider.get(this, classType())
+        }
+
+        //fallback to local provider
+        return LocalValueProvider.get(this, classType())
     }
 
     fun isSupported(toggleValueProvider: ToggleValueProvider) : Boolean {
