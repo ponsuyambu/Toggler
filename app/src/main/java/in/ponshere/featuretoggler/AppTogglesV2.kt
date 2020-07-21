@@ -1,5 +1,6 @@
 package `in`.ponshere.featuretoggler
 
+import `in`.ponshere.toggler.firebase.provider.FirebaseToggle
 import `in`.ponshere.toggler.v2.annotations.NumberOfToggles
 import `in`.ponshere.toggler.v2.annotations.SelectToggle
 import `in`.ponshere.toggler.v2.annotations.SwitchToggle
@@ -8,6 +9,7 @@ interface AppTogglesV2 {
         key = "feature1",
         defaultValue = true
     )
+    @FirebaseToggle
     fun isFeatureAEnabled(): Boolean
 
     @SwitchToggle(key = "feature2",

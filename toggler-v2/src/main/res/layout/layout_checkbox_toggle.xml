@@ -81,68 +81,68 @@
                     android:orientation="vertical"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/lblValues" />
-                <TextView
-                    android:id="@+id/lblLocalValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text ="Local"
-                    android:textSize="12dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/llValuesContainer"
-                    tools:text ="Local Value"/>
-                <Switch
-                    android:id="@+id/swithcLocalProvider"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:layout_constraintBaseline_toBaselineOf="@id/lblLocalValue"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/lblValues" />
+<!--                <TextView-->
+<!--                    android:id="@+id/lblLocalValue"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text ="Local"-->
+<!--                    android:textSize="12dp"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/llValuesContainer"-->
+<!--                    tools:text ="Local Value"/>-->
+<!--                <Switch-->
+<!--                    android:id="@+id/swithcLocalProvider"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:visibility="gone"-->
+<!--                    app:layout_constraintBaseline_toBaselineOf="@id/lblLocalValue"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/lblValues" />-->
 
-                <LinearLayout
-                    android:id="@+id/llSelectValueContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="@id/swithcLocalProvider"
-                    app:layout_constraintTop_toBottomOf="@id/lblValues">
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvLocalValue"
-                        style="@style/ValueText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="`local value`"/>
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/llSelectValueContainer"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    app:layout_constraintEnd_toEndOf="@id/swithcLocalProvider"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/lblValues">-->
+<!--                    <com.google.android.material.textview.MaterialTextView-->
+<!--                        android:id="@+id/tvLocalValue"-->
+<!--                        style="@style/ValueText"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="`local value`"/>-->
 
-                    <TextView
-                        android:id="@+id/btnEditLocalValue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="EDIT"
-                        android:textColor="#6B0000FF"/>
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:id="@+id/btnEditLocalValue"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="4dp"-->
+<!--                        android:text="EDIT"-->
+<!--                        android:textColor="#6B0000FF"/>-->
+<!--                </LinearLayout>-->
 
-                <TextView
-                    android:id="@+id/lblFirebaseValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text ="Firebase"
-                    android:textSize="12dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/lblLocalValue"
-                    tools:text ="Firebase" />
+<!--                <TextView-->
+<!--                    android:id="@+id/lblFirebaseValue"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="4dp"-->
+<!--                    android:text ="Firebase"-->
+<!--                    android:textSize="12dp"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/lblLocalValue"-->
+<!--                    tools:text ="Firebase" />-->
 
-                <TextView
-                    android:id="@+id/tvFirebaseValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text ="`value`"
-                    android:textSize="12dp"
-                    android:textStyle="bold"
-                    app:layout_constraintBaseline_toBaselineOf="@id/lblFirebaseValue"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:text ="`value`"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/tvFirebaseValue"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text ="`value`"-->
+<!--                    android:textSize="12dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    app:layout_constraintBaseline_toBaselineOf="@id/lblFirebaseValue"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    tools:text ="`value`"/>-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout

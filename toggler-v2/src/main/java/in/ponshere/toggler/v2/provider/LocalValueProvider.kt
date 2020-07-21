@@ -1,8 +1,10 @@
 package `in`.ponshere.toggler.v2.provider
 
+import `in`.ponshere.toggler.v2.toggles.Toggle
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import java.lang.reflect.Method
 
 object LocalValueProvider : ToggleValueProvider() {
     lateinit var sharedPreferences: SharedPreferences
@@ -14,7 +16,9 @@ object LocalValueProvider : ToggleValueProvider() {
         sharedPreferences = context.getSharedPreferences("toggler_preferences", Context.MODE_PRIVATE)
     }
 
-    override fun <T> get(key: String, defaultValue: T, clazz: Class<T>): T {
+    override fun isSupported(toggle: Toggle<*>) = true
+
+    override fun <T> get(key: String, defaultValue: T, clazz: Class<T>, method: Method): T {
 
         if(clazz.isAssignableFrom(Boolean::class.java)) {
             return sharedPreferences.getBoolean(key, defaultValue as Boolean) as T

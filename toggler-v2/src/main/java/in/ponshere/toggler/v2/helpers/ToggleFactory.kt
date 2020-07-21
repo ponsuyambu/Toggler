@@ -14,7 +14,8 @@ internal class ToggleFactory {
         return SwitchToggleImpl(
             resolveSharedPreferencesKey(sharedPreferencesKey, method),
             defaultValue,
-            switchToggleAnnotation.displayName
+            switchToggleAnnotation.displayName,
+            method
         )
     }
 
@@ -25,7 +26,8 @@ internal class ToggleFactory {
             resolveSharedPreferencesKey(sharedPreferencesKey, method),
             defaultValue,
             switchToggleAnnotation.displayName,
-            switchToggleAnnotation.selectOptions
+            switchToggleAnnotation.selectOptions,
+            method
         )
     }
 

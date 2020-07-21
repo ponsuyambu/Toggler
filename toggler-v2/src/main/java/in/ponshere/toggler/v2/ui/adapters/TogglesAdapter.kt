@@ -55,7 +55,7 @@ internal class TogglesAdapter(val toggler: Toggler) :
 
 
 
-            return CheckboxViewHolder(
+            return ToggleViewHolder(
                 view,
                 this,
                 toggler
@@ -150,7 +150,7 @@ internal class TogglesAdapter(val toggler: Toggler) :
     override fun getItemCount() = adapterRowItems.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is CheckboxViewHolder) {
+        if (holder is ToggleViewHolder) {
             val toggleRowItem = adapterRowItems[position] as ToggleRowItem
             if(toggleRowItem.toggle is SwitchToggleImpl) {
                 holder.bind(toggleRowItem.toggle)

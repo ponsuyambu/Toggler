@@ -18,22 +18,22 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-internal class CheckboxViewHolder(view: View, private val adapter: TogglesAdapter, val toggler: Toggler) : RecyclerView.ViewHolder(view) {
-    private val localProviderSwitch = view.findViewById<Switch>(R.id.swithcLocalProvider)
+internal class ToggleViewHolder(view: View, private val adapter: TogglesAdapter, val toggler: Toggler) : RecyclerView.ViewHolder(view) {
+//    private val localProviderSwitch = view.findViewById<Switch>(R.id.swithcLocalProvider)
     private val mainView = view.findViewById<ConstraintLayout>(R.id.clMain)
     private val llDetails = view.findViewById<LinearLayout>(R.id.llDetails)
     private val llValuesContainer = view.findViewById<LinearLayout>(R.id.llValuesContainer)
-    private val llSelectValueContainer = view.findViewById<LinearLayout>(R.id.llSelectValueContainer)
+//    private val llSelectValueContainer = view.findViewById<LinearLayout>(R.id.llSelectValueContainer)
     private val toggleTitle = view.findViewById<TextView>(R.id.toggleTitle)
     private val tvResolvedValue = view.findViewById<TextView>(R.id.tvResolvedValue)
-    private val tvFirebaseValue = view.findViewById<TextView>(R.id.tvFirebaseValue)
-    private val tvLocalValue = view.findViewById<TextView>(R.id.tvLocalValue)
+//    private val tvFirebaseValue = view.findViewById<TextView>(R.id.tvFirebaseValue)
+//    private val tvLocalValue = view.findViewById<TextView>(R.id.tvLocalValue)
     private val tvSharedPreferencesKey = view.findViewById<TextView>(R.id.tvSharedPreferencesKey)
     private val tvFirebaseConfigKey = view.findViewById<TextView>(R.id.tvFirebaseConfigKey)
     private val tvDefaultValue = view.findViewById<TextView>(R.id.tvDefaultValue)
     private val tvSelectionOptions = view.findViewById<TextView>(R.id.tvSelectionOptions)
     private val lblSelectionOptions = view.findViewById<TextView>(R.id.lblOptions)
-    private val btnEdit = view.findViewById<TextView>(R.id.btnEditLocalValue)
+//    private val btnEdit = view.findViewById<TextView>(R.id.btnEditLocalValue)
 
     private val cachedViews = mutableMapOf<Int, View>()
 
@@ -48,8 +48,8 @@ internal class CheckboxViewHolder(view: View, private val adapter: TogglesAdapte
     fun bind(toggle: SwitchToggleImpl) {
         commonBind(toggle)
 
-        localProviderSwitch.visibility = VISIBLE
-        llSelectValueContainer.visibility = GONE
+//        localProviderSwitch.visibility = VISIBLE
+//        llSelectValueContainer.visibility = GONE
         lblSelectionOptions.visibility = GONE
         tvSelectionOptions.visibility = GONE
 
@@ -103,27 +103,33 @@ internal class CheckboxViewHolder(view: View, private val adapter: TogglesAdapte
 
 
             tvLabel.text = provider.name
-
-            if (toggle is SwitchToggleImpl) {
-                if (provider.isSaveAllowed) {
-                    toggleSwitch.apply {
-                        isChecked = toggle.getProviderValue(provider).toString().toBoolean()
-                        visibility = VISIBLE
-                        setOnClickListener {
-                            toggle.saveProviderValue(provider, isChecked)
-                            adapter.notifyItemChanged(adapterPosition)
+            if (toggle.isSupported(provider).not()) {
+                tvValue.apply {
+                    text = notConfiguredNotation()
+                    visibility = VISIBLE
+                }
+            } else {
+                if (toggle is SwitchToggleImpl) {
+                    if (provider.isSaveAllowed) {
+                        toggleSwitch.apply {
+                            isChecked = toggle.getProviderValue(provider).toString().toBoolean()
+                            visibility = VISIBLE
+                            setOnClickListener {
+                                toggle.saveProviderValue(provider, isChecked)
+                                adapter.notifyItemChanged(adapterPosition)
+                            }
+                        }
+                    } else {
+                        tvValue.apply {
+                            text = toggle.getProviderValue(provider).toString()
+                            visibility = VISIBLE
                         }
                     }
-                } else {
+                } else if (toggle.type == Toggle.Type.Select) {
                     tvValue.apply {
                         text = toggle.getProviderValue(provider).toString()
                         visibility = VISIBLE
                     }
-                }
-            } else if (toggle.type == Toggle.Type.Select) {
-                tvValue.apply {
-                    text = toggle.getProviderValue(provider).toString()
-                    visibility = VISIBLE
                 }
             }
         }
@@ -131,10 +137,10 @@ internal class CheckboxViewHolder(view: View, private val adapter: TogglesAdapte
 
     fun bind(toggle: SelectToggleImpl) {
         commonBind(toggle)
-        llSelectValueContainer.visibility = VISIBLE
+//        llSelectValueContainer.visibility = VISIBLE
         lblSelectionOptions.visibility = VISIBLE
         tvSelectionOptions.visibility = VISIBLE
-        localProviderSwitch.visibility = GONE
+//        localProviderSwitch.visibility = GONE
 //        tvLocalValue.text = toggle.localProviderValue()
 //        btnEdit.setOnClickListener {
 //            MaterialAlertDialogBuilder(btnEdit.context)
