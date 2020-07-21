@@ -17,6 +17,7 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 internal class ToggleViewHolder(view: View, private val adapter: TogglesAdapter, val toggler: Toggler) : RecyclerView.ViewHolder(view) {
 //    private val localProviderSwitch = view.findViewById<Switch>(R.id.swithcLocalProvider)
@@ -39,9 +40,9 @@ internal class ToggleViewHolder(view: View, private val adapter: TogglesAdapter,
 
     init {
         toggler.valueProviders.forEach {
-            cachedViews[it.name.hashCode()] = view.findViewById(it.name.hashCode())
-            cachedViews[it.name.hashCode()+1] = view.findViewById(it.name.hashCode()+1)
-            cachedViews[it.name.hashCode()+2] = view.findViewById(it.name.hashCode()+2)
+            for (i in 0 until 4) {
+                cachedViews[it.name.hashCode() + i] = view.findViewById(it.name.hashCode() + i)
+            }
         }
     }
 
@@ -97,12 +98,17 @@ internal class ToggleViewHolder(view: View, private val adapter: TogglesAdapter,
 
     private fun updateToggleProviderValues(toggle: Toggle<*>) {
         toggler.valueProviders.forEach { provider ->
-            val tvLabel = cachedViews[provider.name.hashCode()] as TextView
+            val lblProviderName = cachedViews[provider.name.hashCode()] as TextView
             val toggleSwitch = cachedViews[provider.name.hashCode() + 1] as Switch
             val tvValue = cachedViews[provider.name.hashCode() + 2] as TextView
+            val btnEdit = cachedViews[provider.name.hashCode() + 3] as TextView
 
+            lblProviderName.visibility = VISIBLE
+            toggleSwitch.visibility = GONE
+            tvValue.visibility = GONE
+            btnEdit.visibility = GONE
 
-            tvLabel.text = provider.name
+            lblProviderName.text = provider.name
             if (toggle.isSupported(provider).not()) {
                 tvValue.apply {
                     text = notConfiguredNotation()
@@ -125,11 +131,29 @@ internal class ToggleViewHolder(view: View, private val adapter: TogglesAdapter,
                             visibility = VISIBLE
                         }
                     }
-                } else if (toggle.type == Toggle.Type.Select) {
+                } else if (toggle is SelectToggleImpl) {
                     tvValue.apply {
                         text = toggle.getProviderValue(provider).toString()
                         visibility = VISIBLE
                     }
+                    if (provider.isSaveAllowed) {
+                        btnEdit.visibility = VISIBLE
+                        btnEdit.setOnClickListener {
+                            MaterialAlertDialogBuilder(btnEdit.context)
+                                .setTitle("Options")
+                                .setPositiveButton("CANCEL") { dialog, which ->
+                                    dialog.dismiss()
+                                }
+                                // Single-choice items (initialized with checked item)
+                                .setSingleChoiceItems(toggle.selectOptions, toggle.selectOptions.indexOf(toggle.value())) { dialog, which ->
+                                    dialog.dismiss()
+                                    toggle.saveProviderValue(provider, toggle.selectOptions[which])
+                                    adapter.notifyItemChanged(adapterPosition)
+                                }
+                                .show()
+                        }
+                    }
+
                 }
             }
         }
@@ -140,22 +164,7 @@ internal class ToggleViewHolder(view: View, private val adapter: TogglesAdapter,
 //        llSelectValueContainer.visibility = VISIBLE
         lblSelectionOptions.visibility = VISIBLE
         tvSelectionOptions.visibility = VISIBLE
-//        localProviderSwitch.visibility = GONE
-//        tvLocalValue.text = toggle.localProviderValue()
-//        btnEdit.setOnClickListener {
-//            MaterialAlertDialogBuilder(btnEdit.context)
-//                .setTitle("Options")
-//                .setPositiveButton("CANCEL") { dialog, which ->
-//                    dialog.dismiss()
-//                }
-//                // Single-choice items (initialized with checked item)
-//                .setSingleChoiceItems(toggle.selectOptions, toggle.selectOptions.indexOf(toggle.resolvedValue(toggler.toggleValueProvider))) { dialog, which ->
-//                    dialog.dismiss()
-//                    toggle.updateLocalProvider(toggle.selectOptions[which])
-//                    adapter.notifyItemChanged(adapterPosition)
-//                }
-//                .show()
-//        }
+
 //        tvSelectionOptions.text = toggle.selectOptions.joinToString(", ")
 
     }

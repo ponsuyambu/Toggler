@@ -117,6 +117,15 @@ internal class TogglesAdapter(val toggler: Toggler) :
             }
 
 
+            val btnEdit = TextView(llValuesContainer.context).apply {
+                layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT).apply {
+                    addRule(RelativeLayout.ALIGN_PARENT_END)
+                }
+                id = provider.name.hashCode() + 3
+                text = "Edit"
+                visibility = GONE
+            }
+
             val tvValue = TextView(llValuesContainer.context).apply {
                 layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT).apply {
                     addRule(RelativeLayout.ALIGN_PARENT_END)
@@ -125,9 +134,12 @@ internal class TogglesAdapter(val toggler: Toggler) :
                 visibility = GONE
             }
 
+
+
             providerRow.addView(tvName)
             providerRow.addView(tvValue)
             providerRow.addView(swValue)
+            providerRow.addView(btnEdit)
 
             llValuesContainer.addView(providerRow)
         }
