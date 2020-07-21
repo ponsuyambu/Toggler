@@ -7,7 +7,7 @@ import androidx.core.content.edit
 import java.lang.reflect.Method
 
 object LocalValueProvider : ToggleValueProvider() {
-    lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPreferences: SharedPreferences
 
     override val name = "Local"
     override val isSaveAllowed = true
@@ -45,7 +45,7 @@ object LocalValueProvider : ToggleValueProvider() {
 
     }
 
-    override fun configurationMap(): Map<String, String> {
-        TODO("Not yet implemented")
+    override fun configurationMap(toggle: Toggle<*>): Map<String, String> {
+        return emptyMap()
     }
 }

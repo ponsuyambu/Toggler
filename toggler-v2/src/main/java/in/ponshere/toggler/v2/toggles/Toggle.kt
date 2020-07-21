@@ -30,6 +30,18 @@ abstract class Toggle<T> constructor(val type: Type,
         toggleValueProvider.save(key, value, classType())
     }
 
+    fun getConfiguration() : Map<String, String> {
+        val defaultMap = mutableMapOf(
+            "Key" to key,
+            "Default Value" to defaultValue.toString()
+        )
+
+        Toggler.valueProviders.forEach {
+            defaultMap.putAll(it.configurationMap(this))
+        }
+        return defaultMap
+    }
+
     sealed class Type : Comparable<Type> {
         abstract val value: Int
         override fun compareTo(other: Type) = value - other.value

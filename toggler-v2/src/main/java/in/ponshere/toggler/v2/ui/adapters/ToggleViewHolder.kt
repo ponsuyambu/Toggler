@@ -19,7 +19,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-internal class ToggleViewHolder(view: View, private val adapter: TogglesAdapter, val toggler: Toggler) : RecyclerView.ViewHolder(view) {
+internal class ToggleViewHolder(
+    view: View,
+    private val adapter: TogglesAdapter,
+    val toggler: Toggler,
+    private val maxNumberOfConfigurations: Int
+) : RecyclerView.ViewHolder(view) {
 //    private val localProviderSwitch = view.findViewById<Switch>(R.id.swithcLocalProvider)
     private val mainView = view.findViewById<ConstraintLayout>(R.id.clMain)
     private val llDetails = view.findViewById<LinearLayout>(R.id.llDetails)
@@ -29,11 +34,11 @@ internal class ToggleViewHolder(view: View, private val adapter: TogglesAdapter,
     private val tvResolvedValue = view.findViewById<TextView>(R.id.tvResolvedValue)
 //    private val tvFirebaseValue = view.findViewById<TextView>(R.id.tvFirebaseValue)
 //    private val tvLocalValue = view.findViewById<TextView>(R.id.tvLocalValue)
-    private val tvSharedPreferencesKey = view.findViewById<TextView>(R.id.tvSharedPreferencesKey)
-    private val tvFirebaseConfigKey = view.findViewById<TextView>(R.id.tvFirebaseConfigKey)
-    private val tvDefaultValue = view.findViewById<TextView>(R.id.tvDefaultValue)
-    private val tvSelectionOptions = view.findViewById<TextView>(R.id.tvSelectionOptions)
-    private val lblSelectionOptions = view.findViewById<TextView>(R.id.lblOptions)
+//    private val tvSharedPreferencesKey = view.findViewById<TextView>(R.id.tvSharedPreferencesKey)
+//    private val tvFirebaseConfigKey = view.findViewById<TextView>(R.id.tvFirebaseConfigKey)
+//    private val tvDefaultValue = view.findViewById<TextView>(R.id.tvDefaultValue)
+//    private val tvSelectionOptions = view.findViewById<TextView>(R.id.tvSelectionOptions)
+//    private val lblSelectionOptions = view.findViewById<TextView>(R.id.lblOptions)
 //    private val btnEdit = view.findViewById<TextView>(R.id.btnEditLocalValue)
 
     private val cachedViews = mutableMapOf<Int, View>()
@@ -44,6 +49,9 @@ internal class ToggleViewHolder(view: View, private val adapter: TogglesAdapter,
                 cachedViews[it.name.hashCode() + i] = view.findViewById(it.name.hashCode() + i)
             }
         }
+        repeat(maxNumberOfConfigurations * 2) {index ->
+            cachedViews[index + 1] = view.findViewById(index + 1)
+        }
     }
 
     fun bind(toggle: SwitchToggleImpl) {
@@ -51,8 +59,8 @@ internal class ToggleViewHolder(view: View, private val adapter: TogglesAdapter,
 
 //        localProviderSwitch.visibility = VISIBLE
 //        llSelectValueContainer.visibility = GONE
-        lblSelectionOptions.visibility = GONE
-        tvSelectionOptions.visibility = GONE
+//        lblSelectionOptions.visibility = GONE
+//        tvSelectionOptions.visibility = GONE
 
 
         //Local provider
@@ -72,27 +80,34 @@ internal class ToggleViewHolder(view: View, private val adapter: TogglesAdapter,
         toggleTitle.text = toggle.key
         tvResolvedValue.text = toggle.value().toString()
         updateToggleProviderValues(toggle)
-//        val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-//            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
-//        )
-//        val textView = TextView(llSelectValueContainer.context)
-//        textView.layoutParams = params
-//        textView.text = "Hi asd ada da da"
-//        llValuesContainer.addView(textView)
+        updateToggleConfigurations(toggle)
 
-//        tvFirebaseValue.text =
-//            if (toggle.isFirebaseKeyConfigured()) toggle.firebaseProviderValue() else notConfiguredNotation()
-//
-//        tvDefaultValue.text = toggle.defaultValue.toString()
-//        tvSharedPreferencesKey.text = toggle.sharedPreferencesKey
-//        tvFirebaseConfigKey.text =
-//            if (toggle.isFirebaseKeyConfigured()) toggle.firebaseConfigKey else notConfiguredNotation()
-//
         llDetails.visibility = if (toggle.isExpanded) VISIBLE else GONE
         mainView.setOnClickListener {
             val expanded: Boolean = toggle.isExpanded
             toggle.isExpanded = expanded.not()
             adapter.notifyItemChanged(adapterPosition)
+        }
+    }
+
+    private fun updateToggleConfigurations(toggle: Toggle<*>) {
+        var configViewIndex = 1
+
+        repeat(maxNumberOfConfigurations * 2) {index ->
+            cachedViews[index + 1]?.visibility = GONE
+        }
+
+        toggle.getConfiguration().forEach { entry ->
+            val tvConfigName = cachedViews[configViewIndex] as TextView
+            val tvConfigValue = cachedViews[configViewIndex + 1] as TextView
+
+            tvConfigName.visibility = VISIBLE
+            tvConfigValue.visibility = VISIBLE
+
+            tvConfigName.text = entry.key
+            tvConfigValue.text = entry.value
+
+            configViewIndex += 2
         }
     }
 
@@ -162,8 +177,8 @@ internal class ToggleViewHolder(view: View, private val adapter: TogglesAdapter,
     fun bind(toggle: SelectToggleImpl) {
         commonBind(toggle)
 //        llSelectValueContainer.visibility = VISIBLE
-        lblSelectionOptions.visibility = VISIBLE
-        tvSelectionOptions.visibility = VISIBLE
+//        lblSelectionOptions.visibility = VISIBLE
+//        tvSelectionOptions.visibility = VISIBLE
 
 //        tvSelectionOptions.text = toggle.selectOptions.joinToString(", ")
 

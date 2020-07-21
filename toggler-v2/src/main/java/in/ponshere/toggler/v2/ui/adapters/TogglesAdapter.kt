@@ -14,20 +14,26 @@ import android.widget.RelativeLayout
 import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.max
 
 internal class TogglesAdapter(val toggler: Toggler) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var featureToggles: MutableList<Toggle<*>> = toggler.allToggles
     private val adapterRowItems = mutableListOf<AdapterRowItem>()
+    private var maxNumberOfConfigurations : Int = 0
+
     init {
         adapterRowItems.add(HeaderRowItem("SWITCH TOGGLES"))
         featureToggles.filter { it.type == Toggle.Type.Switch }.forEach {
             adapterRowItems.add(ToggleRowItem(it as SwitchToggleImpl))
+            maxNumberOfConfigurations = max(it.getConfiguration().size, maxNumberOfConfigurations)
         }
+
 
         adapterRowItems.add(HeaderRowItem("SELECT TOGGLES"))
         featureToggles.filter { it.type == Toggle.Type.Select }.forEach {
             adapterRowItems.add(ToggleRowItem(it as SelectToggleImpl))
+            maxNumberOfConfigurations = max(it.getConfiguration().size, maxNumberOfConfigurations)
         }
 
         featureToggles.sortBy { it.type }
@@ -58,7 +64,8 @@ internal class TogglesAdapter(val toggler: Toggler) :
             return ToggleViewHolder(
                 view,
                 this,
-                toggler
+                toggler,
+                maxNumberOfConfigurations
             )
         } else  {
             return TitleViewHolder(LayoutInflater.from(parent.context).inflate(
@@ -91,6 +98,7 @@ internal class TogglesAdapter(val toggler: Toggler) :
 
     private fun addAllProviderValuesViews(root: View) {
         val llValuesContainer = root.findViewById<LinearLayout>(R.id.llValuesContainer)
+        val llConfigurationsContainer = root.findViewById<LinearLayout>(R.id.llConfigurationsContainer)
 
 
         toggler.valueProviders.forEach { provider ->
@@ -134,8 +142,6 @@ internal class TogglesAdapter(val toggler: Toggler) :
                 visibility = GONE
             }
 
-
-
             providerRow.addView(tvName)
             providerRow.addView(tvValue)
             providerRow.addView(swValue)
@@ -144,6 +150,37 @@ internal class TogglesAdapter(val toggler: Toggler) :
             llValuesContainer.addView(providerRow)
         }
 
+
+        repeat(maxNumberOfConfigurations) { index ->
+            val configurationRow = RelativeLayout(root.context).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+            }
+
+            val tvConfigName = TextView(llConfigurationsContainer.context).apply {
+                layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT).apply {
+                    addRule(RelativeLayout.ALIGN_PARENT_START)
+                }
+                id = index * 2 + 1
+                text = id.toString()
+                //visibility = GONE
+            }
+
+            val tvConfigValue = TextView(llConfigurationsContainer.context).apply {
+                layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT).apply {
+                    addRule(RelativeLayout.ALIGN_PARENT_END)
+                }
+                id = index * 2 + 2
+                text = id.toString()
+                //visibility = GONE
+            }
+
+            configurationRow.addView(tvConfigName)
+            configurationRow.addView(tvConfigValue)
+
+            llConfigurationsContainer.addView(configurationRow)
+        }
 
 //        val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
 //            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT

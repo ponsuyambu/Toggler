@@ -15,8 +15,11 @@ object FirebaseValueProvider : ToggleValueProvider() {
     }
 
     override fun isSupported(toggle: Toggle<*>): Boolean {
-        return toggle.method.isAnnotationPresent(FirebaseToggle::class.java)
+        return hasAnnotation(toggle)
     }
+
+    private fun hasAnnotation(toggle: Toggle<*>) =
+        toggle.method.isAnnotationPresent(FirebaseToggle::class.java)
 
     override fun <T> get(key: String, defaultValue: T, clazz: Class<T>, method: Method): T {
 
@@ -32,7 +35,13 @@ object FirebaseValueProvider : ToggleValueProvider() {
         throw UnsupportedOperationException("You can't update firebase values from the app.")
     }
 
-    override fun configurationMap(): Map<String, String> {
-        TODO("Not yet implemented")
+    override fun configurationMap(toggle: Toggle<*>): Map<String, String> {
+        val configurations = mutableMapOf<String, String>()
+        if(hasAnnotation(toggle)) {
+            val annotation = toggle.method.getAnnotation(FirebaseToggle::class.java)
+            if(annotation != null)
+                configurations["Remote config key"] = annotation.remoteConfigKey
+        }
+        return configurations
     }
 }

@@ -164,86 +164,95 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text ="CONFIGURATION" />
 
-                    <TextView
-                        android:id="@+id/lblSharedPreferencesKey"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/llConfigurationsContainer"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text ="Shared Preferences Key"
-                        android:textSize="12dp"
+                        android:background="#ff0"
+                        android:orientation="vertical"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/lblConfigurations" />
 
-                    <TextView
-                        android:id="@+id/tvSharedPreferencesKey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text ="`value`"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        app:layout_constraintBaseline_toBaselineOf="@id/lblSharedPreferencesKey"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:text ="`feature1`"/>
+<!--                    <TextView-->
+<!--                        android:id="@+id/lblSharedPreferencesKey"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="4dp"-->
+<!--                        android:text ="Shared Preferences Key"-->
+<!--                        android:textSize="12dp"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/lblConfigurations" />-->
 
-                    <TextView
-                        android:id="@+id/lblFirebaseConfigKey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text ="Firebase Remote Config Key"
-                        android:textSize="12dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/lblSharedPreferencesKey" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvSharedPreferencesKey"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text ="`value`"-->
+<!--                        android:textSize="12dp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        app:layout_constraintBaseline_toBaselineOf="@id/lblSharedPreferencesKey"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        tools:text ="`feature1`"/>-->
 
-                    <TextView
-                        android:id="@+id/tvFirebaseConfigKey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text ="`value`"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        app:layout_constraintBaseline_toBaselineOf="@id/lblFirebaseConfigKey"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:text ="`feature1`"/>
+<!--                    <TextView-->
+<!--                        android:id="@+id/lblFirebaseConfigKey"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="4dp"-->
+<!--                        android:text ="Firebase Remote Config Key"-->
+<!--                        android:textSize="12dp"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/lblSharedPreferencesKey" />-->
 
-                    <TextView
-                        android:id="@+id/lblDefaultValue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text ="Default value"
-                        android:textSize="12dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/lblFirebaseConfigKey" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvFirebaseConfigKey"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text ="`value`"-->
+<!--                        android:textSize="12dp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        app:layout_constraintBaseline_toBaselineOf="@id/lblFirebaseConfigKey"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        tools:text ="`feature1`"/>-->
 
-                    <TextView
-                        android:id="@+id/tvDefaultValue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text ="`default value`"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        app:layout_constraintBaseline_toBaselineOf="@id/lblDefaultValue"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-                    <TextView
-                        android:id="@+id/lblOptions"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text ="Selection Options"
-                        android:textSize="12dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/lblDefaultValue" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/lblDefaultValue"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="4dp"-->
+<!--                        android:text ="Default value"-->
+<!--                        android:textSize="12dp"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/lblFirebaseConfigKey" />-->
 
-                    <TextView
-                        android:id="@+id/tvSelectionOptions"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text ="`default value`"
-                        android:textSize="12dp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/lblOptions"/>
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvDefaultValue"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text ="`default value`"-->
+<!--                        android:textSize="12dp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        app:layout_constraintBaseline_toBaselineOf="@id/lblDefaultValue"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"/>-->
+<!--                    <TextView-->
+<!--                        android:id="@+id/lblOptions"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="4dp"-->
+<!--                        android:text ="Selection Options"-->
+<!--                        android:textSize="12dp"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/lblDefaultValue" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvSelectionOptions"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text ="`default value`"-->
+<!--                        android:textSize="12dp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/lblOptions"/>-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

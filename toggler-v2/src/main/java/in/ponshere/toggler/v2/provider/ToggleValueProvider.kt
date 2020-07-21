@@ -12,6 +12,6 @@ abstract class ToggleValueProvider  {
     abstract fun isSupported(toggle: Toggle<*>): Boolean
     abstract fun<T> get(key: String, defaultValue: T, clazz: Class<T>, method: Method) : T
     abstract fun<T> save(key: String, value: T, clazz: Class<T>)
-    abstract fun configurationMap() : Map<String, String>
+    abstract fun configurationMap(toggle: Toggle<*>) : Map<String, String>
 
 }
