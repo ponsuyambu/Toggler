@@ -29,56 +29,55 @@ interface AppTogglesV2 {
     @SwitchToggle(key = "new login", defaultValue = false)
     fun isNewLoginEnabled(): Boolean
 
-//    @SwitchToggle(sharedPreferencesKey = "a", defaultValue = false)
-//    fun a(): Boolean
-//
-//    @SwitchToggle(sharedPreferencesKey = "b", defaultValue = false)
-//    fun b(): Boolean
-//
-//    @SwitchToggle(sharedPreferencesKey = "c", defaultValue = false)
-//    fun c(): Boolean
-//
-//    @SelectToggle(
-//        sharedPreferencesKey = "d",
-//        defaultValue = "2",
-//        fireBaseRemoteConfigKey = "feature3",
-//        selectOptions = ["1", "2", "3", "4"]
-//    )
-//    fun d(): String
-//
-//    @SwitchToggle(sharedPreferencesKey = "e", defaultValue = false)
-//    fun e(): Boolean
-//
-//    @SwitchToggle(sharedPreferencesKey = "f", defaultValue = false)
-//    fun f(): Boolean
-//
-//    @SwitchToggle(sharedPreferencesKey = "g", defaultValue = false)
-//    fun g(): Boolean
-//
-//    @SelectToggle(
-//        sharedPreferencesKey = "h",
-//        defaultValue = "2",
-//        selectOptions = ["1", "2", "3", "4"]
-//    )
-//    fun h(): String
-//
-//    @SwitchToggle(sharedPreferencesKey = "i", defaultValue = false)
-//    fun i(): Boolean
-//
-//    @SwitchToggle(sharedPreferencesKey = "j", defaultValue = false)
-//    fun j(): Boolean
-//
-//    @SwitchToggle(sharedPreferencesKey = "k", defaultValue = false)
-//    fun k(): Boolean
-//
-//    @SelectToggle(
-//        sharedPreferencesKey = "l",
-//        defaultValue = "2",
-//        selectOptions = ["1", "2", "3", "4"]
-//    )
-//    fun l(): String
-//
-//
-//    @SwitchToggle
-//    fun f1(): String
+    @SwitchToggle(key = "a", defaultValue = false)
+    fun a(): Boolean
+
+    @SwitchToggle(key = "b", defaultValue = false)
+    fun b(): Boolean
+
+    @SwitchToggle(key = "c", defaultValue = false)
+    fun c(): Boolean
+
+    @SelectToggle(
+        key = "d",
+        defaultValue = "2",
+        selectOptions = ["1", "2", "3", "4"]
+    )
+    fun d(): String
+
+    @SwitchToggle(key = "e", defaultValue = false)
+    fun e(): Boolean
+
+    @SwitchToggle(key = "f", defaultValue = false)
+    fun f(): Boolean
+
+    @SwitchToggle(key = "g", defaultValue = false)
+    fun g(): Boolean
+
+    @SelectToggle(
+        key = "h",
+        defaultValue = "2",
+        selectOptions = ["1", "2", "3", "4"]
+    )
+    fun h(): String
+
+    @SwitchToggle(key = "i", defaultValue = false)
+    fun i(): Boolean
+
+    @SwitchToggle(key = "j", defaultValue = false)
+    fun j(): Boolean
+
+    @SwitchToggle(key = "k", defaultValue = false)
+    fun k(): Boolean
+
+    @SelectToggle(
+        key = "l",
+        defaultValue = "2",
+        selectOptions = ["1", "2", "3", "4"]
+    )
+    fun l(): String
+
+
+    @SwitchToggle
+    fun f1(): String
 }

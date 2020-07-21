@@ -4,7 +4,6 @@ import `in`.ponshere.toggler.v2.provider.ToggleValueProvider
 import `in`.ponshere.toggler.v2.toggles.Toggle
 import android.content.Context
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import java.lang.reflect.Method
 
 object FirebaseValueProvider : ToggleValueProvider() {
     override val name: String = "Firebase"
@@ -21,12 +20,11 @@ object FirebaseValueProvider : ToggleValueProvider() {
     private fun hasAnnotation(toggle: Toggle<*>) =
         toggle.method.isAnnotationPresent(FirebaseToggle::class.java)
 
-    override fun <T> get(key: String, defaultValue: T, clazz: Class<T>, method: Method): T {
-
+    override fun <T> get(toggle: Toggle<*>, clazz: Class<T>): T {
         if(clazz.isAssignableFrom(Boolean::class.java)) {
-            return FirebaseRemoteConfig.getInstance().getBoolean(key) as T
+            return FirebaseRemoteConfig.getInstance().getBoolean(toggle.key) as T
         } else if(clazz.isAssignableFrom(String::class.java)) {
-            return FirebaseRemoteConfig.getInstance().getString(key) as T
+            return FirebaseRemoteConfig.getInstance().getString(toggle.key) as T
         }
         throw IllegalArgumentException("Firbase Provider only supports Boolean and String types")
     }

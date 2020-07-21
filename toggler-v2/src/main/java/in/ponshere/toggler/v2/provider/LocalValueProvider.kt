@@ -4,7 +4,6 @@ import `in`.ponshere.toggler.v2.toggles.Toggle
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import java.lang.reflect.Method
 
 object LocalValueProvider : ToggleValueProvider() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -18,12 +17,11 @@ object LocalValueProvider : ToggleValueProvider() {
 
     override fun isSupported(toggle: Toggle<*>) = true
 
-    override fun <T> get(key: String, defaultValue: T, clazz: Class<T>, method: Method): T {
-
+    override fun <T> get(toggle: Toggle<*>, clazz: Class<T>): T {
         if(clazz.isAssignableFrom(Boolean::class.java)) {
-            return sharedPreferences.getBoolean(key, defaultValue as Boolean) as T
+            return sharedPreferences.getBoolean(toggle.key, toggle.defaultValue as Boolean) as T
         } else if(clazz.isAssignableFrom(String::class.java)) {
-            return sharedPreferences.getString(key, defaultValue as String) as T
+            return sharedPreferences.getString(toggle.key, toggle.defaultValue as String) as T
         }
         throw IllegalArgumentException("LocalProvider only supports Boolean and String types")
     }

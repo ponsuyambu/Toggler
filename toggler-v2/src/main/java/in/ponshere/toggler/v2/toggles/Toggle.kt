@@ -6,7 +6,7 @@ import java.lang.reflect.Method
 
 abstract class Toggle<T> constructor(val type: Type,
                                      val key: String,
-                                     private val defaultValue: T,
+                                     val defaultValue: T,
                                      val displayName: String,
                                      val method: Method,
                                      var isExpanded: Boolean = false
@@ -15,7 +15,7 @@ abstract class Toggle<T> constructor(val type: Type,
     abstract fun classType() : Class<T>
 
     fun value() : T {
-        return Toggler.highPriorityValueProvider.get(key, defaultValue, classType(), method)
+        return Toggler.highPriorityValueProvider.get(this, classType())
     }
 
     fun isSupported(toggleValueProvider: ToggleValueProvider) : Boolean {
@@ -23,7 +23,7 @@ abstract class Toggle<T> constructor(val type: Type,
     }
 
     fun getProviderValue(toggleValueProvider: ToggleValueProvider) : T {
-        return toggleValueProvider.get(key, defaultValue, classType(), method)
+        return toggleValueProvider.get(this, classType())
     }
 
     fun saveProviderValue(toggleValueProvider: ToggleValueProvider, value: T) {
