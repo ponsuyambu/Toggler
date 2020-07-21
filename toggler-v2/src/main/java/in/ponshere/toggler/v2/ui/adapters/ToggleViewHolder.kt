@@ -25,21 +25,10 @@ internal class ToggleViewHolder(
     val toggler: Toggler,
     private val maxNumberOfConfigurations: Int
 ) : RecyclerView.ViewHolder(view) {
-//    private val localProviderSwitch = view.findViewById<Switch>(R.id.swithcLocalProvider)
     private val mainView = view.findViewById<ConstraintLayout>(R.id.clMain)
     private val llDetails = view.findViewById<LinearLayout>(R.id.llDetails)
-    private val llValuesContainer = view.findViewById<LinearLayout>(R.id.llValuesContainer)
-//    private val llSelectValueContainer = view.findViewById<LinearLayout>(R.id.llSelectValueContainer)
     private val toggleTitle = view.findViewById<TextView>(R.id.toggleTitle)
     private val tvResolvedValue = view.findViewById<TextView>(R.id.tvResolvedValue)
-//    private val tvFirebaseValue = view.findViewById<TextView>(R.id.tvFirebaseValue)
-//    private val tvLocalValue = view.findViewById<TextView>(R.id.tvLocalValue)
-//    private val tvSharedPreferencesKey = view.findViewById<TextView>(R.id.tvSharedPreferencesKey)
-//    private val tvFirebaseConfigKey = view.findViewById<TextView>(R.id.tvFirebaseConfigKey)
-//    private val tvDefaultValue = view.findViewById<TextView>(R.id.tvDefaultValue)
-//    private val tvSelectionOptions = view.findViewById<TextView>(R.id.tvSelectionOptions)
-//    private val lblSelectionOptions = view.findViewById<TextView>(R.id.lblOptions)
-//    private val btnEdit = view.findViewById<TextView>(R.id.btnEditLocalValue)
 
     private val cachedViews = mutableMapOf<Int, View>()
 
@@ -54,31 +43,10 @@ internal class ToggleViewHolder(
         }
     }
 
-    fun bind(toggle: SwitchToggleImpl) {
-        commonBind(toggle)
-
-//        localProviderSwitch.visibility = VISIBLE
-//        llSelectValueContainer.visibility = GONE
-//        lblSelectionOptions.visibility = GONE
-//        tvSelectionOptions.visibility = GONE
-
-
-        //Local provider
-//        localProviderSwitch.isChecked = toggle.booleanValue(LocalProvider)
-//        localProviderSwitch.setOnClickListener {
-//            toggle.updateLocalProvider((it as Switch).isChecked)
-//            adapter.notifyItemChanged(adapterPosition)
-//        }
-
-
-
-
-
-    }
-
-    private fun commonBind(toggle: Toggle<*>) {
+    fun bind(toggle: Toggle<*>) {
         toggleTitle.text = toggle.key
         tvResolvedValue.text = toggle.value().toString()
+
         updateToggleProviderValues(toggle)
         updateToggleConfigurations(toggle)
 
@@ -172,16 +140,6 @@ internal class ToggleViewHolder(
                 }
             }
         }
-    }
-
-    fun bind(toggle: SelectToggleImpl) {
-        commonBind(toggle)
-//        llSelectValueContainer.visibility = VISIBLE
-//        lblSelectionOptions.visibility = VISIBLE
-//        tvSelectionOptions.visibility = VISIBLE
-
-//        tvSelectionOptions.text = toggle.selectOptions.joinToString(", ")
-
     }
 
     private fun notConfiguredNotation() : SpannableString {

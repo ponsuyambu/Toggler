@@ -18,6 +18,7 @@ import kotlin.math.max
 
 internal class TogglesAdapter(val toggler: Toggler) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     private var featureToggles: MutableList<Toggle<*>> = toggler.allToggles
     private val adapterRowItems = mutableListOf<AdapterRowItem>()
     private var maxNumberOfConfigurations : Int = 0
@@ -29,7 +30,6 @@ internal class TogglesAdapter(val toggler: Toggler) :
             maxNumberOfConfigurations = max(it.getConfiguration().size, maxNumberOfConfigurations)
         }
 
-
         adapterRowItems.add(HeaderRowItem("SELECT TOGGLES"))
         featureToggles.filter { it.type == Toggle.Type.Select }.forEach {
             adapterRowItems.add(ToggleRowItem(it as SelectToggleImpl))
@@ -40,25 +40,14 @@ internal class TogglesAdapter(val toggler: Toggler) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-//        return CheckboxViewHolder(
-//            LayoutInflater.from(parent.context).inflate(
-//                R.layout.layout_checkbox_toggle,
-//                parent,
-//                false
-//            ),
-//            this,
-//            toggler
-//        )
         if (viewType == AdapterRowItem.TOGGLE) {
             val view = LayoutInflater.from(parent.context).inflate(
                 R.layout.layout_checkbox_toggle,
                 parent,
                 false
             )
-
-
             addAllProviderValuesViews(view)
-
+            addAllConfigurationViews(view)
 
 
             return ToggleViewHolder(
@@ -74,32 +63,25 @@ internal class TogglesAdapter(val toggler: Toggler) :
                 false
             ))
         }
-//        if (viewType == FeatureToggleType.SWITCH.ordinal) {
-//            return CheckboxViewHolder(
-//                LayoutInflater.from(parent.context).inflate(
-//                    R.layout.layout_checkbox_toggle,
-//                    parent,
-//                    false
-//                ),
-//                this,
-//                toggler
-//            )
-//        }
-//        return SpinnerViewHolderOld(
-//            LayoutInflater.from(parent.context).inflate(
-//                R.layout.layout_select_toggle,
-//                parent,
-//                false
-//            ),
-//            this,
-//            Toggler
-//        )
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return adapterRowItems[position].type
+    }
+
+    override fun getItemCount() = adapterRowItems.size
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is ToggleViewHolder) {
+            val toggleRowItem = adapterRowItems[position] as ToggleRowItem
+            holder.bind(toggleRowItem.toggle)
+        } else if (holder is TitleViewHolder) {
+            holder.bind((adapterRowItems[position] as HeaderRowItem).title)
+        }
     }
 
     private fun addAllProviderValuesViews(root: View) {
         val llValuesContainer = root.findViewById<LinearLayout>(R.id.llValuesContainer)
-        val llConfigurationsContainer = root.findViewById<LinearLayout>(R.id.llConfigurationsContainer)
-
 
         toggler.valueProviders.forEach { provider ->
 
@@ -149,8 +131,12 @@ internal class TogglesAdapter(val toggler: Toggler) :
 
             llValuesContainer.addView(providerRow)
         }
+    }
 
-
+    private fun addAllConfigurationViews(
+        root: View
+    ) {
+        val llConfigurationsContainer = root.findViewById<LinearLayout>(R.id.llConfigurationsContainer)
         repeat(maxNumberOfConfigurations) { index ->
             val configurationRow = RelativeLayout(root.context).apply {
                 layoutParams = LinearLayout.LayoutParams(
@@ -159,21 +145,27 @@ internal class TogglesAdapter(val toggler: Toggler) :
             }
 
             val tvConfigName = TextView(llConfigurationsContainer.context).apply {
-                layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT).apply {
+                layoutParams = RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
                     addRule(RelativeLayout.ALIGN_PARENT_START)
                 }
                 id = index * 2 + 1
                 text = id.toString()
-                //visibility = GONE
+                visibility = GONE
             }
 
             val tvConfigValue = TextView(llConfigurationsContainer.context).apply {
-                layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT).apply {
+                layoutParams = RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
                     addRule(RelativeLayout.ALIGN_PARENT_END)
                 }
                 id = index * 2 + 2
                 text = id.toString()
-                //visibility = GONE
+                visibility = GONE
             }
 
             configurationRow.addView(tvConfigName)
@@ -181,39 +173,9 @@ internal class TogglesAdapter(val toggler: Toggler) :
 
             llConfigurationsContainer.addView(configurationRow)
         }
-
-//        val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-//            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
-//        )
-//        val textView = TextView(llValuesContainer.context)
-//        textView.layoutParams = params
-//        textView.id = id
-//        llValuesContainer.addView(textView)
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return adapterRowItems[position].type
     }
 
 
-    override fun getItemCount() = adapterRowItems.size
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is ToggleViewHolder) {
-            val toggleRowItem = adapterRowItems[position] as ToggleRowItem
-            if(toggleRowItem.toggle is SwitchToggleImpl) {
-                holder.bind(toggleRowItem.toggle)
-            } else if(toggleRowItem.toggle is SelectToggleImpl) {
-                holder.bind(toggleRowItem.toggle)
-            }
-        } else if (holder is TitleViewHolder) {
-            holder.bind((adapterRowItems[position] as HeaderRowItem).title)
-        }
-//
-//        else if (holder is SpinnerViewHolderOld) {
-//            holder.bind(featureToggles[position] as SelectToggleImpl)
-//        }
-    }
 
     fun update(featureToggles: List<Toggle<*>>) {
         this.featureToggles.clear()
