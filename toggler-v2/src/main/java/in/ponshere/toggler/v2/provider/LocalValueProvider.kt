@@ -43,7 +43,7 @@ object LocalValueProvider : ToggleValueProvider() {
 
     }
 
-    override fun configurationMap(toggle: Toggle<*>): Map<String, String> {
+    override fun configurationMap(toggle: Toggle<*>): Map<String, CharSequence> {
         return emptyMap()
     }
 }

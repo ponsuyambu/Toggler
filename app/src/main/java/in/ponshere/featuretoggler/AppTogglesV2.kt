@@ -14,6 +14,7 @@ interface AppTogglesV2 {
 
     @SwitchToggle(key = "feature2",
         defaultValue = false)
+    @FirebaseToggle()
     fun isFeature2Enabled(): Boolean
 
     @SelectToggle(

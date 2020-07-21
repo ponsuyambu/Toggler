@@ -1,5 +1,6 @@
 package `in`.ponshere.toggler.firebase.provider
 
+import `in`.ponshere.toggler.v2.helpers.Utils
 import `in`.ponshere.toggler.v2.provider.ToggleValueProvider
 import `in`.ponshere.toggler.v2.toggles.Toggle
 import android.content.Context
@@ -9,9 +10,7 @@ object FirebaseValueProvider : ToggleValueProvider() {
     override val name: String = "Firebase"
     override val isSaveAllowed: Boolean = false
 
-    override fun init(context: Context) {
-
-    }
+    override fun init(context: Context) { }
 
     override fun isSupported(toggle: Toggle<*>): Boolean {
         return hasAnnotation(toggle)
@@ -21,10 +20,19 @@ object FirebaseValueProvider : ToggleValueProvider() {
         toggle.method.isAnnotationPresent(FirebaseToggle::class.java)
 
     override fun <T> get(toggle: Toggle<*>, clazz: Class<T>): T {
+        var key = toggle.key
+
+        if(hasAnnotation(toggle)) {
+            val annotation = toggle.method.getAnnotation(FirebaseToggle::class.java)
+            if(annotation != null && annotation.remoteConfigKey.isNotBlank()) {
+                key = annotation.remoteConfigKey
+            }
+        }
+
         if(clazz.isAssignableFrom(Boolean::class.java)) {
-            return FirebaseRemoteConfig.getInstance().getBoolean(toggle.key) as T
+            return FirebaseRemoteConfig.getInstance().getBoolean(key) as T
         } else if(clazz.isAssignableFrom(String::class.java)) {
-            return FirebaseRemoteConfig.getInstance().getString(toggle.key) as T
+            return FirebaseRemoteConfig.getInstance().getString(key) as T
         }
         throw IllegalArgumentException("Firbase Provider only supports Boolean and String types")
     }
@@ -33,12 +41,13 @@ object FirebaseValueProvider : ToggleValueProvider() {
         throw UnsupportedOperationException("You can't update firebase values from the app.")
     }
 
-    override fun configurationMap(toggle: Toggle<*>): Map<String, String> {
-        val configurations = mutableMapOf<String, String>()
+    override fun configurationMap(toggle: Toggle<*>): Map<String, CharSequence> {
+        val configurations = mutableMapOf<String, CharSequence>()
         if(hasAnnotation(toggle)) {
             val annotation = toggle.method.getAnnotation(FirebaseToggle::class.java)
             if(annotation != null)
-                configurations["Remote config key"] = annotation.remoteConfigKey
+                configurations["Remote config key"] = if(annotation.remoteConfigKey.isBlank())
+                    Utils.notConfiguredNotation() else annotation.remoteConfigKey
         }
         return configurations
     }

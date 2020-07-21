@@ -30,8 +30,8 @@ abstract class Toggle<T> constructor(val type: Type,
         toggleValueProvider.save(key, value, classType())
     }
 
-    fun getConfiguration() : Map<String, String> {
-        val defaultMap = mutableMapOf(
+    fun getConfiguration() : Map<String, CharSequence> {
+        val defaultMap = mutableMapOf<String, CharSequence>(
             "Key" to key,
             "Default Value" to defaultValue.toString()
         )

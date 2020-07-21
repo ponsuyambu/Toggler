@@ -2,13 +2,10 @@ package `in`.ponshere.toggler.v2.ui.adapters
 
 import `in`.ponshere.toggler.R
 import `in`.ponshere.toggler.v2.Toggler
+import `in`.ponshere.toggler.v2.helpers.Utils.notConfiguredNotation
 import `in`.ponshere.toggler.v2.toggles.SelectToggleImpl
 import `in`.ponshere.toggler.v2.toggles.SwitchToggleImpl
 import `in`.ponshere.toggler.v2.toggles.Toggle
-import android.graphics.Color
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -139,12 +136,6 @@ internal class ToggleViewHolder(
 
                 }
             }
-        }
-    }
-
-    private fun notConfiguredNotation() : SpannableString {
-        return SpannableString("-").apply {
-            setSpan(ForegroundColorSpan(Color.RED), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
     }
 }
