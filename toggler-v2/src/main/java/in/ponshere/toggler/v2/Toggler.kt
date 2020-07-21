@@ -27,7 +27,7 @@ object Toggler {
                 highPriorityValueProvider : ToggleValueProvider = LocalValueProvider
     ) : T {
         this.clazz = clazz
-        this.highPriorityValueProvider = LocalValueProvider
+        this.highPriorityValueProvider = highPriorityValueProvider
         if(valueProviders.isNotEmpty()) {
             this.valueProviders.addAll(valueProviders)
         }
