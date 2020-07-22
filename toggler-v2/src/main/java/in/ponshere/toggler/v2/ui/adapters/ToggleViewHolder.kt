@@ -2,7 +2,6 @@ package `in`.ponshere.toggler.v2.ui.adapters
 
 import `in`.ponshere.toggler.R
 import `in`.ponshere.toggler.v2.Toggler
-import `in`.ponshere.toggler.v2.helpers.Utils.notConfiguredNotation
 import `in`.ponshere.toggler.v2.toggles.SelectToggleImpl
 import `in`.ponshere.toggler.v2.toggles.SwitchToggleImpl
 import `in`.ponshere.toggler.v2.toggles.Toggle
@@ -42,7 +41,7 @@ internal class ToggleViewHolder(
 
     fun bind(toggle: Toggle<*>) {
         toggleTitle.text = toggle.key
-        tvResolvedValue.text = toggle.value().toString()
+        tvResolvedValue.text = toggle.displayValue()
 
         updateToggleProviderValues(toggle)
         updateToggleConfigurations(toggle)
@@ -89,52 +88,45 @@ internal class ToggleViewHolder(
             btnEdit.visibility = GONE
 
             lblProviderName.text = provider.name
-            if (toggle.isSupported(provider).not()) {
-                tvValue.apply {
-                    text = notConfiguredNotation()
-                    visibility = VISIBLE
-                }
-            } else {
-                if (toggle is SwitchToggleImpl) {
-                    if (provider.isSaveAllowed) {
-                        toggleSwitch.apply {
-                            isChecked = toggle.getProviderValue(provider).toString().toBoolean()
-                            visibility = VISIBLE
-                            setOnClickListener {
-                                toggle.saveProviderValue(provider, isChecked)
-                                adapter.notifyItemChanged(adapterPosition)
-                            }
-                        }
-                    } else {
-                        tvValue.apply {
-                            text = toggle.getProviderValue(provider).toString()
-                            visibility = VISIBLE
+            if (toggle is SwitchToggleImpl) {
+                if (provider.isSaveAllowed) {
+                    toggleSwitch.apply {
+                        isChecked = toggle.getProviderValue(provider).toString().toBoolean()
+                        visibility = VISIBLE
+                        setOnClickListener {
+                            toggle.saveProviderValue(provider, isChecked)
+                            adapter.notifyItemChanged(adapterPosition)
                         }
                     }
-                } else if (toggle is SelectToggleImpl) {
+                } else {
                     tvValue.apply {
-                        text = toggle.getProviderValue(provider).toString()
+                        text = toggle.getProviderDisplayValue(provider)
                         visibility = VISIBLE
                     }
-                    if (provider.isSaveAllowed) {
-                        btnEdit.visibility = VISIBLE
-                        btnEdit.setOnClickListener {
-                            MaterialAlertDialogBuilder(btnEdit.context)
-                                .setTitle("Options")
-                                .setPositiveButton("CANCEL") { dialog, which ->
-                                    dialog.dismiss()
-                                }
-                                // Single-choice items (initialized with checked item)
-                                .setSingleChoiceItems(toggle.selectOptions, toggle.selectOptions.indexOf(toggle.value())) { dialog, which ->
-                                    dialog.dismiss()
-                                    toggle.saveProviderValue(provider, toggle.selectOptions[which])
-                                    adapter.notifyItemChanged(adapterPosition)
-                                }
-                                .show()
-                        }
-                    }
-
                 }
+            } else if (toggle is SelectToggleImpl) {
+                tvValue.apply {
+                    text = toggle.getProviderDisplayValue(provider)
+                    visibility = VISIBLE
+                }
+                if (provider.isSaveAllowed) {
+                    btnEdit.visibility = VISIBLE
+                    btnEdit.setOnClickListener {
+                        MaterialAlertDialogBuilder(btnEdit.context)
+                            .setTitle("Options")
+                            .setPositiveButton("CANCEL") { dialog, which ->
+                                dialog.dismiss()
+                            }
+                            // Single-choice items (initialized with checked item)
+                            .setSingleChoiceItems(toggle.selectOptions, toggle.selectOptions.indexOf(toggle.value())) { dialog, which ->
+                                dialog.dismiss()
+                                toggle.saveProviderValue(provider, toggle.selectOptions[which])
+                                adapter.notifyItemChanged(adapterPosition)
+                            }
+                            .show()
+                    }
+                }
+
             }
         }
     }

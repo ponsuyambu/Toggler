@@ -13,20 +13,19 @@ object FirebaseValueProvider : ToggleValueProvider() {
     override fun init(context: Context) { }
 
     override fun isSupported(toggle: Toggle<*>): Boolean {
-        return hasAnnotation(toggle)
+        return toggle.method.isAnnotationPresent(FirebaseToggle::class.java)
     }
 
-    private fun hasAnnotation(toggle: Toggle<*>) =
-        toggle.method.isAnnotationPresent(FirebaseToggle::class.java)
-
-    override fun <T> get(toggle: Toggle<*>, clazz: Class<T>): T {
+    override fun <T> getValue(toggle: Toggle<*>, clazz: Class<T>): T {
         var key = toggle.key
 
-        if(hasAnnotation(toggle)) {
+        if(isSupported(toggle)) {
             val annotation = toggle.method.getAnnotation(FirebaseToggle::class.java)
             if(annotation != null && annotation.remoteConfigKey.isNotBlank()) {
                 key = annotation.remoteConfigKey
             }
+        } else {
+            throw java.lang.UnsupportedOperationException("`${toggle.key}` is not supported by FirebaseValueProvider")
         }
 
         if(clazz.isAssignableFrom(Boolean::class.java)) {
@@ -37,13 +36,21 @@ object FirebaseValueProvider : ToggleValueProvider() {
         throw IllegalArgumentException("Firbase Provider only supports Boolean and String types")
     }
 
+    override fun <T> getDisplayValue(toggle: Toggle<*>, clazz: Class<T>): CharSequence {
+        return try {
+            getValue(toggle, clazz).toString()
+        } catch (e: Exception) {
+            Utils.notConfiguredNotation()
+        }
+    }
+
     override fun <T> save(key: String, value: T, clazz: Class<T>) {
         throw UnsupportedOperationException("You can't update firebase values from the app.")
     }
 
     override fun configurationMap(toggle: Toggle<*>): Map<String, CharSequence> {
         val configurations = mutableMapOf<String, CharSequence>()
-        if(hasAnnotation(toggle)) {
+        if(isSupported(toggle)) {
             val annotation = toggle.method.getAnnotation(FirebaseToggle::class.java)
             if(annotation != null)
                 configurations["Remote config key"] = if(annotation.remoteConfigKey.isBlank())

@@ -1,6 +1,7 @@
 package `in`.ponshere.toggler.v2.toggles
 
 import `in`.ponshere.toggler.v2.Toggler
+import `in`.ponshere.toggler.v2.helpers.Utils
 import `in`.ponshere.toggler.v2.provider.LocalValueProvider
 import `in`.ponshere.toggler.v2.provider.ToggleValueProvider
 import java.lang.reflect.Method
@@ -15,21 +16,36 @@ abstract class Toggle<T> constructor(val type: Type,
 
     abstract fun classType() : Class<T>
 
+    /**
+     * Should not throw any exceptions. Always handle fallbacks
+     */
     fun value() : T {
         if(Toggler.highPriorityValueProvider.isSupported(this)) {
-            return Toggler.highPriorityValueProvider.get(this, classType())
+            return Toggler.highPriorityValueProvider.getValue(this, classType())
         }
 
         //fallback to local provider
-        return LocalValueProvider.get(this, classType())
+        return LocalValueProvider.getValue(this, classType())
+    }
+
+    fun displayValue() : String {
+        return value().toString()
     }
 
     fun isSupported(toggleValueProvider: ToggleValueProvider) : Boolean {
         return toggleValueProvider.isSupported(this)
     }
 
+    fun getProviderDisplayValue(toggleValueProvider: ToggleValueProvider) : CharSequence {
+        return try {
+            getProviderValue(toggleValueProvider).toString()
+        }catch (e: Exception) {
+            Utils.notConfiguredNotation()
+        }
+    }
+
     fun getProviderValue(toggleValueProvider: ToggleValueProvider) : T {
-        return toggleValueProvider.get(this, classType())
+        return toggleValueProvider.getValue(this, classType())
     }
 
     fun saveProviderValue(toggleValueProvider: ToggleValueProvider, value: T) {
