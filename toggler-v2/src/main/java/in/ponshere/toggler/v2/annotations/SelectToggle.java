@@ -14,7 +14,6 @@ public @interface SelectToggle {
 
     String displayName() default "";
 
-
     String defaultValue() default "";
 
     String[] selectOptions() default "";

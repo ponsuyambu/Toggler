@@ -1,6 +1,6 @@
 package `in`.ponshere.toggler.firebase.provider
 
-import `in`.ponshere.toggler.v2.helpers.Utils
+import `in`.ponshere.toggler.v2.helpers.TogglerUtils
 import `in`.ponshere.toggler.v2.provider.ToggleValueProvider
 import `in`.ponshere.toggler.v2.toggles.Toggle
 import android.content.Context
@@ -40,7 +40,7 @@ object FirebaseValueProvider : ToggleValueProvider() {
         return try {
             getValue(toggle, clazz).toString()
         } catch (e: Exception) {
-            Utils.notConfiguredNotation()
+            TogglerUtils.notConfiguredNotation()
         }
     }
 
@@ -54,7 +54,7 @@ object FirebaseValueProvider : ToggleValueProvider() {
             val annotation = toggle.method.getAnnotation(FirebaseToggle::class.java)
             if(annotation != null)
                 configurations["Remote config key"] = if(annotation.remoteConfigKey.isBlank())
-                    Utils.notConfiguredNotation() else annotation.remoteConfigKey
+                    TogglerUtils.notConfiguredNotation() else annotation.remoteConfigKey
         }
         return configurations
     }

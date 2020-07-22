@@ -1,7 +1,7 @@
 package `in`.ponshere.toggler.v2.toggles
 
 import `in`.ponshere.toggler.v2.Toggler
-import `in`.ponshere.toggler.v2.helpers.Utils
+import `in`.ponshere.toggler.v2.helpers.TogglerUtils
 import `in`.ponshere.toggler.v2.provider.LocalValueProvider
 import `in`.ponshere.toggler.v2.provider.ToggleValueProvider
 import java.lang.reflect.Method
@@ -40,7 +40,7 @@ abstract class Toggle<T> constructor(val type: Type,
         return try {
             getProviderValue(toggleValueProvider).toString()
         }catch (e: Exception) {
-            Utils.notConfiguredNotation()
+            TogglerUtils.notConfiguredNotation()
         }
     }
 

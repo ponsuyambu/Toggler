@@ -2,6 +2,7 @@ package `in`.ponshere.toggler.v2.helpers
 
 import `in`.ponshere.toggler.v2.annotations.SelectToggle
 import `in`.ponshere.toggler.v2.annotations.SwitchToggle
+import `in`.ponshere.toggler.v2.helpers.TogglerUtils.resolveKey
 import `in`.ponshere.toggler.v2.toggles.SelectToggleImpl
 import `in`.ponshere.toggler.v2.toggles.SwitchToggleImpl
 import java.lang.reflect.Method
@@ -12,7 +13,7 @@ internal class ToggleFactory {
         val defaultValue = switchToggleAnnotation.defaultValue
 
         return SwitchToggleImpl(
-            resolveSharedPreferencesKey(sharedPreferencesKey, method),
+            resolveKey(sharedPreferencesKey, method),
             defaultValue,
             switchToggleAnnotation.displayName,
             method
@@ -23,7 +24,7 @@ internal class ToggleFactory {
         val sharedPreferencesKey = switchToggleAnnotation.key
         val defaultValue = switchToggleAnnotation.defaultValue
         return SelectToggleImpl(
-            resolveSharedPreferencesKey(sharedPreferencesKey, method),
+            resolveKey(sharedPreferencesKey, method),
             defaultValue,
             switchToggleAnnotation.displayName,
             switchToggleAnnotation.selectOptions,
@@ -31,9 +32,5 @@ internal class ToggleFactory {
         )
     }
 
-    private fun resolveSharedPreferencesKey(
-        sharedPreferencesKey: String,
-        method: Method
-    ) = if (sharedPreferencesKey.isBlank()) method.name else sharedPreferencesKey
 
 }
