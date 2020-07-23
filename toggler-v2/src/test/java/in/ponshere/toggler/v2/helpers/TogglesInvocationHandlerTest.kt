@@ -1,5 +1,6 @@
 package `in`.ponshere.toggler.v2.helpers
 
+import `in`.ponshere.toggler.isEquals
 import `in`.ponshere.toggler.mocks.aSwitchToggleWithAllValuesMethod
 import `in`.ponshere.toggler.v2.Toggler
 import `in`.ponshere.toggler.v2.annotations.SwitchToggle
@@ -8,6 +9,7 @@ import `in`.ponshere.toggler.v2.toggles.Toggle
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
@@ -27,8 +29,8 @@ class TogglesInvocationHandlerTest {
     @MockK
     private lateinit var cacheMockK: MutableMap<Method, Toggle<*>>
 
-    @MockK
-    private lateinit var switchToggleMock : SwitchToggle
+    @RelaxedMockK
+    private lateinit var switchToggleImplMock : SwitchToggleImpl
 
     private lateinit var togglesInvocationHandler : TogglesInvocationHandler
 
@@ -47,8 +49,6 @@ class TogglesInvocationHandlerTest {
         inner class CacheDoesNotHaveMethod {
             @Test
             fun `should create the method from factory`() {
-                val switchToggleImplMock = mockk<SwitchToggleImpl>()
-                every { switchToggleImplMock.value() } returns mockk()
                 every { cacheMockK[any()] } returns null
                 every { cacheMockK.put(any(), any()) } returns mockk()
                 every { toggleFactorMock.createSwitchToggle(any(), any()) } returns switchToggleImplMock
@@ -61,6 +61,23 @@ class TogglesInvocationHandlerTest {
                         aSwitchToggleWithAllValuesMethod
                     )
                 }
+            }
+        }
+
+        @Nested
+        @DisplayName("When cache does not have the given method")
+        inner class WhenCacheHasMethod {
+            @Test
+            fun `should get the method from cache`() {
+                every { switchToggleImplMock.value() } returns true
+                every { cacheMockK[any()] } returns switchToggleImplMock
+                every { toggleFactorMock.createSwitchToggle(any(), any()) } returns switchToggleImplMock
+
+                val value = togglesInvocationHandler.invoke(mockk(), aSwitchToggleWithAllValuesMethod, arrayOf())
+
+                value isEquals true
+                verify { cacheMockK[aSwitchToggleWithAllValuesMethod] }
+
             }
         }
     }
