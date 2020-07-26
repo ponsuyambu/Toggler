@@ -1,0 +1,10 @@
+siteUrl = https://github.com/ponsuyambu/Toggler
+gitUrl = https://github.com/ponsuyambu/Toggler
+version = 0.0.5
+groupId = in.ponshere
+licenses = Apache-2.0
+id = toggler
+name = toggler
+repo = android
+org = android
+description = Feature Toggles for Android App

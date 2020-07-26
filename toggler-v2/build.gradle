@@ -1,8 +1,11 @@
+import net.researchgate.release.GitAdapter
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "de.mannodermaus.android-junit5"
 apply plugin: 'jacoco'
+apply plugin: 'net.researchgate.release'
 
 android {
     compileSdkVersion 29
@@ -102,13 +105,17 @@ task jacocoTestReport(type: JacocoReport, dependsOn: [
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.3.0'
+    implementation 'androidx.core:core-ktx:1.3.1'
+
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
     implementation 'com.google.android.material:material:1.1.0'
 
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.cardview:cardview:1.0.0'
+
 
     testImplementation "io.mockk:mockk:1.10.0"
     testImplementation "io.mockk:mockk-android:1.10.0"
@@ -125,5 +132,32 @@ dependencies {
     androidTestImplementation "io.mockk:mockk-android:1.10.0"
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.1'
+    androidTestImplementation 'androidx.test:core-ktx:1.2.0'
+    androidTestImplementation "io.mockk:mockk-android:1.10.0"
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}"
 
 }
+
+release {
+    failOnCommitNeeded = false
+    failOnSnapshotDependencies = false
+    failOnUnversionedFiles = false
+    versionPropertyFile = 'deploy.settings'
+    preCommitText = ''
+    preTagCommitMessage = '[Gradle Release Plugin] - pre tag commit: '
+    tagCommitMessage = '[Gradle Release Plugin] - creating tag: '
+    newVersionCommitMessage = '[Gradle Release Plugin] - new version commit: '
+    tagTemplate = '${version}'
+    buildTasks = ['bintrayUpload']
+    scmAdapters = [
+            GitAdapter
+    ]
+
+    git {
+        requireBranch = 'master'
+    }
+}
+
+apply from: 'deploy.gradle'
