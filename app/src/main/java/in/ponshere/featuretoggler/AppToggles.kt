@@ -1,30 +1,33 @@
 package `in`.ponshere.featuretoggler
 
-import `in`.ponshere.toggler.annotations.NumberOfToggles
-import `in`.ponshere.toggler.annotations.SelectToggle
-import `in`.ponshere.toggler.annotations.SwitchToggle
+//import `in`.ponshere.toggler.annotations.NumberOfToggles
+//import `in`.ponshere.toggler.annotations.SelectToggle
+//import `in`.ponshere.toggler.annotations.SwitchToggle
 
+@Deprecated("use v2")
 interface AppToggles {
-    @SwitchToggle(
-        sharedPreferencesKey = "feature1",
-        defaultValue = true,
-        fireBaseRemoteConfigKey = "feature1"
-    )
-    fun isFeatureAEnabled(): Boolean
-
-    @SwitchToggle(sharedPreferencesKey = "feature2", defaultValue = false)
-    fun isFeature2Enabled(): Boolean
-
-    @SelectToggle(
-        sharedPreferencesKey = "number_of_options",
-        defaultValue = "3",
-        fireBaseRemoteConfigKey = "feature3",
-        selectOptions = ["1", "2", "3", "4"]
-    )
-    fun getFeature3Option(): String
-
-    @NumberOfToggles
-    fun totalNumberOfToggles() : Int
+//    @SwitchToggle(
+//        sharedPreferencesKey = "feature1",
+//        defaultValue = true,
+//        fireBaseRemoteConfigKey = "feature1"
+//    )
+//    fun isFeatureAEnabled(): Boolean
+//
+//    @SwitchToggle(sharedPreferencesKey = "feature2",
+//        fireBaseRemoteConfigKey = "feature2",
+//        defaultValue = false)
+//    fun isFeature2Enabled(): Boolean
+//
+//    @SelectToggle(
+//        sharedPreferencesKey = "number_of_options",
+//        defaultValue = "3",
+//        fireBaseRemoteConfigKey = "feature3",
+//        selectOptions = ["1", "2", "3", "4"]
+//    )
+//    fun getFeature3Option(): String
+//
+//    @NumberOfToggles
+//    fun totalNumberOfToggles() : Int
 //
 //    @SwitchToggle(sharedPreferencesKey = "new login", defaultValue = false)
 //    fun isNewLoginEnabled(): Boolean
@@ -78,5 +81,7 @@ interface AppToggles {
 //    )
 //    fun l(): String
 //
+//
+//    @SwitchToggle
 //    fun f1(): String
 }

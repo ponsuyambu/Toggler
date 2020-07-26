@@ -1,6 +1,6 @@
 package `in`.ponshere.featuretoggler
 
-import `in`.ponshere.toggler.Toggler
+import `in`.ponshere.toggler.v2.Toggler
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
                 FirebaseRemoteConfig.getInstance().activate()
                 runOnUiThread {
                     val text =
-                        "feature3Enabled: ${Toggler.get<AppToggles>().getFeature3Option()}"
+                        "feature3Enabled: ${Toggler.get<AppTogglesV2>().getFeature3Option()}"
                     btnLaunch.text = text
 
                     Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         }
         Log.d(
             "Toggle",
-            "toggles.isFeature2Enabled() " + Toggler.get<AppToggles>().isFeature2Enabled()
+            "toggles.isFeature2Enabled() " + Toggler.get<AppTogglesV2>().isFeature2Enabled()
         )
 
 

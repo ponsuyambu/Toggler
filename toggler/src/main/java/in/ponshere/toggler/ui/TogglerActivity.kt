@@ -2,7 +2,8 @@ package `in`.ponshere.toggler.ui
 
 import `in`.ponshere.toggler.R
 import `in`.ponshere.toggler.Toggler
-import `in`.ponshere.toggler.annotations.models.BaseToggleMethodImplementation
+import `in`.ponshere.toggler.toggles.Toggle
+import `in`.ponshere.toggler.ui.adapters.TogglesAdapter
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_toggler.*
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         togglesAdapter =
-            TogglesAdapter(Toggler.allToggles)
+            TogglesAdapter(Toggler)
         togglerList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = togglesAdapter
@@ -42,7 +43,7 @@ import kotlinx.android.synthetic.main.activity_toggler.*
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                val filteredToggles = mutableListOf<BaseToggleMethodImplementation<*>>()
+                val filteredToggles = mutableListOf<Toggle<*>>()
                 Toggler.allToggles.forEach {
                     if (it.sharedPreferencesKey.contains(newText ?: "")) {
                         filteredToggles.add(it)

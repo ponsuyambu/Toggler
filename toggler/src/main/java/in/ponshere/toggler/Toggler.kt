@@ -4,9 +4,12 @@ package `in`.ponshere.toggler
 
 import `in`.ponshere.toggler.annotations.SelectToggle
 import `in`.ponshere.toggler.annotations.SwitchToggle
-import `in`.ponshere.toggler.annotations.models.BaseToggleMethodImplementation
-import `in`.ponshere.toggler.helpers.ToggleMethodCreator
+import `in`.ponshere.toggler.helpers.ToggleFactory
 import `in`.ponshere.toggler.helpers.TogglesInvocationHandler
+import `in`.ponshere.toggler.providers.FirebaseProvider
+import `in`.ponshere.toggler.providers.LocalProvider
+import `in`.ponshere.toggler.providers.ToggleValueProvider
+import `in`.ponshere.toggler.toggles.Toggle
 import `in`.ponshere.toggler.ui.TogglerActivity
 import android.app.Activity
 import android.content.Context
@@ -19,20 +22,29 @@ import java.lang.reflect.Proxy
 
 object Toggler {
     @VisibleForTesting
-    internal lateinit var methodCreator: ToggleMethodCreator
+    internal lateinit var toggleFactory: ToggleFactory
     @VisibleForTesting
     internal lateinit var clazz: Class<*>
     @VisibleForTesting
     internal lateinit var toggles: Any
 
-    internal val allToggles: MutableList<BaseToggleMethodImplementation<*>> by lazy {
-        val map = mutableMapOf<Method, BaseToggleMethodImplementation<*>>()
+    internal var toggleValueProviderType = ToggleValueProvider.Type.FIREBASE
+
+    internal val toggleValueProvider: ToggleValueProvider<*>
+        get() {
+            if(toggleValueProviderType == ToggleValueProvider.Type.FIREBASE)
+                return FirebaseProvider
+            return LocalProvider
+        }
+
+    internal val allToggles: MutableList<Toggle<*>> by lazy {
+        val map = mutableMapOf<Method, Toggle<*>>()
         clazz.methods.forEach { method ->
             method?.annotations?.forEach {
                 if (it is SwitchToggle) {
-                    map[method] = methodCreator.createSwitchToggleMethod(it, method)
+                    map[method] = toggleFactory.createSwitchToggle(it, method, toggleValueProviderType)
                 } else if (it is SelectToggle) {
-                    map[method] = methodCreator.createSelectToggleMethod(it, method)
+                    map[method] = toggleFactory.createSelectToggleMethod(it, method, toggleValueProviderType)
                 }
             }
         }
@@ -40,19 +52,21 @@ object Toggler {
     }
 
 
-    fun <T> init(context: Context, clazz: Class<T>): T {
+    fun <T> init(context: Context, clazz: Class<T>, toggleValueProviderType: ToggleValueProvider.Type = ToggleValueProvider.Type.FIREBASE): T {
         this.clazz = clazz
         val sharedPreferences =
             context.getSharedPreferences("toggler_preferences", Context.MODE_PRIVATE)
-        methodCreator =
-            ToggleMethodCreator(sharedPreferences)
+        LocalProvider.init(context)
+        toggleFactory =
+            ToggleFactory(sharedPreferences)
         val togglesInvocationHandler =
-            TogglesInvocationHandler(methodCreator, this)
+            TogglesInvocationHandler(toggleFactory, this)
         toggles = Proxy.newProxyInstance(
             Toggler::class.java.classLoader,
             arrayOf<Class<*>>(clazz),
             togglesInvocationHandler
         )
+        this.toggleValueProviderType = toggleValueProviderType
         return toggles as T
     }
 

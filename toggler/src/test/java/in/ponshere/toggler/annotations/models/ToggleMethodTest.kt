@@ -1,10 +1,14 @@
 package `in`.ponshere.toggler.annotations.models
 
+import `in`.ponshere.toggler.providers.LocalProvider
+import android.content.Context
 import android.content.SharedPreferences
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import org.junit.Before
+import org.junit.jupiter.api.BeforeEach
 
 open class ToggleMethodTest {
     @MockK
@@ -14,9 +18,13 @@ open class ToggleMethodTest {
     protected lateinit var sharedPreferencesEditor: SharedPreferences.Editor
 
     @Before
+    @BeforeEach
     open fun setup() {
         MockKAnnotations.init(this)
         mockSharedPreferences()
+        val mockContext = mockk<Context>()
+        every { mockContext.getSharedPreferences(any(), any()) } returns sharedPreferences
+        LocalProvider.init(mockContext)
 
     }
 
