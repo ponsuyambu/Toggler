@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 def deploy = new Properties()
 deploy.load(new FileInputStream("$projectDir/deploy.settings"))
 
-version=deploy.version
+//version=deploy.version
 group=deploy.groupId
 
 
@@ -27,7 +27,7 @@ bintray {
         licenses = deploy.licenses.split(',')
         publish = true
         version {
-            name = deploy.version
+            name = version
         }
     }
 }
@@ -79,7 +79,7 @@ publishing {
             artifact sourcesJar
             groupId deploy.groupId
             artifactId deploy.id
-            version deploy.version
+            version version
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', 'Fragment Intent API to do fragment navigation easily')

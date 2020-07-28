@@ -51,6 +51,11 @@ jobs:
           arch: x86
           disable-animations: true
           script: ./gradlew connectedCheck --stacktrace
+      - name: Create Test Report
+        run: bash ./gradlew jacocoTestReport --stacktrace
       - name: Upload Reports
         run: bash <(curl -s https://codecov.io/bash) -t "$CODECOV_TOKEN"
+      - name: Release version
+        run: bash ./gradlew release --stacktrace -PghToken=$GH_TOKEN
+
 
