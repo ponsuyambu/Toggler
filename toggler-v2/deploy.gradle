@@ -13,6 +13,10 @@ Properties properties = new Properties()
 File propFile = new File(rootDir,"local.properties")
 if(propFile.exists()) //load only if bintray file is present
  properties.load(propFile.newDataInputStream())
+else {
+    properties.put("bintray.user", project.getProperty('BINTRAY_USER'))
+    properties.put("bintray.apikey", project.getProperty('BINTRAY_APIKEY'))
+}
 
 bintray {
     user = properties.getProperty("bintray.user")
