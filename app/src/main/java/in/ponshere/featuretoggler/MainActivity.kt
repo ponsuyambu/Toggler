@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
 
         btnLaunch.setOnClickListener {
+            Toast.makeText(this, Toggler.get<AppTogglesV2>().isFeature2Enabled().toString(), Toast.LENGTH_SHORT).show()
             Toggler.showAllToggles(this)
         }
 
