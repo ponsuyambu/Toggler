@@ -34,8 +34,8 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 task testProps {
-    def user = project.hasProperty('BINTRAY_USER') ? project.getProperty('BINTRAY_USER') : "No user"
-    def apiKey = project.hasProperty('BINTRAY_APIKEY') ? project.getProperty('BINTRAY_APIKEY') : "No Key"
+    def user = System.getenv('BINTRAY_USER')
+    def apiKey = System.getenv('BINTRAY_APIKEY')
     println("Bintry user : "+ user)
     println("Bintry API Key : "+ apiKey)
 }
