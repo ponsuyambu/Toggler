@@ -10,13 +10,14 @@ group=deploy.groupId
 
 Properties properties = new Properties()
 //File propFile = "${System.properties['user.home']}${File.separator}.gradle${File.separator}bintray.properties" as File
-File propFile = new File(rootDir,"local.properties")
+File propFile = new File(rootDir,"local1.properties")
 if(propFile.exists()) //load only if bintray file is present
  properties.load(propFile.newDataInputStream())
 else {
     if(project.hasProperty('BINTRAY_USER')) properties.put("bintray.user", project.getProperty('BINTRAY_USER'))
     if(project.hasProperty('BINTRAY_APIKEY')) properties.put("bintray.apikey", project.getProperty('BINTRAY_APIKEY'))
 }
+println("Properties: "+properties.toString())
 
 bintray {
     user = properties.getProperty("bintray.user")
