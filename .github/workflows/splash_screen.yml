@@ -21,9 +21,20 @@ jobs:
           BINTRAY_APIKEY: ${{ secrets.BINTRAY_APIKEY }}
         with:
           java-version: 1.8
+      - name: Print version
+          env:
+            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+            GH_TOKEN: ${{ secrets.GH_TOKEN }}
+            BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
+            BINTRAY_APIKEY: ${{ secrets.BINTRAY_APIKEY }}
+          run: echo "$BINTRAY_USER"
       - name: Release version
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
+          BINTRAY_APIKEY: ${{ secrets.BINTRAY_APIKEY }}
         run: bash ./gradlew release --stacktrace -PghToken="$GH_TOKEN" -PBINTRAY_APIKEY="$BINTRAY_APIKEY" -PBINTRAY_USER="$BINTRAY_USER" -PCODECOV_TOKEN="$CODECOV_TOKEN"
-      - name: Release version
-        run: echo "$BINTRAY_APIKEY"
+
 
 
