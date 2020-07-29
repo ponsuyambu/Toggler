@@ -20,9 +20,9 @@ else {
 println("Properties: "+properties.toString())
 
 bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    publications = ['MyPublication']
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_APIKEY')
+    publications = ['TogglerPublication']
 //    configurations = ['archives']
     pkg {
         repo = "android"
@@ -78,7 +78,7 @@ def pomConfig = {
 // Create the publication with the pom configuration:
 publishing {
     publications {
-        MyPublication(MavenPublication) {
+        TogglerPublication(MavenPublication) {
             //artifact javadocJar
             artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
             artifact sourcesJar
@@ -90,6 +90,16 @@ publishing {
                 root.appendNode('description', 'Fragment Intent API to do fragment navigation easily')
                 root.appendNode('name', 'Toggler')
                 root.children().last() + pomConfig
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/ponsuyambu/Toggler")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
