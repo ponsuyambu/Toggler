@@ -22,11 +22,11 @@ jobs:
         with:
           java-version: 1.8
       - name: Print version
-          env:
-            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-            GH_TOKEN: ${{ secrets.GH_TOKEN }}
-            BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
-            BINTRAY_APIKEY: ${{ secrets.BINTRAY_APIKEY }}
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
+          BINTRAY_APIKEY: ${{ secrets.BINTRAY_APIKEY }}
           run: echo "$BINTRAY_USER"
       - name: Release version
         env:
