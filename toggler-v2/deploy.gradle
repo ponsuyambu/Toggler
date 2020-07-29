@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 def deploy = new Properties()
 deploy.load(new FileInputStream("$projectDir/deploy.settings"))
 
-version=deploy.version
+//version=deploy.version
 group=deploy.groupId
 
 
