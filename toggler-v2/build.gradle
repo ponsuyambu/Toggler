@@ -163,7 +163,7 @@ dependencies {
 //}
 apply from: 'deploy.gradle'
 
-project.afterEvaluate {
+afterEvaluate {
     if (!version.toString().endsWith('-SNAPSHOT'))
         publish.dependsOn publishTogglerPublicationToGitHubPackagesRepository bintrayUpload
     else
