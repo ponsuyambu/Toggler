@@ -26,7 +26,7 @@ jobs:
           BINTRAY_APIKEY: ${{ secrets.BINTRAY_APIKEY }}
         run: bash ./gradlew release --stacktrace -PghToken="$GH_TOKEN"
       - name: Publish Library to Github Packages
-          run: bash ./gradlew publishTogglerPublicationToGitHubPackagesRepository --stacktrace
+        run: bash ./gradlew publishTogglerPublicationToGitHubPackagesRepository --stacktrace
 
 #    steps:
 #      - uses: actions/checkout@v1
