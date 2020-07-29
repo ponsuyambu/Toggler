@@ -22,6 +22,7 @@ jobs:
         with:
           java-version: 1.8
       - name: Print version
+        uses: actions/setup-java@v1
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -29,6 +30,7 @@ jobs:
           BINTRAY_APIKEY: ${{ secrets.BINTRAY_APIKEY }}
           run: echo "$BINTRAY_USER"
       - name: Release version
+        uses: actions/setup-java@v1
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
