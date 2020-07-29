@@ -4,12 +4,10 @@ apply plugin: 'maven-publish'
 def deploy = new Properties()
 deploy.load(new FileInputStream("$projectDir/deploy.settings"))
 
-//version=deploy.version
 group=deploy.groupId
 
 
 Properties properties = new Properties()
-//File propFile = "${System.properties['user.home']}${File.separator}.gradle${File.separator}bintray.properties" as File
 File propFile = new File(rootDir,"local.properties")
 if(propFile.exists()) //load only if bintray file is present
  properties.load(propFile.newDataInputStream())

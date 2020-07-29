@@ -1,11 +1,9 @@
-import net.researchgate.release.GitAdapter
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "de.mannodermaus.android-junit5"
 apply plugin: 'jacoco'
-//apply plugin: 'net.researchgate.release'
 apply plugin: 'de.gliderpilot.semantic-release'
 
 
@@ -142,41 +140,20 @@ dependencies {
 
 }
 
-//release {
-//    failOnCommitNeeded = false
-//    failOnSnapshotDependencies = false
-//    failOnUnversionedFiles = false
-//    versionPropertyFile = 'deploy.settings'
-//    preCommitText = ''
-//    preTagCommitMessage = '[Gradle Release Plugin] - pre tag commit: '
-//    tagCommitMessage = '[Gradle Release Plugin] - creating tag: '
-//    newVersionCommitMessage = '[Gradle Release Plugin] - new version commit: '
-//    tagTemplate = '${version}'
-//    buildTasks = ['bintrayUpload']
-//    scmAdapters = [
-//            GitAdapter
-//    ]
-//
-//    git {
-//        requireBranch = 'master'
-//    }
-//}
 apply from: 'deploy.gradle'
 
-afterEvaluate {
-    if (!version.toString().endsWith('-SNAPSHOT')) {
-        publish.dependsOn publishTogglerPublicationToGitHubPackagesRepository
-        publish.dependsOn "bintrayUpload"
-    }
-    else
-        publish.dependsOn publishTogglerPublicationToGitHubPackagesRepository
+if (!version.toString().endsWith('-SNAPSHOT')) {
+    publish.dependsOn publishTogglerPublicationToGitHubPackagesRepository
+    publish.dependsOn "bintrayUpload"
 }
+else
+    publish.dependsOn publishTogglerPublicationToGitHubPackagesRepository
 
 
-project.ext.ghToken = project.hasProperty('ghToken') ? project.getProperty('ghToken') : System.getenv('GH_TOKEN') ?: null
+
 semanticRelease {
     repo {
-        ghToken = project.ghToken
+        ghToken = System.getenv("GH_TOKEN")
     }
 }
 
