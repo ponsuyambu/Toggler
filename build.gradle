@@ -33,10 +33,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-task testProps {
-    def user = System.getenv('BINTRAY_USER')
-    def apiKey = System.getenv('BINTRAY_APIKEY')
-    println("Bintry user : "+ user)
-    println("CODECOV_TOKEN : "+ System.getenv('CODECOV_TOKEN'))
-    println("Bintry API Key : "+ apiKey)
-}
