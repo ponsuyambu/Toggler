@@ -82,7 +82,7 @@ publishing {
             artifact sourcesJar
             groupId deploy.groupId
             artifactId deploy.id
-            version version
+            version version.toString()
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', 'Fragment Intent API to do fragment navigation easily')
