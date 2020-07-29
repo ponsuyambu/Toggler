@@ -4,4 +4,13 @@
         <item name="android:textSize">12dp</item>
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="TogglerActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSurface">@android:color/white</item>
+    </style>
+    <color name="colorPrimaryDark">#0099cc</color>
+    <color name="colorPrimary">#04BEFC</color>
+    <color name="colorAccent">#D81B60</color>
 </resources>

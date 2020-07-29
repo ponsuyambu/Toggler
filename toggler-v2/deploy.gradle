@@ -14,14 +14,15 @@ File propFile = new File(rootDir,"local.properties")
 if(propFile.exists()) //load only if bintray file is present
  properties.load(propFile.newDataInputStream())
 else {
-    if(project.hasProperty('BINTRAY_USER')) properties.put("bintray.user", project.getProperty('BINTRAY_USER'))
-    if(project.hasProperty('BINTRAY_APIKEY')) properties.put("bintray.apikey", project.getProperty('BINTRAY_APIKEY'))
+    properties.put("bintray.user", System.getenv('BINTRAY_USER') != null ? System.getenv('BINTRAY_USER') : "")
+    properties.put("bintray.apikey", System.getenv('BINTRAY_APIKEY') != null ? System.getenv('BINTRAY_APIKEY') : "")
 }
+println("Properties: "+properties.toString())
 
 bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
-    publications = ['MyPublication']
+    publications = ['Toggler']
 //    configurations = ['archives']
     pkg {
         repo = "android"
@@ -77,7 +78,7 @@ def pomConfig = {
 // Create the publication with the pom configuration:
 publishing {
     publications {
-        MyPublication(MavenPublication) {
+        Toggler(MavenPublication) {
             //artifact javadocJar
             artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
             artifact sourcesJar
@@ -89,6 +90,16 @@ publishing {
                 root.appendNode('description', 'Fragment Intent API to do fragment navigation easily')
                 root.appendNode('name', 'Toggler')
                 root.children().last() + pomConfig
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/ponsuyambu/Toggler")
+            credentials {
+                username = "ponsuyambu"
+                password = System.getenv("GH_TOKEN")
             }
         }
     }

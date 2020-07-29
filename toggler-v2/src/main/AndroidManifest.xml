@@ -3,6 +3,7 @@
 
     <application>
         <activity android:name=".v2.ui.TogglerActivity"
-            android:theme="@style/Theme.MaterialComponents.Light"/>
+            android:label="Toggles List"
+            android:theme="@style/TogglerActivityTheme"/>
     </application>
 </manifest>
