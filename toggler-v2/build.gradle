@@ -163,7 +163,11 @@ dependencies {
 //}
 apply from: 'deploy.gradle'
 
-publish.dependsOn bintrayUpload
+if (!version.toString().endsWith('-SNAPSHOT'))
+    publish.dependsOn bintrayUpload publishTogglerPublicationToGitHubPackagesRepository
+else
+    publish.dependsOn publishTogglerPublicationToGitHubPackagesRepository
+
 project.ext.ghToken = project.hasProperty('ghToken') ? project.getProperty('ghToken') : System.getenv('GH_TOKEN') ?: null
 semanticRelease {
     repo {
