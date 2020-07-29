@@ -22,6 +22,8 @@ jobs:
         with:
           java-version: 1.8
       - name: Release version
-        run: bash ./gradlew testProps --stacktrace -PghToken="$GH_TOKEN" -PBINTRAY_APIKEY="$BINTRAY_APIKEY" -PBINTRAY_USER="$BINTRAY_USER"
+        run: bash ./gradlew testProps --stacktrace -PghToken="$GH_TOKEN" -PBINTRAY_APIKEY="$BINTRAY_APIKEY" -PBINTRAY_USER="$BINTRAY_USER" PCODECOV_TOKEN="$CODECOV_TOKEN"
+      - name: Release version
+        run: echo "$BINTRAY_APIKEY"
 
 
