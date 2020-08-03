@@ -58,7 +58,7 @@ artifacts {
     //archives javadocJar
     archives sourcesJar
 }
-// Create the pom configuration:
+
 def pomConfig = {
     licenses {
         license {
