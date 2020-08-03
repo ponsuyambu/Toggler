@@ -143,7 +143,7 @@ dependencies {
 apply from: 'deploy.gradle'
 
 if (!version.toString().endsWith('-SNAPSHOT')) {
-    publish.dependsOn publishTogglerPublicationToGitHubPackagesRepository
+    publish.dependsOn "publishTogglerPublicationToGitHubPackagesRepository"
     publish.dependsOn "bintrayUpload"
 }
 else

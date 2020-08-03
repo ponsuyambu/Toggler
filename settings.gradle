@@ -2,3 +2,4 @@ include ':toggler-v2'
 include ':toggler-firebase-provider'
 include ':app'
 rootProject.name='FeatureToggler'
+project(":toggler-v2").name = "toggler"

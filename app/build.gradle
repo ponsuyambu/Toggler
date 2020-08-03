@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 
 def artifact = new Properties()
-artifact.load(new FileInputStream("$rootDir/toggler/deploy.settings"))
+artifact.load(new FileInputStream("$rootDir/toggler-v2/deploy.settings"))
 
 android {
     compileSdkVersion 29
@@ -37,7 +37,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-    implementation project(path: ':toggler-v2')
+    implementation project(path: ':toggler')
     implementation project(path: ':toggler-firebase-provider')
 
 //    implementation project(path: ':toggler')

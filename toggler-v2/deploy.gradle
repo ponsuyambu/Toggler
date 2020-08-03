@@ -5,7 +5,8 @@ def deploy = new Properties()
 deploy.load(new FileInputStream("$projectDir/deploy.settings"))
 
 group=deploy.groupId
-
+//version = "1.0.2"
+//project.version = "1.0.2"
 
 Properties properties = new Properties()
 File propFile = new File(rootDir,"local.properties")

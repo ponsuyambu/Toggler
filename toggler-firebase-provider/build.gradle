@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':toggler-v2')
+    implementation project(path: ':toggler')
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
