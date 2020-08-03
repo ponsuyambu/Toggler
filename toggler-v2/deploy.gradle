@@ -21,7 +21,7 @@ bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
     publications = ['Toggler']
-//    configurations = ['archives']
+    configurations = ['archives']
     pkg {
         repo = "android"
         name = deploy.id
@@ -73,14 +73,19 @@ def pomConfig = {
             email "suyambu.vps@gmail.com"
         }
     }
+    scm {
+        url deploy.gitUrl
+    }
 }
 
 // Create the publication with the pom configuration:
+project.afterEvaluate {
 publishing {
     publications {
         Toggler(MavenPublication) {
             //artifact javadocJar
-            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+            artifact bundleReleaseAar
+//            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
             artifact sourcesJar
             groupId deploy.groupId
             artifactId deploy.id
@@ -103,5 +108,6 @@ publishing {
             }
         }
     }
+}
 }
 
