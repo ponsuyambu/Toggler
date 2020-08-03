@@ -14,6 +14,7 @@ if(propFile.exists()) //load only if bintray file is present
  properties.load(propFile.newDataInputStream())
 else {
     properties.put("bintray.user", System.getenv('BINTRAY_USER') != null ? System.getenv('BINTRAY_USER') : "")
+    properties.put("ghToken", System.getenv('GH_TOKEN') != null ? System.getenv('GH_TOKEN') : "No github token")
     properties.put("bintray.apikey", System.getenv('BINTRAY_APIKEY') != null ? System.getenv('BINTRAY_APIKEY') : "")
 }
 println("Properties: "+properties.toString())

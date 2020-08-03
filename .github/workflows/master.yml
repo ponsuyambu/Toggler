@@ -51,4 +51,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
           BINTRAY_APIKEY: ${{ secrets.BINTRAY_APIKEY }}
-        run: bash ./gradlew release --stacktrace -PghToken="$GH_TOKEN"
+        run: bash ./gradlew release --stacktrace
