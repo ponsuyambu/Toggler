@@ -30,7 +30,9 @@ bintray {
         licenses = deploy.licenses.split(',')
         publish = true
         version {
-            name = version
+            println("Project version: "+ project.version)
+            name = project.version
+            released = new Date()
         }
     }
 }
