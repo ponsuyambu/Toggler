@@ -9,7 +9,7 @@ group=deploy.groupId
 //project.version = "1.0.2"
 
 Properties properties = new Properties()
-File propFile = new File(rootDir,"local.properties")
+File propFile = new File(rootDir,"local1.properties")
 if(propFile.exists()) //load only if bintray file is present
  properties.load(propFile.newDataInputStream())
 else {
@@ -18,6 +18,7 @@ else {
     properties.put("bintray.apikey", System.getenv('BINTRAY_APIKEY') != null ? System.getenv('BINTRAY_APIKEY') : "")
 }
 println("Properties: "+properties.toString())
+println("Prop: "+(project.hasProperty("ghToken") ? "Project Prop => "+project.property("ghToken") : System.getenv("GH_TOKEN")))
 
 bintray {
     user = properties.getProperty("bintray.user")
@@ -106,7 +107,7 @@ publishing {
             url = uri("https://maven.pkg.github.com/ponsuyambu/Toggler")
             credentials {
                 username = "ponsuyambu"
-                password = System.getenv("GH_TOKEN")
+                password = project.hasProperty("ghToken") ? project.property("ghToken") : System.getenv("GH_TOKEN")
             }
         }
     }
