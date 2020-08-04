@@ -22,7 +22,7 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          GHTOKEN: ${{ secrets.GH_TOKEN }}
+          GHTOKEN: ${{ secrets.GITHUB_TOKEN }}
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
           BINTRAY_APIKEY: ${{ secrets.BINTRAY_APIKEY }}
         run: bash ./gradlew release --stacktrace -PghToken="$GH_TOKEN"

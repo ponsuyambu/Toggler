@@ -109,7 +109,7 @@ publishing {
             url = uri("https://maven.pkg.github.com/ponsuyambu/Toggler")
             credentials {
                 username = "ponsuyambu"
-                password = System.getenv("GITHUB_TOKEN")
+                password = System.getenv("GHTOKEN")
             }
         }
     }
