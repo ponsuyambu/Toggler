@@ -153,7 +153,7 @@ else
 
 semanticRelease {
     repo {
-        ghToken = System.getenv("GH_TOKEN")
+        ghToken = project.hasProperty("ghToken") ? project.property("ghToken") : System.getenv("GH_TOKEN")
     }
 }
 

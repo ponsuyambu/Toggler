@@ -9,14 +9,18 @@ group=deploy.groupId
 //project.version = "1.0.2"
 
 Properties properties = new Properties()
-File propFile = new File(rootDir,"local.properties")
+File propFile = new File(rootDir,"local1.properties")
 if(propFile.exists()) //load only if bintray file is present
  properties.load(propFile.newDataInputStream())
 else {
     properties.put("bintray.user", System.getenv('BINTRAY_USER') != null ? System.getenv('BINTRAY_USER') : "")
+    properties.put("ghToken", System.getenv('GH_TOKEN') != null ? System.getenv('GH_TOKEN') : "No github token")
+    properties.put("GHTOKEN", System.getenv('GHTOKEN') != null ? System.getenv('GHTOKEN') : "No github token")
     properties.put("bintray.apikey", System.getenv('BINTRAY_APIKEY') != null ? System.getenv('BINTRAY_APIKEY') : "")
 }
 println("Properties: "+properties.toString())
+println("Prop: "+(project.hasProperty("ghToken") ? "Project Prop => "+project.property("ghToken") : System.getenv("GH_TOKEN")))
+println("GHTOKEN: "+System.getenv("GHTOKEN"))
 
 bintray {
     user = properties.getProperty("bintray.user")

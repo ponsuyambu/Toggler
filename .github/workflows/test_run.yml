@@ -1,9 +1,9 @@
-name: splash_screen
+name: github_package_publish
 
 on:
   push:
     branches:
-      - 'splash_screen'
+      - 'not_exists'
 
 jobs:
   Release:
@@ -21,7 +21,8 @@ jobs:
       - name: Publish Library
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GHTOKEN: ${{ secrets.GITHUB_TOKEN }}
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
           BINTRAY_APIKEY: ${{ secrets.BINTRAY_APIKEY }}
         run: bash ./gradlew release --stacktrace -PghToken="$GH_TOKEN"
