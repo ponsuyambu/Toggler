@@ -3,7 +3,7 @@ name: github_package_publish
 on:
   push:
     branches:
-      - 'fix/github_package_publish'
+      - 'not_exists'
 
 jobs:
   Release:
