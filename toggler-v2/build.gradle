@@ -143,17 +143,18 @@ dependencies {
 apply from: 'deploy.gradle'
 
 if (!version.toString().endsWith('-SNAPSHOT')) {
-    publish.dependsOn "publishTogglerPublicationToGitHubPackagesRepository"
+    //publish.dependsOn "publishTogglerPublicationToGitHubPackagesRepository"
     publish.dependsOn "bintrayUpload"
 }
-else
-    publish.dependsOn "publishTogglerPublicationToGitHubPackagesRepository"
+else { }
+    //publish.dependsOn "publishTogglerPublicationToGitHubPackagesRepository"
 
 
+project.ext.ghToken = project.hasProperty('GH_TOKEN') ? project.getProperty('GH_TOKEN') : System.getenv('GH_TOKEN') ?: null
 
 semanticRelease {
     repo {
-        ghToken = project.hasProperty("GH_TOKEN") ? project.property("GH_TOKEN") : System.getenv("GH_TOKEN")
+        ghToken = "e428d7c475ea1a223732f18b0347603d46cb4f50"
     }
 }
 
